@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/login.css?v=15.10" id="main-stylesheet">
+</head>
+<body>
+    <div class="login-container">
+        <h2 class="title"><span class="title-wago"><img src="assets/img/wago.png" width="100px"></span> Login</h2>
+        <div class="hero">
+            <!-- Webp image -->
+            <img src="assets/img/WA.webp" alt="Hero Image" class="img-fluid">
+        </div>
+        <div class="formInput">
+            <form id="login-form">
+                <div id="phone-otp-section">
+                    <!-- Menggunakan input-group agar button send OTP berada di samping input -->
+                    <div class="input-group mb-3">
+                        <input type="text" id="phone" name="phone" class="form-control" placeholder="Enter your phone number">
+                        <div class="input-group-append ml-1"> <!-- Menambahkan margin-left 2 -->
+                            <button type="button" id="send-otp" class="btn btn-primary" disabled>Send OTP</button>
+                        </div>
+                    </div>
+
+                    <div id="messageOTP"></div>
+                    <hr>
+
+                    <!-- OTP input, muncul setelah OTP dikirim -->
+                    <label for="otp" style="display: none;">Enter OTP</label>
+                    <input type="number" id="otp" name="otp" class="form-control-otp" style="display: none;">
+                </div>
+                 <!-- Loading state untuk OTP -->
+                <div id="loadingOTP" class="lodingLocation" style="display: none;">Sending OTP...</div>
+            </form>
+        </div>
+        <div id="message"></div>
+        <div id="loading" style="display: none;">Loading...</div>
+    </div>
+    <script src="./js/auth.js?v=15.13"></script>
+</body>
+</html>

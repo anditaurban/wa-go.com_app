@@ -1,0 +1,101 @@
+<div class="main-content" style="min-height: 811px;">
+    <section class="section">
+        <div class="section-header">
+            <h1>Admin</h1>
+            <div class="section-header-breadcrumb">
+                <div class="breadcrumb-item active">
+                    <a href="#" class="warna">WA-Go!</a>
+                </div>
+                <div class="breadcrumb-item">
+                    <a href="#" class="warna">admin</a>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <main class="mt-16 flex-1 p-6 md:mt-0" id="content">
+                    <div class="alert alert-primary alert-dismissible show fade">
+                        <div class="alert-body">
+                            <button class="close" data-dismiss="alert">
+                                <span>×</span>
+                            </button>
+                            <h2>Admin Module</h2>
+                            <p>
+                                Admin Module adalah fitur yang dirancang khusus untuk mengelola semua aspek administratif dari platform atau aplikasi. 
+                                Modul ini memberikan kontrol penuh kepada administrator untuk mengatur, memonitor, dan mengelola berbagai elemen sistem yang berhubungan dengan pengguna, kampanye, konten, dan pengaturan umum.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-8 mb-2">
+                            <span id="buttonDesktop" class="pl-1">
+                                <button class="btn btn-primary col-12 col-sm-auto mb-md-0 mb-2" id="addButton">
+                                    <i class="fas fa-sign-in-alt fa-lg text-white-50"></i> Add New Admin
+                                </button>
+                            </span>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control d-md-block" id="searchInput" onkeyup="handleSearch()" oninput="filterProducts()" placeholder="Cari Data Produk">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive mt-4">
+                        
+                        <table class="table-striped table-bordered table" cellspacing="0">
+                            <thead id="tableHeader" class="bg-warna text-center">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-xs font-medium uppercase text-white">No.</th>
+                                    <th scope="col" class="px-6 py-3 text-xs font-medium uppercase text-white">Name</th>
+                                    <th scope="col" class="px-6 py-3 text-xs font-medium uppercase text-white">Whatsapp</th>
+                                    <th scope="col" class="px-6 py-3 text-xs font-medium uppercase text-white">Qty.Click</th>
+                                    <th scope="col" class="px-6 py-3 text-xs font-medium uppercase text-white">Status</th>
+                                    <th scope="col" class="px-6 py-3 text-xs font-medium uppercase text-white">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody" class="divide-y divide-gray-200 bg-white"></tbody>
+                        </table>
+                        <div>
+                            <span id="paginationInfo" class="page-info text-sm text-gray-500">Showing null of null, Total Data : null</span>  
+                            <div class="float-right">
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination">
+                                        <li class="page-item"><a class="page-link" href="#" id="startPage" onclick="goToPage(1)">First</a></li>
+                                        <li class="page-item"><a class="page-link" href="#" id="prevPage" onclick="goToPreviousPage()">Previous</a></li>
+                                        <li class="page-item"><a class="page-link" href="#" id="firstPage" onclick="goToPage(1)">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#" id="midPage" onclick="goToPage(2)">2</a></li>
+                                        <!-- <li class="page-item"><a class="page-link" href="#" id="thirdPage" onclick="goToPage(3)">3</a></li> -->
+                                        <li class="page-item"><a class="page-link" href="#"  id="nextPage" onclick="goToNextPage()">Next</a></li>
+                                        <li class="page-item"><a class="page-link" href="#"  id="lastPage" onclick="goToPage(3)">Last</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div style="display:none";>
+    <form id="addform" class="mt-2">
+        <div class="mb-4">
+            <label for="cs_admin" class="block text-sm font-medium text-gray-700">Nama</label>
+            <input type="text" name="cs_admin" id="cs_admin" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+        </div>
+        <div class="group relative mb-4">
+            <label for="create_phone" class="block text-sm font-medium text-gray-700">Nomor HP</label>
+            <div class="mt-1 flex rounded-md shadow-sm">
+                <span class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-gray-500 sm:text-sm">62</span>
+                <input type="text" name="phone" id="create_phone" class="block w-full flex-1 rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+            </div>
+            <span id="createPhoneTooltip" class="mt-1 hidden text-sm text-red-500">Phone number must be between 11 and 14 digits.</span>
+        </div>
+    </form>
+</div>
+
+ 
+  

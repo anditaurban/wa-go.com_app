@@ -1,0 +1,287 @@
+
+    <div class="navbar-bg bg-warna"></div>
+    <nav class="navbar navbar-expand-lg main-navbar">
+      <form class="form-inline mr-auto">
+        <ul class="navbar-nav mr-3">
+          <li>
+              <a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a>
+          </li>
+        </ul>
+        <div class="company-name"><h3 style="color:white; margin-top:7px;">DKiDS Media</h3></div>
+      </form>
+      <ul class="navbar-nav navbar-right">
+        <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+            <img alt="image" src="assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
+            <div class="d-sm-none d-lg-inline-block">Hi, Deni Sumarna</div>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right">
+            <div class="dropdown-title">Logged in 5 min ago</div>
+            <a href="#" class="dropdown-item has-icon">
+              <i class="fas fa-bolt"></i> Activities
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="logout.php" class="dropdown-item has-icon text-danger">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  <div class="main-sidebar sidebar-style-2" tabindex="1" style="touch-action: none; overflow: hidden; outline: none;">
+    <aside id="sidebar-wrapper">
+      <div class="sidebar-brand">
+        <a href="#"><img src="assets/img/katib.png" style="height: 80px"></a>
+      </div>
+      <div class="sidebar-brand sidebar-brand-sm">
+        <a href="#"><img src="assets/img/katib.png" style="height: 40px"></a>
+      </div>
+  
+      <hr>
+  
+      <!-- <div id="loading" class="loading">
+        <i class="fas fa-spinner"></i> -->
+      <!-- Assuming you're using Font Awesome for the spinner icon -->
+      <!-- </div> -->
+      <!-- 
+      <ul class="sidebar-menu" id="dynamicList"> -->
+      <!-- Menu akan di generate dari data restAPI -->
+      <!-- <li class="menu-header">MAIN MENU</li>  -->
+      <!-- <li class="menu-header" style="background-color: #03989E;">Main Menu</li>
+  
+      </ul> -->
+      <ul class="sidebar-menu">
+      <li><a class="nav-link" href="https://app.katib.id"><i class="fas fa-rocket"></i> <span>Dashboard</span></a></li>
+      <li class="dropdown ">
+        <a href="#" class="nav-link has-dropdown"><i class="fas fa-dolly-flatbed"></i><span>Inventory</span></a>
+        <ul class="dropdown-menu" style="display: none;">
+          
+          <li class=""><a class="nav-link" href="?page=inventory/produk">Produk</a></li>
+          <li class=""><a class="nav-link" href="?page=inventory/produk_log">Log Produk</a></li>
+          <li class=""><a class="nav-link" href="?page=inventory/wishlist">Wishlist</a></li>
+        </ul>
+      </li>
+      <li class="dropdown ">
+        <a href="#" class="nav-link has-dropdown"><i class="fas fa-users-line"></i><span>Resources</span></a>
+        <ul class="dropdown-menu" style="display: none;">
+          
+          <li class=""><a class="nav-link" href="?page=resources/pelanggan">Pelanggan</a></li>
+          <li class=""><a class="nav-link" href="?page=resources/loyalty">Loyalty</a></li>
+        </ul>
+      </li>
+      <li class="dropdown ">
+        <a href="#" class="nav-link has-dropdown"><i class="fas fa-table-columns"></i><span>Report</span></a>
+        <ul class="dropdown-menu" style="display: none;">
+          
+          <li class=""><a class="nav-link" href="?page=report/penjualan">Penjualan</a></li>
+        </ul>
+      </li> 
+      <li><a class="" href="?page=waredirect"><i class="fab fa-whatsapp" style="font-weight:bold;"></i> <span>WA Redirect</span></a></li>
+      <li><a class="" href="?page=settings"><i class="fas fa-tools"></i> <span>Setting</span></a></li>
+    </ul>
+    </aside>
+  </div><!-- Main Content -->
+  <div class="main-content" style="min-height: 811px;">
+    <section class="section">
+      <!-- Your Content Here -->
+      
+  <div class="section-header">
+      <h1>Dashboard</h1>
+      <div class="section-header-breadcrumb">
+          <div class="breadcrumb-item active"><a href="#" class="warna">KATiB</a></div>
+          <div class="breadcrumb-item"><a href="#" class="warna">dashboard</a></div>
+      </div>
+  </div>
+  
+  <div class="card">
+      <div class="card-body">
+          <div class="row">
+              <div class="col-12">    
+                  <div class="row">
+      <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+          <div class="row">
+      <div class="col-12">
+  
+          <div class="card card-statistic-1">
+              <div class="card-icon bg-primary">
+                  <i class="far fa-user"></i>
+              </div>
+              <div class="card-wrap">
+                  <div class="card-header">
+                      <h4>Total Penjualan</h4>
+                  </div>
+                  <div class="card-body">
+                      Rp. <span id="total_penjualan">7,603,725</span>
+                  </div>
+              </div>
+          </div>
+  
+  
+          <div class="card card-statistic-1">
+              <div class="card-icon bg-primary">
+                  <i class="far fa-user"></i>
+              </div>
+              <div class="card-wrap">
+                  <div class="card-header">
+                      <h4>Gross Profit</h4>
+                  </div>
+                  <div class="card-body">
+                      Rp. <span id="gross_profit">6,179,861</span>
+                  </div>
+              </div>
+          </div>
+  
+          <div class="card card-statistic-1">
+              <div class="card-icon bg-primary">
+                  <i class="far fa-user"></i>
+              </div>
+              <div class="card-wrap">
+                  <div class="card-header">
+                      <h4>Total Transaksi</h4>
+                  </div>
+                  <div class="card-body">
+                      <span id="total_trx">425</span>
+                  </div>
+              </div>
+          </div>
+  
+          <div class="card card-statistic-1">
+              <div class="card-icon bg-primary">
+                  <i class="far fa-user"></i>
+              </div>
+              <div class="card-wrap">
+                  <div class="card-header">
+                      <h4>Total Item Terjual</h4>
+                  </div>
+                  <div class="card-body">
+                      <span id="items_sold">910</span>
+                      <!--<span class="text-danger">(Under Maintain)</span>-->
+                  </div>
+              </div>
+          </div>
+  
+      </div>
+  </div><div class="card">
+  
+      <div class="card-header">
+          <h4>Best Products</h4>
+      </div>
+  
+      <div class="card-body" id="top-5-scroll" tabindex="2" style="height: 315px; overflow: hidden; outline: none;">
+          <ul id="product-list" class="list-unstyled list-unstyled-border"><li class="media">
+            <img class="mr-3 rounded" style="width: 50px; height: 50px;" src="https://pos.katib.id/src/img/product/productdefaults.png" alt="product">
+            <div class="media-body">
+              <div class="float-right">
+                <div class="font-weight-600 text-muted text-small">92 Terjual</div>
+              </div>
+              <div class="media-title">Es Teh Guci Original</div>
+              <div class="mt-1">
+                <div class="budget-price">
+                  <div class="budget-price-label">Sisa Stok: </div>
+                  <div class="budget-price-label">-625</div>
+                </div>
+              </div>
+            </div>
+          </li><li class="media">
+            <img class="mr-3 rounded" style="width: 50px; height: 50px;" src="https://pos.katib.id/src/img/product/productdefaults.png" alt="product">
+            <div class="media-body">
+              <div class="float-right">
+                <div class="font-weight-600 text-muted text-small">34 Terjual</div>
+              </div>
+              <div class="media-title">Remov Spray Anti Kucing Liar</div>
+              <div class="mt-1">
+                <div class="budget-price">
+                  <div class="budget-price-label">Sisa Stok: </div>
+                  <div class="budget-price-label">54</div>
+                </div>
+              </div>
+            </div>
+          </li><li class="media">
+            <img class="mr-3 rounded" style="width: 50px; height: 50px;" src="https://pos.katib.id/src/img/product/productdefaults.png" alt="product">
+            <div class="media-body">
+              <div class="float-right">
+                <div class="font-weight-600 text-muted text-small">29 Terjual</div>
+              </div>
+              <div class="media-title">Indomie Goreng Jumbo</div>
+              <div class="mt-1">
+                <div class="budget-price">
+                  <div class="budget-price-label">Sisa Stok: </div>
+                  <div class="budget-price-label">-48</div>
+                </div>
+              </div>
+            </div>
+          </li><li class="media">
+            <img class="mr-3 rounded" style="width: 50px; height: 50px;" src="https://pos.katib.id/src/img/product/productdefaults.png" alt="product">
+            <div class="media-body">
+              <div class="float-right">
+                <div class="font-weight-600 text-muted text-small">25 Terjual</div>
+              </div>
+              <div class="media-title">Crepes Strawberry</div>
+              <div class="mt-1">
+                <div class="budget-price">
+                  <div class="budget-price-label">Sisa Stok: </div>
+                  <div class="budget-price-label">-82</div>
+                </div>
+              </div>
+            </div>
+          </li><li class="media">
+            <img class="mr-3 rounded" style="width: 50px; height: 50px;" src="https://pos.katib.id/src/img/product/productdefaults.png" alt="product">
+            <div class="media-body">
+              <div class="float-right">
+                <div class="font-weight-600 text-muted text-small">22 Terjual</div>
+              </div>
+              <div class="media-title">Indomie Ayam Bawang</div>
+              <div class="mt-1">
+                <div class="budget-price">
+                  <div class="budget-price-label">Sisa Stok: </div>
+                  <div class="budget-price-label">-46</div>
+                </div>
+              </div>
+            </div>
+          </li></ul>
+      </div>
+  
+  
+  </div>    </div>
+      <div class="col-12 col-sm-12 col-md-6 col-lg-9">
+          <div class="py-3 d-flex flex-row justify-content-between align-items-center">
+      <a><b class="text-primary">PENJUALAN BERDASARKAN BULAN</b>
+          <br>
+          <b>Bulan </b><b id="year">Oktober Tahun 2024</b>
+      </a>
+      <div>
+          <span class="text-danger">Last Update : 14 October 2024 19:35</span>
+          <button class="btn btn-primary ml-3" id="addFilter"><i class="fa-solid fa-filter fa-xl text-white-50"></i> Filter Date</button>
+      </div>
+  </div>
+  
+  <div class="chart-bar"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+      <div class="chartjs-size-monitor">
+          <div class="chartjs-size-monitor-expand">
+              <div class=""></div>
+          </div>
+          <div class="chartjs-size-monitor-shrink">
+              <div class=""></div>
+          </div>
+      </div>
+      <canvas id="myChart2" height="692" width="1384" class="chartjs-render-monitor" style="display: block; height: 346px; width: 692px;"></canvas>
+  </div>
+      </div>
+  </div>
+  
+  
+  
+  
+  
+              </div>
+          </div>
+      </div>
+  </div>  </section>
+  </div>
+  <footer class="main-footer">
+    <div class="footer-left">
+      Copyright © 2024 <div class="bullet"></div> Developed By <a href="https://katib.id/" class="warna">KATiB.id</a>
+    </div>
+    <div class="footer-right">
+  
+    </div>
+  </footer>    </div>

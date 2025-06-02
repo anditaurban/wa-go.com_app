@@ -1,0 +1,146 @@
+<div class="main-content" style="min-height: 811px;">
+    <section class="section">
+        <div class="section-header">
+            <h1>Campaign Detail</h1>
+            <div class="section-header-breadcrumb">
+                <div class="breadcrumb-item active"><a href="#" class="warna">WA-Go!</a></div>
+                <div class="breadcrumb-item"><a href="#" class="warna">campaign-detail</a></div>
+            </div>
+        </div>
+
+        
+        <div class="card">
+            <div class="card-body">
+                <button 
+                  onclick="loadModuleContent('campaign')" 
+                  class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 mb-4">
+                  <i class="fas fa-arrow-left mr-2"></i>
+                  Back
+                </button>
+                <main class="mt-16 flex-1 p-6 md:mt-0" id="content">
+                    <div class="alert alert-primary alert-dismissible show fade">
+                        <div class="alert-body">
+                          <div><button onclick="loadModuleContent('campaign_log', `${detail_id}`, `${detail_desc}`)" class="btn btn-danger float-right"><i class="fas fa-clipboard-list"></i> Log</button></div>
+                          <h4><a onclick="copyLink('${item.url}')"><i class="fa fa-copy"></i></a> <span id="campaignLink"></span></h4>
+                          <p>Dari link yang kamu bagikan, saat ini sudah mendapatkan klik sebanyak <span id="campaignCTAClick"></span> Click</p>                          
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                          <div class="card card-statistic-1">
+                            <div class="card-icon bg-primary">
+                              <i class="far fa-user"></i>
+                            </div>
+                            <div class="card-wrap">
+                              <div class="card-header">
+                                <h4>Admin</h4>
+                              </div>
+                              <div class="card-body" id="totalAdmin">
+                                10
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                          <div class="card card-statistic-1">
+                            <div class="card-icon bg-danger">
+                              <i class="far fa-newspaper"></i>
+                            </div>
+                            <div class="card-wrap">
+                              <div class="card-header">
+                                <h4>CTA hits</h4>
+                              </div>
+                              <div class="card-body" id="totalCTA">
+                                42
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                          <div class="card card-statistic-1">
+                            <div class="card-icon bg-warning">
+                              <i class="far fa-file"></i>
+                            </div>
+                            <div class="card-wrap">
+                              <div class="card-header">
+                                <h4>Leads</h4>
+                              </div>
+                              <div class="card-body" id="totalLeads">
+                                1,201
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                          <div class="card card-statistic-1">
+                            <div class="card-icon bg-success">
+                              <i class="fas fa-circle"></i>
+                            </div>
+                            <div class="card-wrap">
+                              <div class="card-header">
+                                <h4>Purchase</h4>
+                              </div>
+                              <div class="card-body" id="totalClosing">
+                                47
+                              </div>
+                            </div>
+                          </div>
+                        </div>                  
+                      </div>
+                      
+
+                      <div class="row">
+                          <div class="col-sm-8 mb-2">
+                              <span id="buttonDesktop" class="pl-1">
+                                  <button class="btn btn-primary col-12 col-sm-auto mb-md-0 mb-2" id="addButton" data-bs-toggle="modal" data-bs-target="#addProductModal">
+                                      <i class="fas fa-sign-in-alt fa-lg text-white-50"></i> Assign Admin
+                                  </button>
+                              </span>
+                          </div>
+                          <div class="col-sm-4">
+                              <div class="input-group">
+                                  <input type="text" class="form-control d-md-block" id="searchInput" onkeyup="handleSearch()" oninput="filterProducts()" placeholder="Cari Data Produk">
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="table-responsive mt-4">
+                        <table class="table-striped table-bordered table-hover table" width="100%" cellspacing="0">
+                            <thead class="bg-warna text-center">
+                                <tr>        
+                                    <th scope="col" class="px-6 py-3 text-xs font-medium uppercase text-white">No.</th>
+                                    <th scope="col" class="px-6 py-3 text-xs font-medium uppercase text-white">Admin</th>
+                                    <th scope="col" class="px-6 py-3 text-xs font-medium uppercase text-white">CTA</th>
+                                    <th scope="col" class="px-6 py-3 text-xs font-medium uppercase text-white">Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tableBody" class="divide-y-0 divide-gray-200 bg-white sm:divide-y">
+                                <!-- Table rows will be inserted here by JavaScript -->
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <div>
+                        <span id="paginationInfo" class="page-info text-sm text-gray-500">Showing null of null, Total Data : null</span>  
+                        <div class="float-right">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                    <li class="page-item"><a class="page-link" href="#" id="startPage" onclick="goToPage(1)">First</a></li>
+                                    <li class="page-item"><a class="page-link" href="#" id="prevPage" onclick="goToPreviousPage()">Previous</a></li>
+                                    <li class="page-item"><a class="page-link" href="#" id="firstPage" onclick="goToPage(1)">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#" id="midPage" onclick="goToPage(2)">2</a></li>
+                                    <!-- <li class="page-item"><a class="page-link" href="#" id="thirdPage" onclick="goToPage(3)">3</a></li> -->
+                                    <li class="page-item"><a class="page-link" href="#"  id="nextPage" onclick="goToNextPage()">Next</a></li>
+                                    <li class="page-item"><a class="page-link" href="#"  id="lastPage" onclick="goToPage(3)">Last</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    
+                </main>
+            </div>
+        </div>
+    </section>
+</div>
