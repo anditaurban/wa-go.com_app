@@ -1,101 +1,205 @@
-<div class="main-content" style="min-height: 811px;">
-    <section class="section">
-        <div class="section-header">
-            <h1>Admin</h1>
-            <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active">
-                    <a href="#" class="warna">WA-Go!</a>
-                </div>
-                <div class="breadcrumb-item">
-                    <a href="#" class="warna">admin</a>
-                </div>
+<div class="bg-white px-6 mb-5 mt-1 py-4 flex items-center justify-between shadow-sm">
+    <!-- Kiri: Judul -->
+    <h1 class="text-2xl font-semibold text-gray-800">Admin</h1>
+
+    <!-- Kanan: Breadcrumb -->
+    <nav class="text-sm text-teal-600 space-x-1">
+        <a href="#" class="hover:underline">WA-Go!</a>
+        <span>/</span>
+        <span class="text-gray-500">Admin</span>
+    </nav>
+</div>
+<main class="h-full px-1 py-6 pb-16 overflow-y-auto mb-1">
+
+    <div class="container px-6 mx-auto grid">
+        <!-- Notifikasi -->
+        <div id="adminAlert"
+            class="relative bg-teal-50 text-gray-700 rounded-lg mb-6 overflow-hidden shadow-md focus:outline-none focus:shadow-outline-teal">
+            <button onclick="document.getElementById('adminAlert').remove()"
+                class="absolute top-0 right-0 mt-2 mr-2 text-gray-600 hover:text-gray-200 text-xl font-bold focus:outline-none"
+                aria-label="Close">
+                &times;
+            </button>
+            <div class="p-6">
+                <h2 class="text-2xl font-bold">Admin Module</h2>
+                <p class="mt-2 text-sm">
+                    Admin Module adalah fitur yang dirancang khusus untuk mengelola semua aspek
+                    administratif
+                    dari platform atau aplikasi. Modul ini memberikan kontrol penuh kepada administrator
+                    untuk
+                    mengatur, memonitor, dan mengelola berbagai elemen sistem yang berhubungan dengan
+                    pengguna,
+                    kampanye, konten, dan pengaturan umum.
+                </p>
             </div>
         </div>
-        <div class="card">
-            <div class="card-body">
-                <main class="mt-16 flex-1 p-6 md:mt-0" id="content">
-                    <div class="alert alert-primary alert-dismissible show fade">
-                        <div class="alert-body">
-                            <button class="close" data-dismiss="alert">
-                                <span>×</span>
+
+        <!-- Kontrol Atas -->
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
+            <!-- Tombol Add Admin -->
+            <div class="w-full md:w-2/3">
+                <button id="addButton"
+                    class="mt-4 bg-white text-teal-600 px-4 py-2 rounded shadow hover:bg-gray-100 text-sm font-medium">
+                    <i class="fas fa-sign-in-alt text-white/70"></i>
+                    + Add New Admin
+                </button>
+            </div>
+
+            <!-- Input Cari Produk -->
+            <div class="w-full md:w-1/3">
+                <input type="text" id="searchInput" onkeyup="handleSearch()" oninput="filterProducts()"
+                    placeholder="Cari Data Produk"
+                    class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+        </div>
+
+
+        <!-- Tabel Admin -->
+        <div class="w-full overflow-hidden rounded-lg shadow-xs">
+            <div class="w-full overflow-x-auto">
+                <table id="adminTable" class="min-w-full md:table hidden md:table-auto whitespace-no-wrap bg-gray-500">
+                    <thead id="tableHeader">
+                        <tr
+                            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-teal-50 dark:text-gray-400 dark:bg-gray-800">
+                            <th scope="col" class="py-3 px-4 text-center">No</th>
+                            <th scope="col" class="py-3 px-4 text-center">Nama</th>
+                            <th scope="col" class="py-3 px-4 text-center">Whatsapp</th>
+                            <th scope="col" class="py-3 px-4 text-center">Click</th>
+                            <th scope="col" class="py-3 px-4 text-center">Status</th>
+                            <th scope="col" class="py-3 px-4 text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800" id="tableBody">
+                        <tr class="text-gray-700 dark:text-gray-400">
+                            <td colspan=" 6" class="text-center py-4 text-gray-500">Loading...</td>
+                        </tr>
+                    </tbody>
+                    <tbody id="tablebody"></tbody>
+                </table>
+                <!-- CARD MODE UNTUK MOBILE -->
+
+
+            </div>
+
+            <!-- Footer Info + Pagination -->
+            <div>
+                <span id="paginationInfo" class="page-info text-sm text-gray-500">Showing null of null, Total Data :
+                    null</span>
+                <div class="float-right">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" href="#" id="startPage"
+                                    onclick="goToPage(1)">First</a></li>
+                            <li class="page-item"><a class="page-link" href="#" id="prevPage"
+                                    onclick="goToPreviousPage()">Previous</a></li>
+                            <li class="page-item"><a class="page-link" href="#" id="firstPage"
+                                    onclick="goToPage(1)">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#" id="midPage" onclick="goToPage(2)">2</a>
+                            </li>
+                            <!-- <li class="page-item"><a class="page-link" href="#" id="thirdPage" onclick="goToPage(3)">3</a></li> -->
+                            <li class="page-item"><a class="page-link" href="#" id="nextPage"
+                                    onclick="goToNextPage()">Next</a></li>
+                            <li class="page-item"><a class="page-link" href="#" id="lastPage"
+                                    onclick="goToPage(3)">Last</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+
+
+            <!-- Modal Tambah Admin -->
+            <div id="modalCreate"
+                class="fixed inset-0 bg-black bg-opacity-50 hidden  flex items-center justify-center  z-50">
+                <div
+                    class="bg-white p-6 rounded-lg w-full max-w-lg shadow-lg relative transform transition-all duration-300 scale-95 opacity-0">
+                    <button onclick="closeModal('modalCreate')"
+                        class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+                        ✕
+                    </button>
+                    <h2 class="text-2xl font-semibold text-center mb-6">Create New Data</h2>
+                    <form id="createAdminForm">
+                        <!-- CS Admin -->
+                        <div class="mb-4">
+                            <label for="cs_admin" class="block text-sm font-medium text-gray-700 mb-1">CS
+                                Admin</label>
+                            <input type="text" id="cs_admin" name="cs_admin" placeholder="Enter admin name"
+                                class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                required>
+                        </div>
+
+                        <!-- WhatsApp Number -->
+                        <div class="mb-4">
+                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">WhatsApp
+                                Number</label>
+                            <div class="flex">
+                                <span
+                                    class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                                    +62
+                                </span>
+                                <input type="text" id="phone" name="phone" maxlength="13" placeholder="Ex: 8123456789"
+                                    class="w-full border border-gray-300 rounded-r-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    required>
+                            </div>
+                            <p class="text-xs text-gray-400 mt-1">Max 13 digits, without starting 0.</p>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="flex justify-center mt-6">
+                            <button type="submit"
+                                class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold px-6 py-2 rounded-lg mr-3 transition">
+                                Save
                             </button>
-                            <h2>Admin Module</h2>
-                            <p>
-                                Admin Module adalah fitur yang dirancang khusus untuk mengelola semua aspek administratif dari platform atau aplikasi. 
-                                Modul ini memberikan kontrol penuh kepada administrator untuk mengatur, memonitor, dan mengelola berbagai elemen sistem yang berhubungan dengan pengguna, kampanye, konten, dan pengaturan umum.
-                            </p>
+                            <button type="button" onclick="closeModal('modalCreate')"
+                                class="bg-gray-500 hover:bg-gray-600 text-white font-semibold px-6 py-2 rounded-lg transition">
+                                Cancel
+                            </button>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-sm-8 mb-2">
-                            <span id="buttonDesktop" class="pl-1">
-                                <button class="btn btn-primary col-12 col-sm-auto mb-md-0 mb-2" id="addButton">
-                                    <i class="fas fa-sign-in-alt fa-lg text-white-50"></i> Add New Admin
-                                </button>
-                            </span>
+                    </form>
+                </div>
+            </div>
+            <!-- MODAL EDIT -->
+            <div id="modalEdit"
+                class="fixed inset-0 bg-black bg-opacity-50 hidden flex justify-center items-center z-50">
+                <div
+                    class="bg-white p-6 rounded-lg w-full max-w-lg shadow-lg relative transform transition-all duration-300 scale-95 opacity-0">
+                    <button onclick="closeModal('modalEdit')"
+                        class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">✕</button>
+                    <h2 class="text-2xl font-semibold text-center mb-6">Edit Data Admin</h2>
+                    <form id="editAdminForm">
+                        <input type="hidden" id="admin_id">
+                        <div class="mb-4">
+                            <label for="edit_cs_admin" class="block text-sm font-medium text-gray-700 mb-1">CS
+                                Admin</label>
+                            <input type="text" id="edit_cs_admin" name="edit_cs_admin"
+                                class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                required>
                         </div>
-                        <div class="col-sm-4">
-                            <div class="input-group">
-                                <input type="text" class="form-control d-md-block" id="searchInput" onkeyup="handleSearch()" oninput="filterProducts()" placeholder="Cari Data Produk">
+                        <div class="mb-4">
+                            <label for="edit_phone" class="block text-sm font-medium text-gray-700 mb-1">WhatsApp
+                                Number</label>
+                            <div class="flex">
+                                <span
+                                    class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">+62</span>
+                                <input type="text" id="edit_phone" name="edit_phone" maxlength="13"
+                                    class="w-full border border-gray-300 rounded-r-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    required>
                             </div>
+                            <p class="text-xs text-gray-400 mt-1">Max 13 digits, without starting 0.</p>
                         </div>
-                    </div>
+                        <div class="flex justify-center mt-6">
+                            <button type="submit"
+                                class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold px-6 py-2 rounded-lg mr-3 transition">Update</button>
+                            <button type="button" onclick="closeModal('modalEdit')"
+                                class="bg-gray-500 hover:bg-gray-600 text-white font-semibold px-6 py-2 rounded-lg transition">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
-                    <div class="table-responsive mt-4">
-                        
-                        <table class="table-striped table-bordered table" cellspacing="0">
-                            <thead id="tableHeader" class="bg-warna text-center">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3 text-xs font-medium uppercase text-white">No.</th>
-                                    <th scope="col" class="px-6 py-3 text-xs font-medium uppercase text-white">Name</th>
-                                    <th scope="col" class="px-6 py-3 text-xs font-medium uppercase text-white">Whatsapp</th>
-                                    <th scope="col" class="px-6 py-3 text-xs font-medium uppercase text-white">Qty.Click</th>
-                                    <th scope="col" class="px-6 py-3 text-xs font-medium uppercase text-white">Status</th>
-                                    <th scope="col" class="px-6 py-3 text-xs font-medium uppercase text-white">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tableBody" class="divide-y divide-gray-200 bg-white"></tbody>
-                        </table>
-                        <div>
-                            <span id="paginationInfo" class="page-info text-sm text-gray-500">Showing null of null, Total Data : null</span>  
-                            <div class="float-right">
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination">
-                                        <li class="page-item"><a class="page-link" href="#" id="startPage" onclick="goToPage(1)">First</a></li>
-                                        <li class="page-item"><a class="page-link" href="#" id="prevPage" onclick="goToPreviousPage()">Previous</a></li>
-                                        <li class="page-item"><a class="page-link" href="#" id="firstPage" onclick="goToPage(1)">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#" id="midPage" onclick="goToPage(2)">2</a></li>
-                                        <!-- <li class="page-item"><a class="page-link" href="#" id="thirdPage" onclick="goToPage(3)">3</a></li> -->
-                                        <li class="page-item"><a class="page-link" href="#"  id="nextPage" onclick="goToNextPage()">Next</a></li>
-                                        <li class="page-item"><a class="page-link" href="#"  id="lastPage" onclick="goToPage(3)">Last</a></li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                </main>
+            <div id="loader" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-70 z-50 hidden">
+                <div class="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin">
+                </div>
             </div>
         </div>
-    </section>
-</div>
-
-<div style="display:none";>
-    <form id="addform" class="mt-2">
-        <div class="mb-4">
-            <label for="cs_admin" class="block text-sm font-medium text-gray-700">Nama</label>
-            <input type="text" name="cs_admin" id="cs_admin" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-        </div>
-        <div class="group relative mb-4">
-            <label for="create_phone" class="block text-sm font-medium text-gray-700">Nomor HP</label>
-            <div class="mt-1 flex rounded-md shadow-sm">
-                <span class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-gray-500 sm:text-sm">62</span>
-                <input type="text" name="phone" id="create_phone" class="block w-full flex-1 rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-            </div>
-            <span id="createPhoneTooltip" class="mt-1 hidden text-sm text-red-500">Phone number must be between 11 and 14 digits.</span>
-        </div>
-    </form>
-</div>
-
- 
-  
+</main>

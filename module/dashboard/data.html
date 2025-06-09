@@ -1,207 +1,51 @@
-<div class="main-content" style="min-height: 811px;">
-    <section class="section">
-        <div class="section-header">
-            <h1>Dashboard</h1>
-            <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="#" class="warna">WA-Go!</a></div>
-                <div class="breadcrumb-item"><a href="#" class="warna">dashboard</a></div>
-            </div>
+<h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+  Dashboard
+</h2>
+
+<div class="bg-white min-h-screen p-2 m-0.5 rounded-lg shadow-md">
+  <div class="max-w-8xl mx-auto p-6">
+    <div class="mb-6">
+      <h1 class="text-xl font-semibold text-gray-800">Quick Link, !</h1>
+      <p class="text-sm text-gray-600">Buat link dengan cepat dan mudah melalui form berikut:
+      </p>
+    </div>
+
+    <!-- Grid Form + Chart -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- FORM -->
+      <div class="space-y-4">
+        <div class="grid grid-cols-2 gap-2 mb-2">
+          <input id="cs_admin" type="text" placeholder="Pilih / Input Nama CS Admin"
+            class="text-xs p-2 border border-gray-300 rounded" />
+          <input id="phone_number" type="text" placeholder="No Whatsapp"
+            class="text-xs p-2 border border-gray-300 rounded" />
         </div>
-        <div class="card">
-            <div class="card-body">
-                <main class="flex-1 p-6 mt-16 md:mt-0" id="content">
-                    <!--<div class="alert alert-warning alert-dismissible show fade">-->
-                    <!--    <div class="alert-body">-->
-                    <!--      <button class="close" data-dismiss="alert">-->
-                    <!--        <span>×</span>-->
-                    <!--      </button>-->
-                    <!--      <p>Halaman ini masih dalam tahap pengembangan.</p>-->
-                          
-                    <!--    </div>-->
-                    <!--  </div>-->
 
-                      <div class="row">
-                        <div class="col-12 mb-4">
-                          <div class="hero hero-bg-image hero-bg-parallax" style="background-image: url('https://demo.getstisla.com//assets/img/unsplash/andre-benz-1214056-unsplash.jpg');">
-                            <div class="hero-inner">
-                              <h2 class="text-white">Quick Link, <span id="nameUserDashboard"></span>!</h2>
-                              <p class="lead text-white">
-                                Quick Link adalah elemen pada dashboard yang membantu pengguna menyelesaikan pembuatan link dengan cepat. 
-                              </p>
-                              <div class="card">
-                                <div class="card-header">
-                                  <h4 class="text-center text-black">Campaign Information</h4>
-                                </div>
-                                <div class="card-body">
-                                  <div class="row">
-                                    <form class="col-md-7" id="dataform">
-                                      <!-- Campaign Title -->
-                                      <div class="form-group row">
-                                        <label for="campaign_name" class="col-sm-4 col-form-label">Campaign Title</label>
-                                        <div class="col-sm-8">
-                                          <input type="text" class="swal2-input form-control" id="campaign_name" name="campaign_name" placeholder="Type Your Campaign" required>
-                                        </div>
-                                      </div>
-                                    
-                                      <!-- CS Admin -->
-                                      <div class="form-group row">
-                                        <label for="cs_admin" class="col-sm-4 col-form-label">CS Admin</label>
-                                        <div class="col-sm-8">
-                                          <input type="text" class="swal2-input form-control" id="cs_admin" name="cs_admin" placeholder="Admin Name" required>
-                                        </div>
-                                      </div>
-                                    
-                                      <!-- WhatsApp Number -->
-                                      <div class="form-group row">
-                                        <label for="phone" class="col-sm-4 col-form-label">WhatsApp</label>
-                                        <div class="col-sm-2">
-                                          <input type="text" class="form-control" value="62" readonly>
-                                        </div>
-                                        <div class="col-sm-6">
-                                          <input type="text" class="swal2-input form-control" id="phone" name="phone" placeholder="Phone Number" required>
-                                        </div>
-                                      </div>
-                                    
-                                      <!-- Meta Pixel ID -->
-                                      <div class="form-group row">
-                                        <label for="meta_pixel_id" class="col-sm-4 col-form-label">Meta Pixel ID</label>
-                                        <div class="col-sm-8">
-                                          <input type="text" class="swal2-input form-control" id="meta_pixel_id" name="meta_pixel_id" placeholder="Meta Pixel ID" required>
-                                        </div>
-                                      </div>
-                                    
-                                      <!-- Pretext -->
-                                      <div class="form-group row">
-                                        <label for="text" class="col-sm-4 col-form-label">PreText</label>
-                                        <div class="col-sm-8">
-                                          <input type="text" class="swal2-input form-control" id="text" name="text" placeholder="PreText Content" required>
-                                        </div>
-                                      </div>
-                                      
-                                      <!-- Description -->
-                                      <div class="form-group row">
-                                        <label for="description" class="col-sm-4 col-form-label">Description</label>
-                                        <div class="col-sm-8">
-                                          <input type="text" class="swal2-input form-control" id="description" name="description" placeholder="Campaign Description" required>
-                                        </div>
-                                      </div>
-                                    
-                                      <!-- Campaign Type -->
-                                      <div class="form-group row">
-                                        <label for="create_campaign_type" class="col-sm-4 col-form-label">Campaign Type</label>
-                                        <div class="col-sm-8">
-                                          <input type="text" class="swal2-input form-control" id="campaign_type" name="campaign_type" placeholder="Campaign Type" required>
-                                        </div>
-                                      </div>
-                                    
-                                      <!-- Submit Button -->
-                                      <div class="text-center mt-4">
-                                        <button type="submit" id="submitButton" class="btn btn-outline-primary btn-lg"><i class="fas fa-link"></i> Generate Link</button>
-                                      </div>
-                                    </form>
-                                    
-                                    
-                                    <!-- CTA Tracking Section -->
-                                    <div class="col-md-5">
-                                      <div class="card">
-                                        <div class="card-header">
-                                          <h4 class="text-center">CTA Tracking</h4>
-                                        </div>
-                                        <div class="card-body">
-                                          <div class="card-body"><div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+        <!-- Baris 2: Pre Text -->
+        <input id="text" type="text" placeholder="Pre Text"
+          class="w-full mb-2 text-xs p-2 border border-gray-300 rounded" />
 
-                      <h2 class="section-title">WA-Go! Article</h2>
-                      <div class="row">
-                        <div class="col-12 col-md-4 col-lg-4">
-                          <article class="article article-style-c">
-                            <div class="article-header">
-                              <div class="article-image" data-background="https://demo.getstisla.com/assets/img/news/img13.jpg" style="background-image: url(&quot;https://demo.getstisla.com/assets/img/news/img13.jpg&quot;);">
-                              </div>
-                            </div>
-                            <div class="article-details">
-                              <div class="article-category"><a href="#">News</a> <div class="bullet"></div> <a href="#">5 Days</a></div>
-                              <div class="article-title">
-                                <h2><a href="#">Excepteur sint occaecat cupidatat non proident</a></h2>
-                              </div>
-                              <p>Duis aute irure dolor in reprehenderit in voluptate velit esse
-                              cillum dolore eu fugiat nulla pariatur. </p>
-                              <div class="article-user">
-                                <img alt="image" src="https://demo.getstisla.com/assets/img/avatar/avatar-1.png">
-                                <div class="article-user-details">
-                                  <div class="user-detail-name">
-                                    <a href="#">Hasan Basri</a>
-                                  </div>
-                                  <div class="text-job">Web Developer</div>
-                                </div>
-                              </div>
-                            </div>
-                          </article>
-                        </div>
-                        <div class="col-12 col-md-4 col-lg-4">
-                          <article class="article article-style-c">
-                            <div class="article-header">
-                              <div class="article-image" data-background="https://demo.getstisla.com/assets/img/news/img14.jpg" style="background-image: url(&quot;https://demo.getstisla.com/assets/img/news/img14.jpg&quot;);">
-                              </div>
-                            </div>
-                            <div class="article-details">
-                              <div class="article-category"><a href="#">News</a> <div class="bullet"></div> <a href="#">5 Days</a></div>
-                              <div class="article-title">
-                                <h2><a href="#">Excepteur sint occaecat cupidatat non proident</a></h2>
-                              </div>
-                              <p>Duis aute irure dolor in reprehenderit in voluptate velit esse
-                              cillum dolore eu fugiat nulla pariatur. </p>
-                              <div class="article-user">
-                                <img alt="image" src="https://demo.getstisla.com/assets/img/avatar/avatar-3.png">
-                                <div class="article-user-details">
-                                  <div class="user-detail-name">
-                                    <a href="#">Rizal Fakhri</a>
-                                  </div>
-                                  <div class="text-job">UX Designer</div>
-                                </div>
-                              </div>
-                            </div>
-                          </article>
-                        </div>
-                        <div class="col-12 col-md-4 col-lg-4">
-                          <article class="article article-style-c">
-                            <div class="article-header">
-                              <div class="article-image" data-background="https://demo.getstisla.com/assets/img/news/img01.jpg" style="background-image: url(&quot;https://demo.getstisla.com/assets/img/news/img01.jpg&quot;);">
-                              </div>
-                            </div>
-                            <div class="article-details">
-                              <div class="article-category"><a href="#">News</a> <div class="bullet"></div> <a href="#">5 Days</a></div>
-                              <div class="article-title">
-                                <h2><a href="#">Excepteur sint occaecat cupidatat non proident</a></h2>
-                              </div>
-                              <p>Duis aute irure dolor in reprehenderit in voluptate velit esse
-                              cillum dolore eu fugiat nulla pariatur. </p>
-                              <div class="article-user">
-                                <img alt="image" src="https://demo.getstisla.com/assets/img/avatar/avatar-2.png">
-                                <div class="article-user-details">
-                                  <div class="user-detail-name">
-                                    <a href="#">Irwansyah Saputra</a>
-                                  </div>
-                                  <div class="text-job">Mobile Developer</div>
-                                </div>
-                              </div>
-                            </div>
-                          </article>
-                        </div>
-                      </div>
-
-                </main>
-            </div>
+        <!-- Baris 3: Meta Pixel + Button -->
+        <div class="grid grid-cols-2 gap-2">
+          <input id="meta_pixel_id" type="text" placeholder="Meta Pixel"
+            class="text-xs p-2 border border-gray-300 rounded" />
+          <button onclick="submitForm()" class="bg-green-500 hover:bg-green-600 text-white text-xs rounded p-2">
+            GENERATE LINK
+          </button>
         </div>
-    </section>
+
+      </div>
+
+      <!-- GRAFIK -->
+      <!-- GRAFIK -->
+      <div class="flex flex-col gap-4">
+        <div class="bg-white p-4 rounded-lg shadow">
+          <h2 class="text-lg font-semibold mb-6">Grafik Statistik Klik</h2>
+          <canvas id="combinedChart" width="600" height="400"></canvas>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
 </div>
