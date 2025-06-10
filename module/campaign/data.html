@@ -1,84 +1,95 @@
-<div class="main-content" style="min-height: 811px;">
-    <section class="section">
-        <div class="section-header">
-            <h1>Campaign</h1>
-            <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="#" class="warna">WA-Go!</a></div>
-                <div class="breadcrumb-item"><a href="#" class="warna">campaign</a></div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <main class="flex-1 p-6 mt-16 md:mt-0" id="content">
-                    <div class="alert alert-primary alert-dismissible show fade">
-                        <div class="alert-body">
-                          <button class="close" data-dismiss="alert">
-                            <span>×</span>
-                          </button>
-                          <h2>Campaign Module</h2>
-                          <p>Campaign Module adalah fitur yang dirancang untuk mengelola data kampanye pengguna secara efisien. 
-                            Di dalam modul ini, pengguna dapat membuat, menyimpan, dan mengakses informasi tentang berbagai kampanye marketing mereka. 
-                            Setiap kampanye yang dibuat menghasilkan link unik yang dapat digunakan sebagai Call to Action (CTA) pada halaman landing page kampanye.
-                            Modul ini mempermudah pengguna dalam mengelola dan mempromosikan kampanye mereka melalui landing page yang terfokus dan terukur, memungkinkan strategi marketing yang lebih efektif.
-                          </p>
-                          
-                        </div>
-                      </div>
+<div class="bg-white px-6 py-4 flex items-center justify-between shadow-sm">
+    <!-- Kiri: Judul -->
+    <h1 class="text-2xl font-semibold text-gray-800">Campaign</h1>
 
-                      <div class="row">
-                          <div class="col-sm-8 mb-2">
-                              <span id="buttonDesktop" class="pl-1">
-                                  <button class="btn btn-primary col-12 col-sm-auto mb-2 mb-md-0" id="addButton" data-bs-toggle="modal" data-bs-target="#addProductModal">
-                                      <i class="fas fa-sign-in-alt fa-lg text-white-50"></i> Add New Campaign
-                                  </button>
-                              </span>
-                          </div>
-                          <div class="col-sm-4">
-                              <div class="input-group">
-                                  <input type="text" class="form-control d-md-block" id="searchInput" onkeyup="handleSearch()" oninput="filterProducts()" placeholder="Cari Data Produk">
-                              </div>
-                          </div>
-                      </div>
-
-                      <div class="table-responsive mt-4">
-                        <table class="table table-striped table-bordered table-hover" width="100%" cellspacing="0">
-                            <thead class="bg-warna">
-                                <tr style="text-align: center">
-                                    <th scope="col" class="px-6 py-3 text-xs font-medium text-white uppercase">No.</th>
-                                    <th scope="col" class="px-6 py-3 text-xs font-medium text-white uppercase">Campaign</th>
-                                    <th scope="col" class="px-6 py-3 text-xs font-medium text-white uppercase">Admin</th>
-                                    <th scope="col" class="px-6 py-3 text-xs font-medium text-white uppercase">Link</th>
-                                    <th scope="col" class="px-6 py-3 text-xs font-medium text-white uppercase">Tracking</th>
-                                    <th scope="col" class="px-6 py-3 text-xs font-medium text-white uppercase">Click</th>
-                                    <th scope="col" class="px-6 py-3 text-xs font-medium text-white uppercase">Action</th>
-                                </tr>
-                            </thead>
-
-                            <tbody id="tableBody" class="bg-white divide-y-0 sm:divide-y divide-gray-200">
-                                <!-- Table rows will be inserted here by JavaScript -->
-                            </tbody>
-
-                        </table>
-                    </div>
-                    <div>
-                        <span id="paginationInfo" class="page-info text-sm text-gray-500">Showing null of null, Total Data : null</span>  
-                        <div class="float-right">
-                            <nav aria-label="Page navigation">
-                                <ul class="pagination">
-                                    <li class="page-item"><a class="page-link" href="#" id="startPage" onclick="goToPage(1)">First</a></li>
-                                    <li class="page-item"><a class="page-link" href="#" id="prevPage" onclick="goToPreviousPage()">Previous</a></li>
-                                    <li class="page-item"><a class="page-link" href="#" id="firstPage" onclick="goToPage(1)">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#" id="midPage" onclick="goToPage(2)">2</a></li>
-                                    <!-- <li class="page-item"><a class="page-link" href="#" id="thirdPage" onclick="goToPage(3)">3</a></li> -->
-                                    <li class="page-item"><a class="page-link" href="#"  id="nextPage" onclick="goToNextPage()">Next</a></li>
-                                    <li class="page-item"><a class="page-link" href="#"  id="lastPage" onclick="goToPage(3)">Last</a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                    
-                </main>
-            </div>
-        </div>
-    </section>
+    <!-- Kanan: Breadcrumb -->
+    <nav class="text-sm text-teal-600 space-x-1">
+        <a href="#" class="hover:underline">WA-Go!</a>
+        <span>/</span>
+        <span class="text-gray-500">Detail Campaign</span>
+    </nav>
 </div>
+
+<main class="h-full px-1 py-6 pb-16 overflow-y-auto">
+    <div class="container px-6 mx-auto grid">
+        <!-- Notifikasi -->
+        <div id="adminAlert"
+            class="relative bg-teal-50 text-gray-700 rounded-lg mb-6 overflow-hidden shadow-md focus:outline-none focus:shadow-outline-teal">
+            <button onclick="document.getElementById('adminAlert').remove()"
+                class="absolute top-0 right-0 mt-2 mr-2 text-gray-600 hover:text-gray-200 text-xl font-bold focus:outline-none"
+                aria-label="Close">
+                &times;
+            </button>
+            <div class="p-6">
+                <h2 class="text-2xl font-bold">Campaign Module</h2>
+                <p class="mt-2 text-sm">
+                    Campaign Module adalah fitur yang dirancang untuk mengelola data kampanye pengguna
+                    secara
+                    efisien. Di dalam modul ini, pengguna dapat membuat, menyimpan, dan mengakses informasi
+                    tentang berbagai kampanye marketing mereka. Setiap kampanye yang dibuat menghasilkan
+                    link
+                    unik yang dapat digunakan sebagai Call to Action (CTA) pada halaman landing page
+                    kampanye.
+                    Modul ini mempermudah pengguna dalam mengelola dan mempromosikan kampanye mereka melalui
+                    landing page yang terfokus dan terukur, memungkinkan strategi marketing yang lebih
+                    efektif.
+                </p>
+            </div>
+        </div>
+
+        <!-- Kontrol Atas -->
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
+            <!-- Tombol Add Admin -->
+            <div class="w-full md:w-2/3">
+                <button id="addButton"
+                    class="mt-4 bg-white text-teal-600 px-4 py-2 rounded shadow hover:bg-gray-100 text-sm font-medium">
+                    <i class="fas fa-sign-in-alt text-white/70"></i>
+                    + Add New Admin
+                </button>
+            </div>
+
+            <!-- Input Cari Produk -->
+            <div class="w-full md:w-1/3">
+                <input type="text" id="searchInput" onkeyup="handleSearch()" oninput="filterProducts()"
+                    placeholder="Cari Data Produk"
+                    class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+        </div>
+
+        <!-- Tabel tracking-->
+        <!-- Tambahkan loader di atas tabel -->
+
+
+        <!-- Desktop Table View (md+) -->
+        <div class="hidden md:block w-full overflow-hidden rounded-lg shadow-xs">
+            <div class="w-full overflow-x-auto">
+                <table class="min-w-full w-full table-auto">
+                    <thead>
+                        <tr
+                            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-teal-50">
+                            <th scope="col" class="py-3 px-6 text-center">No.</th>
+                            <th scope="col" class="py-3 px-6 text-center">Campaign</th>
+                            <th scope="col" class="py-3 px-6 text-center">Link</th>
+                            <th scope="col" class="py-3 px-6 text-center">Tracking</th>
+                            <th scope="col" class="py-3 px-6 text-center">Click</th>
+                            <th scope="col" class="py-3 px-6 text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y" id="tableBody">
+                        <tr class=" text-gray-700">
+                            <td colspan="5" class="text-center py-4 text-gray-500">Loading...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+        <!-- Footer Info -->
+        <div class="mt-4 flex justify-between items-center text-sm text-gray-500">
+            <div>Total Data: <span id="totalData">0</span></div>
+            <div id="paginationControls" class="flex space-x-1"></div>
+        </div>
+
+    </div>

@@ -6,44 +6,39 @@
   <div class="max-w-8xl mx-auto p-6">
     <div class="mb-6">
       <h1 class="text-xl font-semibold text-gray-800">Quick Link, !</h1>
-      <p class="text-sm text-gray-600">Buat link dengan cepat dan mudah melalui form berikut:
-      </p>
+      <p class="text-sm text-gray-600">Buat link dengan cepat dan mudah melalui form berikut:</p>
     </div>
 
     <!-- Grid Form + Chart -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <!-- FORM -->
-      <div class="space-y-4">
+      <form id="dataform">
         <div class="grid grid-cols-2 gap-2 mb-2">
-          <input id="cs_admin" type="text" placeholder="Pilih / Input Nama CS Admin"
+          <input id="cs_admin" name="cs_admin" type="text" placeholder="Pilih / Input Nama CS Admin"
             class="text-xs p-2 border border-gray-300 rounded" />
-          <input id="phone_number" type="text" placeholder="No Whatsapp"
+          <input id="phone" name="phone" type="text" placeholder="No Whatsapp"
             class="text-xs p-2 border border-gray-300 rounded" />
         </div>
 
-        <!-- Baris 2: Pre Text -->
-        <input id="text" type="text" placeholder="Pre Text"
+        <input id="text" name="text" type="text" placeholder="Pre Text"
           class="w-full mb-2 text-xs p-2 border border-gray-300 rounded" />
 
-        <!-- Baris 3: Meta Pixel + Button -->
         <div class="grid grid-cols-2 gap-2">
-          <input id="meta_pixel_id" type="text" placeholder="Meta Pixel"
+          <input id="meta_pixel_id" name="meta_pixel_id" type="text" placeholder="Meta Pixel"
             class="text-xs p-2 border border-gray-300 rounded" />
-          <button onclick="submitForm()" class="bg-green-500 hover:bg-green-600 text-white text-xs rounded p-2">
+          <button type="submit" class="bg-green-500 hover:bg-green-600 text-white text-xs rounded p-2">
             GENERATE LINK
           </button>
         </div>
+      </form>
 
-      </div>
 
-      <!-- GRAFIK -->
       <!-- GRAFIK -->
       <div class="flex flex-col gap-4">
         <div class="bg-white p-4 rounded-lg shadow">
           <h2 class="text-lg font-semibold mb-6">Grafik Statistik Klik</h2>
           <canvas id="combinedChart" width="600" height="400"></canvas>
         </div>
-
       </div>
 
     </div>

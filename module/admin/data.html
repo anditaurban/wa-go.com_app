@@ -74,7 +74,7 @@
                             <td colspan=" 6" class="text-center py-4 text-gray-500">Loading...</td>
                         </tr>
                     </tbody>
-                    <tbody id="tablebody"></tbody>
+                    
                 </table>
                 <!-- CARD MODE UNTUK MOBILE -->
 
@@ -82,29 +82,46 @@
             </div>
 
             <!-- Footer Info + Pagination -->
-            <div>
-                <span id="paginationInfo" class="page-info text-sm text-gray-500">Showing null of null, Total Data :
-                    null</span>
-                <div class="float-right">
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#" id="startPage"
-                                    onclick="goToPage(1)">First</a></li>
-                            <li class="page-item"><a class="page-link" href="#" id="prevPage"
-                                    onclick="goToPreviousPage()">Previous</a></li>
-                            <li class="page-item"><a class="page-link" href="#" id="firstPage"
-                                    onclick="goToPage(1)">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#" id="midPage" onclick="goToPage(2)">2</a>
-                            </li>
-                            <!-- <li class="page-item"><a class="page-link" href="#" id="thirdPage" onclick="goToPage(3)">3</a></li> -->
-                            <li class="page-item"><a class="page-link" href="#" id="nextPage"
-                                    onclick="goToNextPage()">Next</a></li>
-                            <li class="page-item"><a class="page-link" href="#" id="lastPage"
-                                    onclick="goToPage(3)">Last</a></li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between mt-4">
+  <span id="paginationInfo" class="text-sm text-gray-600 mb-2 md:mb-0">
+    Showing null of null, Total Data: null
+  </span>
+  <nav class="flex justify-center md:justify-end">
+    <ul class="inline-flex -space-x-px text-sm">
+      <li>
+        <a href="#" onclick="goToPage(1)" class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">
+          First
+        </a>
+      </li>
+      <li>
+        <a href="#" onclick="goToPreviousPage()" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
+          Previous
+        </a>
+      </li>
+      <li>
+        <a href="#" onclick="goToPage(1)" id="firstPage" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
+          1
+        </a>
+      </li>
+      <li>
+        <a href="#" onclick="goToPage(2)" id="midPage" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
+          2
+        </a>
+      </li>
+      <li>
+        <a href="#" onclick="goToNextPage()" id="nextPage" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
+          Next
+        </a>
+      </li>
+      <li>
+        <a href="#" onclick="goToPage(3)" id="lastPage" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700">
+          Last
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
 
 
 

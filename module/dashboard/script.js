@@ -1,41 +1,94 @@
+// Set tipe data dan event listener
 pagemodule = "Dashboard";
-//console.log(pagemodule);
 setDataType("quicklink");
 
+// Event listener form
 document
   .getElementById("dataform")
   .addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevent the default form submission
+    event.preventDefault();
 
-    // Retrieve form data using the existing getFormData function
     const rawFormData = getFormData();
     console.log("Raw Form Data:", rawFormData);
+
     if (rawFormData) {
-      // Restructure the form data to match the expected API format
       const formattedData = {
-        owner_id: owner_id, // Set owner_id directly or dynamically if needed
+        owner_id: owner_id, // pastikan ini didefinisikan global
         cs_admin: rawFormData.cs_admin,
         phone: rawFormData.phone,
-        description: rawFormData.description,
         text: rawFormData.text,
         meta_pixel_id: rawFormData.meta_pixel_id,
-        campaign_type: rawFormData.campaign_type,
-        campaign_name: rawFormData.campaign_name,
       };
 
-      // Pass the formatted data to handleCreate for submission
-      handleCreate(formattedData);
-      console.log(formattedData); // Optional: Log to verify the structure
+      handleCreate(formattedData); // fungsi submit ke backend
+      console.log("Formatted Data:", formattedData);
+
       document.getElementById("dataform").reset();
     } else {
-      showErrorAlert("Please fill in all required fields correctly.");
+      showErrorAlert("Mohon isi semua field dengan benar.");
     }
   });
 
-function validateFormData(formData) {
-  return true;
+// Ambil data dari form input
+function getFormData() {
+  const form = document.getElementById("dataform");
+  const formData = new FormData(form);
+
+  return {
+    cs_admin: formData.get("cs_admin")?.trim(), // hapus spasi
+    phone: formData.get("phone")?.trim(),
+    text: formData.get("text")?.trim(),
+    meta_pixel_id: parseInt(formData.get("meta_pixel_id")), // convert ke number
+  };
 }
 
+async function handleCreate(data) {
+  try {
+    const response = await fetch("https://dev.katib.cloud/add/quicklinkwago", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer DpacnJf3uEQeM7HN", // Sesuaikan jika perlu
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("API Error:", errorData);
+      showErrorAlert(errorData.message || "Gagal menambahkan data.");
+      return;
+    }
+
+    const result = await response.json();
+    showSuccessAlert("Data berhasil ditambahkan!");
+    console.log("Success:", result);
+  } catch (error) {
+    console.error("Network Error:", error);
+    showErrorAlert("Terjadi kesalahan jaringan.");
+  }
+}
+
+function showSuccessAlert(message) {
+  Swal.fire({
+    icon: "success",
+    title: "Berhasil",
+    text: message,
+    confirmButtonColor: "#6366F1",
+  });
+}
+
+function showErrorAlert(message) {
+  Swal.fire({
+    icon: "error",
+    title: "Failed",
+    text: message,
+    confirmButtonColor: "#6366F1",
+  });
+}
+
+xAxes;
+// Grafik klik & konversi
 document.addEventListener("DOMContentLoaded", function () {
   const API_URL = "https://dev.katib.cloud/summary/dashboardwago/4409";
 
@@ -48,12 +101,9 @@ document.addEventListener("DOMContentLoaded", function () {
         },
       });
 
-      if (!response.ok) {
-        throw new Error("Gagal mengambil data dari API");
-      }
+      if (!response.ok) throw new Error("Gagal mengambil data dari API");
 
       const { data } = await response.json();
-
       const labels = data.statistic_chart.labels;
       const statisticData = data.statistic_chart.data.map(Number);
       const conversionData = data.conversion_chart.data.map(Number);
@@ -93,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
         responsive: true,
         legend: {
           display: true,
-          position: "top", // Legend di atas
+          position: "top",
         },
         scales: {
           yAxes: [
@@ -103,12 +153,10 @@ document.addEventListener("DOMContentLoaded", function () {
               position: "left",
               ticks: {
                 beginAtZero: true,
-                callback: function (value) {
-                  return value.toFixed(1); // Pastikan 1 baris, format desimal 1 digit
-                },
+                callback: (value) => value.toFixed(1),
               },
               scaleLabel: {
-                display: false, // Hilangkan teks "Leads"
+                display: false,
               },
             },
             {
@@ -118,12 +166,10 @@ document.addEventListener("DOMContentLoaded", function () {
               offset: true,
               ticks: {
                 beginAtZero: true,
-                callback: function (value) {
-                  return value.toFixed(1); // Sama, biar satu baris
-                },
+                callback: (value) => value.toFixed(1),
               },
               scaleLabel: {
-                display: false, // Hilangkan teks "Closing"
+                display: false,
               },
               gridLines: {
                 drawOnChartArea: false,
