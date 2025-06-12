@@ -1,26 +1,24 @@
-<div class="flex-1 ml-64">
-  <!-- Navbar -->
-  <nav class="fixed top-0 left-64 right-0 h-16 bg-white shadow-md z-50 flex items-center justify-between px-4">
-    <!-- Left -->
-    <div class="text-white text-xl font-semibold">Dashboard</div>
-    <!-- Right -->
-    <div class="relative">
-      <button id="userMenuButton" class="flex items-center space-x-2 text-white">
-        <span class="hidden sm:inline">Hi, <span id="nameUser"></span></span>
-        <img src="assets/img/avatar/avatar-3.png" class="w-8 h-8 rounded-full" />
+<!-- Navbar -->
+<nav class="fixed top-0 left-64 right-0 h-16 bg-white shadow-md z-50 flex items-center justify-between px-4">
+  <!-- Left -->
+  <!-- Right -->
+  <div class="relative">
+    <button id="userMenuButton" class="flex items-center space-x-2 text-dark">
+      <span class="hidden sm:inline">Hi, <span id="nameUser"></span></span>
+      <img src="assets/img/avatar/avatar-3.png" class="w-8 h-8 rounded-full" />
 
-      </button>
-      <!-- Dropdown (optional) -->
-      <div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded shadow-lg hidden z-50">
-        <div class="px-4 py-2 text-sm border-b">Logged in 5 min ago</div>
-        <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100">
-          <i class="fas fa-bolt mr-2"></i> Activities
-        </a>
-        <div class="border-t my-1"></div>
-        <a href="#" id="logout" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-100">
-          <i class="fas fa-sign-out-alt mr-2"></i> Logout
-        </a>
-      </div>
+    </button>
+    <!-- Dropdown (optional) -->
+    <div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded shadow-lg hidden z-50">
+      <div class="px-4 py-2 text-sm border-b">Logged in 5 min ago</div>
+      <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100">
+        <i class="fas fa-bolt mr-2"></i> Activities
+      </a>
+      <div class="border-t my-1"></div>
+      <a href="#" id="logout" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-100">
+        <i class="fas fa-sign-out-alt mr-2"></i> Logout
+      </a>
     </div>
-  </nav>
+  </div>
+</nav>
 </div>

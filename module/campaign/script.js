@@ -13,46 +13,42 @@ document.getElementById("addButton").addEventListener("click", async () => {
 
 window.rowTemplate = function (item, index) {
   return `
-    <tr class="group relative mb-4 flex flex-col rounded-lg border shadow-md sm:mb-0 sm:table-row sm:border-none sm:shadow-none">
+    <tr onclick="toggleAction(${item.campaign_id})"
+      class="group relative mb-4 flex flex-col rounded-lg border shadow-md transition hover:shadow-lg sm:mb-0 sm:table-row sm:border-none sm:shadow-none sm:hover:bg-gray-50">
+
       <td class="border-b px-6 py-4 text-center text-sm font-medium text-gray-900 sm:table-cell sm:border-b-0">
         ${index + 1}
       </td>
-      <td class="border-b px-6 py-4 text-left text-sm text-gray-500 sm:table-cell sm:border-b-0">
+      <td class="border-b px-6 py-4 text-left text-sm text-gray-700 sm:table-cell sm:border-b-0">
         ${item.campaign_name}
       </td>
-      <td class="border-b px-6 py-4 text-right text-sm text-gray-500 sm:table-cell sm:border-b-0">
-        <span>${item.url}</span>
+      <td class="border-b px-6 py-4 text-right text-sm text-blue-600 sm:table-cell sm:border-b-0">
+        <a href="${item.url}" target="_blank" class="hover:underline">${
+    item.url
+  }</a>
       </td>
-      <td class="border-b px-6 py-4 text-sm text-gray-500 sm:table-cell sm:border-b-0">
+      <td class="border-b px-6 py-4 text-sm text-gray-700 sm:table-cell sm:border-b-0">
         ${item.tool}
       </td>
-      <td class="border-b px-6 py-4 text-center text-sm text-gray-500 sm:table-cell sm:border-b-0">
+      <td class="border-b px-6 py-4 text-center text-sm text-gray-700 sm:table-cell sm:border-b-0">
         ${item.click_count}
       </td>
       <td class="relative px-6 py-4 text-center text-sm font-medium sm:table-cell">
-        <!-- Action Button -->
-        <button onclick="toggleDropdown(${
+        <div id="action-${
           item.campaign_id
-        })" class="rounded-md bg-blue-600 px-3 py-1 text-white hover:bg-blue-700 focus:outline-none">
-          Action
-        </button>
-
-        <!-- Dropdown Menu -->
-        <div id="dropdown-${
-          item.campaign_id
-        }" class="dropdown-menu hidden absolute right-6 mt-2 w-36 origin-top-right rounded-md border border-gray-200 bg-white shadow-lg z-20">
-          <a onclick="loadModuleContent('campaign_detail', '${
+        }" class="hidden sm:flex sm:items-center sm:justify-center sm:space-x-2 sm:static sm:mt-0 mt-2">
+          <button onclick="event.stopPropagation(); loadModuleContent('campaign_detail', '${
             item.campaign_id
-          }', '${
-    item.campaign_name
-  }')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">
-            <i class="fas fa-edit mr-2"></i>Edit
-          </a>
-          <a onclick="handleDelete(${
+          }', '${item.campaign_name}')"
+            class="inline-flex items-center gap-1 rounded-md bg-yellow-400 px-3 py-1 text-xs text-white hover:bg-yellow-500">
+            <i class="fas fa-edit text-xs"></i>Edit
+          </button>
+          <button onclick="event.stopPropagation(); handleDelete(${
             item.campaign_id
-          })" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50 cursor-pointer">
-            <i class="fas fa-trash-alt mr-2"></i>Delete
-          </a>
+          })"
+            class="inline-flex items-center gap-1 rounded-md bg-red-500 px-3 py-1 text-xs text-white hover:bg-red-600">
+            <i class="fas fa-trash-alt text-xs"></i>Delete
+          </button>
         </div>
       </td>
     </tr>
@@ -60,36 +56,33 @@ window.rowTemplate = function (item, index) {
 };
 
 formHtml = `
-<form id="dataform" class="w-full max-w-2xl mx-auto p-4">
-  <div class="mb-6">
-    <h5 class="text-xl font-semibold mb-4">Campaign</h5>
+  <form id="dataform" class="space-y-4">
+    <h5 class="text-lg font-semibold text-gray-800 mb-2">Form Campaign</h5>
 
     <!-- Campaign Title -->
-    <div class="mb-4">
-      <label for="campaign_name" class="block mb-1 text-sm font-medium text-gray-700">Campaign Title</label>
+    <div class="space-y-1">
+      <label for="campaign_name" class="block text-sm font-medium text-gray-700">Campaign Title</label>
       <input type="text" id="campaign_name" name="campaign_name"
         class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200"
         placeholder="Type Your Campaign" autocomplete="off" required>
     </div>
 
     <!-- PreText -->
-    <div class="mb-4">
-      <label for="text_id" class="block mb-1 text-sm font-medium text-gray-700">PreText</label>
+    <div class="space-y-1">
+      <label for="text_id" class="block text-sm font-medium text-gray-700">PreText</label>
       <select id="text_id" name="text_id"
         class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200">
       </select>
     </div>
 
     <!-- Tracking -->
-    <div class="mb-4">
-      <label for="tool_id" class="block mb-1 text-sm font-medium text-gray-700">Tracking</label>
+    <div class="space-y-1">
+      <label for="tool_id" class="block text-sm font-medium text-gray-700">Tracking</label>
       <select id="tool_id" name="tool_id"
         class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200">
       </select>
     </div>
-
-  </div>
-</form>
+  </form>
 `;
 
 // Modify the addFormListeners function to handle hidden input population on selection

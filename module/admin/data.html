@@ -53,12 +53,11 @@
             </div>
         </div>
 
-
         <!-- Tabel Admin -->
         <div class="w-full overflow-hidden rounded-lg shadow-xs">
             <div class="w-full overflow-x-auto">
-                <table id="adminTable" class="min-w-full md:table hidden md:table-auto whitespace-no-wrap bg-gray-500">
-                    <thead id="tableHeader">
+                <table id="tableHeader" class="min-w-full md:table hidden md:table-auto whitespace-no-wrap bg-gray-500">
+                    <thead>
                         <tr
                             class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-teal-50 dark:text-gray-400 dark:bg-gray-800">
                             <th scope="col" class="py-3 px-4 text-center">No</th>
@@ -66,157 +65,143 @@
                             <th scope="col" class="py-3 px-4 text-center">Whatsapp</th>
                             <th scope="col" class="py-3 px-4 text-center">Click</th>
                             <th scope="col" class="py-3 px-4 text-center">Status</th>
-                            <th scope="col" class="py-3 px-4 text-center">Action</th>
+                            <!-- <th scope="col" class="py-3 px-4 text-center">Action</th> -->
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800" id="tableBody">
-                        <tr class="text-gray-700 dark:text-gray-400">
-                            <td colspan=" 6" class="text-center py-4 text-gray-500">Loading...</td>
-                        </tr>
-                    </tbody>
-                    
+                    <tbody id="tableBody" class="divide-y divide-gray-200 bg-white"></tbody>
                 </table>
                 <!-- CARD MODE UNTUK MOBILE -->
-
+                <div id="adminCardsContainer" class="md:hidden space-y-4 mt-4"></div>
 
             </div>
-
-            <!-- Footer Info + Pagination -->
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between mt-4">
-  <span id="paginationInfo" class="text-sm text-gray-600 mb-2 md:mb-0">
-    Showing null of null, Total Data: null
-  </span>
-  <nav class="flex justify-center md:justify-end">
-    <ul class="inline-flex -space-x-px text-sm">
-      <li>
-        <a href="#" onclick="goToPage(1)" class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">
-          First
-        </a>
-      </li>
-      <li>
-        <a href="#" onclick="goToPreviousPage()" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
-          Previous
-        </a>
-      </li>
-      <li>
-        <a href="#" onclick="goToPage(1)" id="firstPage" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
-          1
-        </a>
-      </li>
-      <li>
-        <a href="#" onclick="goToPage(2)" id="midPage" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
-          2
-        </a>
-      </li>
-      <li>
-        <a href="#" onclick="goToNextPage()" id="nextPage" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
-          Next
-        </a>
-      </li>
-      <li>
-        <a href="#" onclick="goToPage(3)" id="lastPage" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700">
-          Last
-        </a>
-      </li>
-    </ul>
-  </nav>
-</div>
-
-
-
-
-            <!-- Modal Tambah Admin -->
-            <div id="modalCreate"
-                class="fixed inset-0 bg-black bg-opacity-50 hidden  flex items-center justify-center  z-50">
-                <div
-                    class="bg-white p-6 rounded-lg w-full max-w-lg shadow-lg relative transform transition-all duration-300 scale-95 opacity-0">
-                    <button onclick="closeModal('modalCreate')"
-                        class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
-                        ✕
-                    </button>
-                    <h2 class="text-2xl font-semibold text-center mb-6">Create New Data</h2>
-                    <form id="createAdminForm">
-                        <!-- CS Admin -->
-                        <div class="mb-4">
-                            <label for="cs_admin" class="block text-sm font-medium text-gray-700 mb-1">CS
-                                Admin</label>
-                            <input type="text" id="cs_admin" name="cs_admin" placeholder="Enter admin name"
-                                class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                required>
-                        </div>
-
-                        <!-- WhatsApp Number -->
-                        <div class="mb-4">
-                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">WhatsApp
-                                Number</label>
-                            <div class="flex">
-                                <span
-                                    class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-                                    +62
-                                </span>
-                                <input type="text" id="phone" name="phone" maxlength="13" placeholder="Ex: 8123456789"
-                                    class="w-full border border-gray-300 rounded-r-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    required>
-                            </div>
-                            <p class="text-xs text-gray-400 mt-1">Max 13 digits, without starting 0.</p>
-                        </div>
-
-                        <!-- Buttons -->
-                        <div class="flex justify-center mt-6">
-                            <button type="submit"
-                                class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold px-6 py-2 rounded-lg mr-3 transition">
-                                Save
-                            </button>
-                            <button type="button" onclick="closeModal('modalCreate')"
-                                class="bg-gray-500 hover:bg-gray-600 text-white font-semibold px-6 py-2 rounded-lg transition">
-                                Cancel
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <!-- MODAL EDIT -->
-            <div id="modalEdit"
-                class="fixed inset-0 bg-black bg-opacity-50 hidden flex justify-center items-center z-50">
-                <div
-                    class="bg-white p-6 rounded-lg w-full max-w-lg shadow-lg relative transform transition-all duration-300 scale-95 opacity-0">
-                    <button onclick="closeModal('modalEdit')"
-                        class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">✕</button>
-                    <h2 class="text-2xl font-semibold text-center mb-6">Edit Data Admin</h2>
-                    <form id="editAdminForm">
-                        <input type="hidden" id="admin_id">
-                        <div class="mb-4">
-                            <label for="edit_cs_admin" class="block text-sm font-medium text-gray-700 mb-1">CS
-                                Admin</label>
-                            <input type="text" id="edit_cs_admin" name="edit_cs_admin"
-                                class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="edit_phone" class="block text-sm font-medium text-gray-700 mb-1">WhatsApp
-                                Number</label>
-                            <div class="flex">
-                                <span
-                                    class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">+62</span>
-                                <input type="text" id="edit_phone" name="edit_phone" maxlength="13"
-                                    class="w-full border border-gray-300 rounded-r-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    required>
-                            </div>
-                            <p class="text-xs text-gray-400 mt-1">Max 13 digits, without starting 0.</p>
-                        </div>
-                        <div class="flex justify-center mt-6">
-                            <button type="submit"
-                                class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold px-6 py-2 rounded-lg mr-3 transition">Update</button>
-                            <button type="button" onclick="closeModal('modalEdit')"
-                                class="bg-gray-500 hover:bg-gray-600 text-white font-semibold px-6 py-2 rounded-lg transition">Cancel</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <div id="loader" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-70 z-50 hidden">
-                <div class="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin">
-                </div>
+            <div id="floatingAction" class="hidden absolute bg-white shadow-lg rounded-lg border z-50 p-2">
+                <button id="editBtn" class="block w-full text-left text-blue-600 hover:underline mb-1">Edit</button>
+                <button id="deleteBtn" class="block w-full text-left text-red-600 hover:underline">Delete</button>
             </div>
         </div>
+        <div>
+            <span id="paginationInfo" class="page-info text-sm text-gray-500">Showing null of null,
+                Total Data : null</span>
+            <div class="float-right">
+                <nav aria-label="Page navigation" class="mt-4">
+                    <ul class="flex flex-wrap gap-2">
+                        <li>
+                            <button id="startPage" onclick="goToPage(1)"
+                                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100">
+                                First
+                            </button>
+                        </li>
+                        <li>
+                            <button id="prevPage" onclick="goToPreviousPage()"
+                                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100">
+                                Previous
+                            </button>
+                        </li>
+                        <li>
+                            <button id="firstPage" onclick="goToPage(1)"
+                                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100">
+                                1
+                            </button>
+                        </li>
+                        <li>
+                            <button id="midPage" onclick="goToPage(2)"
+                                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100">
+                                2
+                            </button>
+                        </li>
+                        <li>
+                            <button id="nextPage" onclick="goToNextPage()"
+                                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100">
+                                Next
+                            </button>
+                        </li>
+                        <li>
+                            <button id="lastPage" onclick="goToPage(3)"
+                                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100">
+                                Last
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
+        </div>
+    </div>
 </main>
+</div>
+</div>
+</section>
+</div>
+
+<div style="display:none" ;>
+    <form id="addform" class="mt-2">
+        <div class="mb-4">
+            <label for="cs_admin" class="block text-sm font-medium text-gray-700">Nama</label>
+            <input type="text" name="cs_admin" id="cs_admin"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+        </div>
+        <div class="group relative mb-4">
+            <label for="create_phone" class="block text-sm font-medium text-gray-700">Nomor HP</label>
+            <div class="mt-1 flex rounded-md shadow-sm">
+                <span
+                    class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-gray-500 sm:text-sm">62</span>
+                <input type="text" name="phone" id="create_phone"
+                    class="block w-full flex-1 rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+            </div>
+            <span id="createPhoneTooltip" class="mt-1 hidden text-sm text-red-500">Phone number must be between 11 and
+                14 digits.</span>
+        </div>
+    </form>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const tableBody = document.getElementById('tableBody');
+        const floatingAction = document.getElementById('floatingAction');
+        let selectedAdminId = null;
+
+        // Pas klik baris <tr>
+        tableBody.addEventListener('click', function (e) {
+            const row = e.target.closest('tr');
+
+            if (row && row.dataset.id) {
+                selectedAdminId = row.dataset.id;
+
+                // Ambil posisi baris
+                const rect = row.getBoundingClientRect();
+
+                // Atur posisi dropdown di bawah baris yang diklik
+                floatingAction.style.top = `${window.scrollY + rect.bottom}px`;
+                floatingAction.style.left = `${rect.left + rect.width - 150}px`; // Sesuaikan posisi
+                floatingAction.classList.remove('hidden');
+            }
+        });
+
+        // Klik di luar = sembunyikan dropdown
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('tr') && !e.target.closest('#floatingAction')) {
+                floatingAction.classList.add('hidden');
+            }
+        });
+
+        // Tombol edit
+        document.getElementById('editBtn').addEventListener('click', () => {
+            if (selectedAdminId) {
+                alert('Edit Admin ID: ' + selectedAdminId);
+                // Tambahkan logika edit real di sini
+                floatingAction.classList.add('hidden');
+            }
+        });
+
+        // Tombol delete
+        document.getElementById('deleteBtn').addEventListener('click', () => {
+            if (selectedAdminId) {
+                const confirmDelete = confirm('Yakin ingin hapus admin ID: ' + selectedAdminId + '?');
+                if (confirmDelete) {
+                    alert('Admin terhapus: ' + selectedAdminId);
+                    // Tambahkan logika hapus real di sini
+                    floatingAction.classList.add('hidden');
+                }
+            }
+        });
+    });
+</script>

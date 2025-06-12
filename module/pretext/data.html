@@ -78,8 +78,51 @@
         </div>
 
         <!-- Footer Info -->
-        <div class="mt-4 flex justify-between items-center text-sm text-gray-500">
-            <div>Total Data: <span id="totalData">0</span></div>
-            <div id="paginationControls" class="flex space-x-1"></div>
+        <div>
+            <span id="paginationInfo" class="page-info text-sm text-gray-500">Showing null of null,
+                Total Data : null</span>
+            <div class="float-right">
+                <nav aria-label="Page navigation" class="mt-4">
+                    <ul class="flex flex-wrap gap-2">
+                        <li>
+                            <button id="startPage" onclick="goToPage(1)"
+                                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100">
+                                First
+                            </button>
+                        </li>
+                        <li>
+                            <button id="prevPage" onclick="goToPreviousPage()"
+                                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100">
+                                Previous
+                            </button>
+                        </li>
+                        <li>
+                            <button id="firstPage" onclick="goToPage(1)"
+                                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100">
+                                1
+                            </button>
+                        </li>
+                        <li>
+                            <button id="midPage" onclick="goToPage(2)"
+                                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100">
+                                2
+                            </button>
+                        </li>
+                        <li>
+                            <button id="nextPage" onclick="goToNextPage()"
+                                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100">
+                                Next
+                            </button>
+                        </li>
+                        <li>
+                            <button id="lastPage" onclick="goToPage(3)"
+                                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-100">
+                                Last
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
         </div>
     </div>

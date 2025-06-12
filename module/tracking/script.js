@@ -5,76 +5,78 @@ setDataType("tracking");
 
 window.rowTemplate = function (item, index) {
   return `
-        <tr class="mb-4 flex flex-col rounded-lg border shadow-md sm:mb-0 sm:table-row sm:border-none sm:shadow-none">
-            <td class="border-b px-6 py-4 text-sm font-medium text-gray-900 sm:table-cell sm:border-b-0">${
-              index + 1
-            }</td>
-            <td class="border-b px-6 py-4 text-sm text-gray-500 sm:table-cell sm:border-b-0">${
-              item.description
-            }</td>
-            <td class="border-b px-6 py-4 text-sm text-gray-500 sm:table-cell sm:border-b-0">${
-              item.google_analytic_id
-            }</td>
-            <td class="border-b px-6 py-4 text-sm text-gray-500 sm:table-cell sm:border-b-0">${
-              item.tiktok_pixel_id
-            }</td>
-            <td class="border-b px-6 py-4 text-sm text-gray-500 sm:table-cell sm:border-b-0">${
-              item.meta_pixel_id
-            }</td>
-            <td class="border-b px-6 py-4 text-sm text-gray-500 sm:table-cell sm:border-b-0">${
-              item.google_spreadsheet_id
-            }</td>
-            <td class="border-b px-6 py-4 text-center text-sm text-gray-500 sm:table-cell sm:border-b-0">${
-              item.status
-            }</td>
-            <td class="relative px-6 py-4 text-center text-sm font-medium sm:table-cell">
-                <button onclick="toggleDropdown(${
-                  item.tool_id
-                })" class="rounded bg-blue-600 px-3 py-1 text-white hover:bg-blue-700 focus:outline-none">Action</button>
-                <div id="dropdown-${
-                  item.tool_id
-                }" class="dropdown-menu hidden absolute right-6 mt-2 w-36 origin-top-right rounded-md border border-gray-200 bg-white shadow-lg z-20">
-                    <a href="#" onclick="console.log('View Log for ${
-                      item.tool_id
-                    }')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Log</a>
-                    <a href="#" onclick="handleEdit('${item.tool_id}', '${
+    <tr class="mb-4 flex flex-col rounded-lg border shadow-md sm:mb-0 sm:table-row sm:border-none sm:shadow-none">
+      <td class="border-b px-6 py-4 text-sm font-medium text-gray-900 sm:table-cell sm:border-b">${
+        index + 1
+      }</td>
+      <td class="border-b px-6 py-4 text-sm text-gray-700 sm:table-cell sm:border-b">${
+        item.description
+      }</td>
+      <td class="border-b px-6 py-4 text-sm text-gray-700 sm:table-cell sm:border-b">${
+        item.google_analytic_id
+      }</td>
+      <td class="border-b px-6 py-4 text-sm text-gray-700 sm:table-cell sm:border-b">${
+        item.tiktok_pixel_id
+      }</td>
+      <td class="border-b px-6 py-4 text-sm text-gray-700 sm:table-cell sm:border-b">${
+        item.meta_pixel_id
+      }</td>
+      <td class="border-b px-6 py-4 text-sm text-gray-700 sm:table-cell sm:border-b">${
+        item.google_spreadsheet_id
+      }</td>
+      <td class="border-b px-6 py-4 text-center text-sm text-gray-700 sm:table-cell sm:border-b">${
+        item.status
+      }</td>
+      <td class="px-6 py-4 text-center sm:table-cell">
+        <div class="flex justify-center space-x-2">
+          <button onclick="handleEdit('${item.tool_id}', '${
     item.description
-  }')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</a>
-                    <a href="#" onclick="handleDelete(${
-                      item.tool_id
-                    })" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50">Delete</a>
-                </div>
-            </td>
-        </tr>
-    `;
+  }')" class="inline-flex items-center rounded-md bg-yellow-500 px-3 py-1 text-white text-sm hover:bg-yellow-600 focus:outline-none">
+            Edit
+          </button>
+          <button onclick="handleDelete(${
+            item.tool_id
+          })" class="inline-flex items-center rounded-md bg-red-600 px-3 py-1 text-white text-sm hover:bg-red-700 focus:outline-none">
+            Hapus
+          </button>
+        </div>
+      </td>
+    </tr>
+  `;
 };
 
 formHtml = `
 <form id="dataform" class="space-y-6">
-  <h5 class="text-lg font-medium text-gray-900">Tracking</h5>
+  <h5 class="text-lg font-semibold text-gray-800">Tracking</h5>
+  
   <div>
     <label for="create_campaign_type" class="block text-sm font-medium text-gray-700">Jenis Campaign</label>
-    <input type="text" id="create_campaign_type" name="campaign_type" class="mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Ketik Jenis Campaign" required>
+    <input type="text" id="create_campaign_type" name="campaign_type" class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200" placeholder="Ketik Jenis Campaign" required>
   </div>
+  
   <div>
     <label for="google_analytic_id" class="block text-sm font-medium text-gray-700">ID Google Analytic</label>
-    <input type="text" id="google_analytic_id" name="google_analytic_id" class="mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="ID Google Analytic" required>
+    <input type="text" id="google_analytic_id" name="google_analytic_id" class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200" placeholder="ID Google Analytic" required>
   </div>
+  
   <div>
     <label for="tiktok_pixel_id" class="block text-sm font-medium text-gray-700">ID TikTok Pixel</label>
-    <input type="text" id="tiktok_pixel_id" name="tiktok_pixel_id" class="mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="ID TikTok Pixel" required>
+    <input type="text" id="tiktok_pixel_id" name="tiktok_pixel_id" class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200" placeholder="ID TikTok Pixel" required>
   </div>
+  
   <div>
     <label for="meta_pixel_id" class="block text-sm font-medium text-gray-700">ID Meta Pixel</label>
-    <input type="text" id="meta_pixel_id" name="meta_pixel_id" class="mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="ID Meta Pixel" required>
+    <input type="text" id="meta_pixel_id" name="meta_pixel_id" class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200" placeholder="ID Meta Pixel" required>
   </div>
+  
   <div>
     <label for="google_spreadsheet_id" class="block text-sm font-medium text-gray-700">ID Google Spreadsheet</label>
-    <input type="text" id="google_spreadsheet_id" name="google_spreadsheet_id" class="mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="ID Google Spreadsheet" required>
+    <input type="text" id="google_spreadsheet_id" name="google_spreadsheet_id" class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200" placeholder="ID Google Spreadsheet" required>
   </div>
+  
   <div>
     <span class="block text-sm font-medium text-gray-700">Status</span>
-    <div class="mt-2 space-x-4">
+    <div class="mt-2 flex items-center space-x-6">
       <label class="inline-flex items-center">
         <input type="radio" name="status" id="statusOn" value="on" class="text-blue-600 focus:ring-blue-500" required>
         <span class="ml-2 text-sm text-gray-700">On</span>
@@ -85,7 +87,8 @@ formHtml = `
       </label>
     </div>
   </div>
-</form>`;
+</form>
+`;
 
 function fillFormData(data) {
   document.getElementById("create_campaign_type").value =

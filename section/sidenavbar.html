@@ -1,12 +1,12 @@
 <!-- Sidebar -->
-<aside class="w-64 bg-white h-screen shadow-md fixed top-0 left-0 z-40 pt-6">
-    <!-- Logo di atas -->
-    <div class="flex justify-center items-center mb-4">
+<aside id="sidebar"
+    class="fixed top-0 left-0 z-40 w-64 h-screen bg-white shadow-md transform -translate-x-full sm:translate-x-0 transition-transform duration-300">
+    <!-- Logo -->
+    <div class="flex justify-center items-center py-4 border-b">
         <img src="./assets/img/wago.png" alt="Logo" class="h-10">
     </div>
-
     <!-- Menu -->
-    <nav class="mt-2">
+    <nav class="mt-4">
         <ul class="space-y-1 px-4">
             <li>
                 <a href="#" data-module="dashboard"
@@ -18,7 +18,7 @@
             <li>
                 <a href="#" data-module="admin"
                     class="flex items-center space-x-2 px-4 py-2 rounded-md hover:bg-gray-100 transition nav-link">
-                    <i class="fas fa-users text-gray-600"></i>
+                    <i class="fas fa-users-line text-gray-600"></i>
                     <span class="text-gray-700">Admin</span>
                 </a>
             </li>

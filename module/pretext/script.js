@@ -5,77 +5,87 @@ setDataType("pretext");
 
 window.rowTemplate = function (item, index) {
   return `
-        <tr class="mb-4 flex flex-col rounded-lg border shadow-md sm:mb-0 sm:table-row sm:border-none sm:shadow-none">
-            <td class="border-b px-6 py-4 text-sm font-medium text-gray-900 sm:table-cell sm:border-b-0">
-                ${index + 1}
-            </td>
-            <td class="border-b px-6 py-4 text-sm text-gray-700 sm:table-cell sm:border-b-0 whitespace-pre-wrap break-words">
-                ${item.description}
-            </td>
-            <td class="border-b px-6 py-4 text-sm text-gray-700 sm:table-cell sm:border-b-0 whitespace-pre-wrap break-words">
-                ${item.text}
-            </td>
-            <td class="border-b px-6 py-4 text-sm text-left text-gray-700 sm:table-cell sm:border-b-0">
-                ${item.status}
-            </td>
-            <td class="relative px-6 py-4 text-left text-sm font-medium sm:table-cell">
-                <button onclick="toggleDropdown('${
-                  item.text_id
-                }')" class="rounded bg-blue-600 px-3 py-1 text-white hover:bg-blue-700 focus:outline-none">
-                    Action
-                </button>
-                <div id="dropdown-${
-                  item.text_id
-                }" class="dropdown-menu hidden absolute right-6 mt-2 w-36 origin-top-right rounded-md border border-gray-200 bg-white shadow-lg z-20">
-                    <a href="#" onclick="console.log('View Log for ${
-                      item.text_id
-                    }')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Log</a>
-                    <a href="#" onclick="handleEdit('${item.text_id}', '${
-    item.description
-  }')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Edit</a>
-                    <a href="#" onclick="handleDelete(${
-                      item.text_id
-                    })" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50">Delete</a>
-                </div>
-            </td>
-        </tr>
-    `;
+    <tr class="mb-4 flex flex-col rounded-lg border shadow-md sm:mb-0 sm:table-row sm:border-none sm:shadow-none">
+      <td class="border-b px-6 py-4 text-sm font-medium text-gray-900 sm:table-cell sm:border-b-0 text-left">
+        ${index + 1}
+      </td>
+      <td class="border-b px-6 py-4 text-sm text-gray-700 sm:table-cell sm:border-b-0 whitespace-pre-wrap break-words text-left">
+        ${item.description}
+      </td>
+      <td class="border-b px-6 py-4 text-sm text-gray-700 sm:table-cell sm:border-b-0 whitespace-pre-wrap break-words text-left">
+        ${item.text}
+      </td>
+      <td class="border-b px-6 py-4 text-sm text-gray-700 sm:table-cell sm:border-b-0 text-center">
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input 
+            type="checkbox"
+            ${item.status === "on" ? "checked" : ""}
+            onchange="toggleStatus(this, '${
+              item.text_id
+            }', \`${item.description.replace(
+    /`/g,
+    "\\`"
+  )}\`, \`${item.text.replace(/`/g, "\\`")}\`)"
+            class="sr-only peer"
+          />
+          <div class="w-11 h-6 bg-gray-200 rounded-full peer-checked:bg-green-500 transition duration-300">
+            <div class="w-5 h-5 bg-white rounded-full shadow transform transition-transform duration-300 translate-x-1 peer-checked:translate-x-6"></div>
+          </div>
+        </label>
+      </td>
+      <td class="border-b px-6 py-4 text-sm text-gray-700 sm:table-cell sm:border-b-0 text-left">
+        <div class="flex gap-2">
+          <button onclick="handleEdit('${
+            item.text_id
+          }', '${item.description.replace(
+    /'/g,
+    "\\'"
+  )}')" class="inline-flex items-center rounded bg-yellow-500 px-3 py-1 text-white hover:bg-yellow-600 focus:outline-none">
+            Edit
+          </button>
+          <button onclick="handleDelete(${
+            item.text_id
+          })" class="inline-flex items-center rounded bg-red-600 px-3 py-1 text-white hover:bg-red-700 focus:outline-none">
+            Hapus
+          </button>
+        </div>
+      </td>
+    </tr>
+  `;
 };
 
 formHtml = `
-<form id="dataform" class="space-y-6">
-  <h5 class="text-lg font-medium text-gray-900">Pretext</h5>
+  <form id="dataform" class="space-y-4">
+    <h5 class="text-lg font-semibold text-gray-800 mb-2">Form Pretext</h5>
 
-  <div>
-    <label for="description" class="block text-sm font-medium text-gray-700">Deskripsi</label>
-    <input type="text" id="description" name="description"
-      class="mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-      placeholder="Ketik Jenis Campaign" required>
-  </div>
-
-  <div>
-    <label for="text" class="block text-sm font-medium text-gray-700">Konten</label>
-    <textarea id="text" name="text" rows="3"
-      class="mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-      placeholder="Konten" required></textarea>
-  </div>
-
-  <div>
-    <span class="block text-sm font-medium text-gray-700">Status</span>
-    <div class="mt-2 space-x-4">
-      <label class="inline-flex items-left">
-        <input type="radio" name="status" id="statusOn" value="on"
-          class="text-blue-600 focus:ring-blue-500" required>
-        <span class="ml-2 text-sm text-gray-700">On</span>
-      </label>
-      <label class="inline-flex items-left">
-        <input type="radio" name="status" id="statusOff" value="off"
-          class="text-blue-600 focus:ring-blue-500">
-        <span class="ml-2 text-sm text-gray-700">Off</span>
-      </label>
+    <div class="space-y-1">
+      <label for="description" class="block text-sm font-medium text-gray-700">Deskripsi</label>
+      <input type="text" id="description" name="description"
+        class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+        placeholder="Ketik Jenis Campaign" required />
     </div>
-  </div>
-</form>
+
+    <div class="space-y-1">
+      <label for="text" class="block text-sm font-medium text-gray-700">Konten</label>
+      <textarea id="text" name="text" rows="3"
+        class="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+        placeholder="Konten" required></textarea>
+    </div>
+
+    <div class="space-y-1">
+      <label class="block text-sm font-medium text-gray-700">Status</label>
+      <div class="flex gap-6 mt-1">
+        <label class="inline-flex items-center text-sm text-gray-700">
+          <input type="radio" name="status" id="statusOn" value="on" class="text-blue-600 focus:ring-blue-500" required />
+          <span class="ml-2">On</span>
+        </label>
+        <label class="inline-flex items-center text-sm text-gray-700">
+          <input type="radio" name="status" id="statusOff" value="off" class="text-blue-600 focus:ring-blue-500" />
+          <span class="ml-2">Off</span>
+        </label>
+      </div>
+    </div>
+  </form>
 `;
 
 function fillFormData(data) {
@@ -119,4 +129,58 @@ fetchAndUpdateData();
 
 document.getElementById("addButton").addEventListener("click", () => {
   showFormModal();
+});
+
+async function toggleStatus(
+  checkbox,
+  id,
+  description,
+  text,
+  type = "pretextwago"
+) {
+  const status = checkbox.checked ? "on" : "off";
+  const payload = { description, text, status };
+
+  console.log("Sending update payload:", payload);
+
+  try {
+    const result = await updateData(type, id, payload);
+    console.log("Backend response:", result);
+
+    if (result && result.success) {
+      Swal.fire({
+        icon: "success",
+        title: "Status diperbarui",
+        toast: true,
+        position: "top-end",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+
+      // fetch ulang data supaya checkbox sesuai status backend
+      await fetchAndUpdateData();
+    } else {
+      throw new Error("Update gagal atau response tidak sesuai");
+    }
+  } catch (error) {
+    console.error("Error updating status:", error);
+    checkbox.checked = !checkbox.checked; // rollback toggle
+    Swal.fire({
+      icon: "error",
+      title: "Gagal mengubah status!",
+      toast: true,
+      position: "top-end",
+      timer: 1500,
+      showConfirmButton: false,
+    });
+  }
+}
+
+Swal.fire({
+  icon: "success",
+  title: "Status diperbarui",
+  toast: true,
+  position: "top-end",
+  timer: 1500,
+  showConfirmButton: false,
 });
