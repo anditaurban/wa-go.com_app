@@ -1,85 +1,176 @@
-<div class="bg-white px-6 py-4 flex items-center justify-between shadow-sm">
-    <!-- Kiri: Judul -->
-    <h1 class="text-2xl font-semibold text-gray-800">Tracking</h1>
+<main class="px-6 py-6">
+    <!-- Page Title -->
+    <div class="mb-8">
+        <h2 class="text-4xl font-semibold text-gray-800">Tracking</h2>
+        <div class="mt-1 h-1 w-12 bg-green-500 rounded-full"></div>
+    </div>
 
-    <!-- Kanan: Breadcrumb -->
-    <nav class="text-sm text-teal-600 space-x-1">
-        <a href="#" class="hover:underline">WA-Go!</a>
-        <span>/</span>
-        <span class="text-gray-500">Tracking</span>
-    </nav>
-</div>
-<main class="h-full px-1 py-6 pb-16 overflow-y-auto">
-    <div class="container px-6 mx-auto grid">
-        <!-- Notifikasi -->
-        <div id="adminAlert"
-            class="relative bg-teal-50 text-gray-700 rounded-lg mb-6 overflow-hidden shadow-md focus:outline-none focus:shadow-outline-teal">
-            <button onclick="document.getElementById('adminAlert').remove()"
-                class="absolute top-0 right-0 mt-2 mr-2 text-gray-600 hover:text-gray-200 text-xl font-bold focus:outline-none"
-                aria-label="Close">
-                &times;
-            </button>
-            <div class="p-6">
-                <h2 class="text-2xl font-bold">Tracking Module</h2>
-                <p class="mt-2 text-sm">
-                    Tracking Module adalah fitur yang dirancang untuk memantau dan menganalisis performa
-                    kampanye, interaksi pengguna, serta aktivitas di dalam platform secara mendalam. Modul
-                    ini
-                    menyediakan data real-time dan laporan terperinci yang membantu pengguna memahami
-                    efektivitas setiap kampanye atau interaksi yang terjadi, sehingga mereka dapat membuat
-                    keputusan yang lebih baik dan lebih strategis.
-                </p>
+    <!-- Notification Banner -->
+    <div id="trackingAlert" class="relative bg-teal-50 border border-teal-100 rounded-xl p-5 mb-6">
+        <button onclick="document.getElementById('trackingAlert').remove()"
+            class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clip-rule="evenodd" />
+            </svg>
+        </button>
+        <h2 class="text-lg font-semibold text-gray-800 mb-2">Tracking Analytics</h2>
+        <p class="text-sm text-gray-600">
+            Monitor and analyze campaign performance with real-time data and detailed reports.
+            Gain insights into user interactions and optimize your marketing strategies effectively.
+        </p>
+    </div>
+
+    <!-- Action Bar -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+        <button id="addTrackingButton"
+            class="flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            New Tracking
+        </button>
+
+        <div class="w-full md:w-64">
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
+                <input type="text" id="searchTrackingInput" placeholder="Search campaigns..."
+                    class="pl-10 w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-100 focus:border-teal-400 text-sm">
             </div>
-        </div>
-
-        <!-- Kontrol Atas -->
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
-            <!-- Tombol Add Admin -->
-            <div class="w-full md:w-2/3">
-                <button id="addButton"
-                    class="mt-4 bg-white text-teal-600 px-4 py-2 rounded shadow hover:bg-gray-100 text-sm font-medium">
-                    <i class="fas fa-sign-in-alt text-white/70"></i>
-                    + Add New Admin
-                </button>
-            </div>
-
-            <!-- Input Cari Produk -->
-            <div class="w-full md:w-1/3">
-                <input type="text" id="searchInput" onkeyup="handleSearch()" oninput="filterProducts()"
-                    placeholder="Cari Data Produk"
-                    class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            </div>
-        </div>
-
-        <!-- Tabel Admin -->
-        <div class="w-full overflow-hidden rounded-lg shadow-xs">
-            <div class="w-full overflow-x-auto">
-                <table class="w-full whitespace-no-wrap">
-                    <thead>
-                        <tr
-                            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-teal-50 dark:text-gray-400 dark:bg-gray-800">
-                            <th scope="col" class="px-4 py-3 text-center">No.</th>
-                            <th scope="col" class="px-4 py-3 text-center">Dekripsi</th>
-                            <th scope="col" class="px-4 py-3 text-center">Google</th>
-                            <th scope="col" class="px-4 py-3 text-center">Tiktok</th>
-                            <th scope="col" class="px-4 py-3 text-center">Meta</th>
-                            <th scope="col" class="px-4 py-3 text-center">Google Spreedsheet</th>
-                            <th scope="col" class="px-4 py-3 text-center">Status</th>
-                            <th scope="col" class="px-4 py-3 text-center">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800" id="tableBody">
-                        <tr class="text-gray-700 dark:text-gray-400">
-                            <td colspan="8" class="text-center py-4 text-gray-500">Loading...</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- Footer Info -->
-        <div class="mt-4 flex justify-between items-center text-sm text-gray-500">
-            <div>Total Data: <span id="totalData">0</span></div>
-            <div id="paginationControls" class="flex space-x-1"></div>
         </div>
     </div>
+
+    <!-- Table Section -->
+    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
+        <div class="overflow-x-auto">
+            <table class="w-full min-w-max">
+                <thead class="bg-gray-50">
+                    <tr class="text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th class="px-6 py-3 text-left w-12">No</th>
+                        <th class="px-6 py-3 text-left">Description</th>
+                        <th class="px-6 py-3 text-center">Google</th>
+                        <th class="px-6 py-3 text-center">TikTok</th>
+                        <th class="px-6 py-3 text-center">Meta</th>
+                        <th class="px-6 py-3 text-center">Spreadsheet</th>
+                        <th class="px-6 py-3 text-center">Status</th>
+                        <th class="px-6 py-3 text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
+                    <tr>
+                        <td colspan="8" class="px-6 py-4 text-center text-gray-500">Loading campaign data...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="flex flex-col md:flex-row justify-between items-center mt-6">
+        <div class="text-sm text-gray-500 mb-4 md:mb-0">
+            Showing <span id="trackingStart">1</span> - <span id="trackingEnd">10</span> of
+            <span id="trackingTotal">0</span> campaigns
+        </div>
+        <nav class="flex items-center gap-1">
+            <button id="firstPage"
+                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50">
+                First
+            </button>
+            <button id="prevPage"
+                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50">
+                Previous
+            </button>
+            <button id="nextPage"
+                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50">
+                Next
+            </button>
+            <button id="lastPage"
+                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50">
+                Last
+            </button>
+        </nav>
+    </div>
+</main>
+
+<!-- Tracking Form Modal -->
+<div id="trackingFormModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-xl p-6 w-full max-w-2xl">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-semibold">New Tracking Campaign</h3>
+            <button onclick="document.getElementById('trackingFormModal').classList.add('hidden')"
+                class="text-gray-400 hover:text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+
+        <form id="trackingForm" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Google Analytics</label>
+                    <input type="text" placeholder="Tracking ID"
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-100 focus:border-teal-400 text-sm">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">TikTok Pixel</label>
+                    <input type="text" placeholder="Pixel ID"
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-100 focus:border-teal-400 text-sm">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Meta Pixel</label>
+                    <input type="text" placeholder="Pixel ID"
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-100 focus:border-teal-400 text-sm">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Spreadsheet URL</label>
+                    <input type="text" placeholder="Google Sheet link"
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-100 focus:border-teal-400 text-sm">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <textarea rows="3" placeholder="Campaign description"
+                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-100 focus:border-teal-400 text-sm"></textarea>
+            </div>
+
+            <div class="flex justify-end gap-3 pt-2">
+                <button type="button" onclick="document.getElementById('trackingFormModal').classList.add('hidden')"
+                    class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">
+                    Cancel
+                </button>
+                <button type="submit"
+                    class="px-4 py-2 bg-teal-600 hover:bg-teal-700 rounded-lg text-sm font-medium text-white shadow-sm">
+                    Save Campaign
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Script Section -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Dummy sample data
+        const sampleData = Array.from({ length: 25 }, (_, i) => ({ id: i + 1 }));
+
+        // Pagination Setup
+        document.getElementById('trackingTotal').textContent = sampleData.length;
+        document.getElementById('trackingEnd').textContent = Math.min(sampleData.length, 10);
+
+        // Modal Toggle
+        document.getElementById('addTrackingButton').addEventListener('click', () => {
+            document.getElementById('trackingFormModal').classList.remove('hidden');
+        });
+    });
+</script>

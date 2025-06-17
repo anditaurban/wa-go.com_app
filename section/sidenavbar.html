@@ -1,60 +1,111 @@
-<!-- Sidebar -->
 <aside id="sidebar"
-    class="fixed top-0 left-0 z-40 w-64 h-screen bg-white shadow-md transform -translate-x-full sm:translate-x-0 transition-transform duration-300">
+    class="fixed top-0 left-0 z-40 w-72 h-screen bg-white shadow-xl transform -translate-x-full sm:translate-x-0 transition-all duration-300 ease-in-out border-r border-gray-100">
+
     <!-- Logo -->
-    <div class="flex justify-center items-center py-4 border-b">
-        <img src="./assets/img/wago.png" alt="Logo" class="h-10">
+    <div class="flex justify-center items-center py-6 border-b border-gray-200">
+        <img src="./assets/img/wago.png" alt="Logo" class="h-12 transition-all duration-300 hover:scale-105" width="120"
+            height="200">
     </div>
+
     <!-- Menu -->
-    <nav class="mt-4">
-        <ul class="space-y-1 px-4">
+    <nav class="mt-6 px-3">
+        <ul class="space-y-2">
             <li>
                 <a href="#" data-module="dashboard"
-                    class="flex items-center space-x-2 px-4 py-2 rounded-md hover:bg-gray-100 transition nav-link">
-                    <i class="fas fa-rocket text-gray-600"></i>
-                    <span class="text-gray-700">Dashboard</span>
+                    class="flex items-center gap-4 py-3 px-4 rounded-lg hover:bg-gray-100/80 transition-all duration-200 nav-link group">
+                    <div
+                        class="w-8 h-8 flex items-center justify-center rounded-full bg-blue-50 group-hover:bg-blue-100 transition-colors duration-200">
+                        <i class="fas fa-home text-blue-500 text-lg"></i>
+                    </div>
+                    <span
+                        class="text-gray-700 font-medium group-hover:text-blue-600 transition-colors duration-200">Dashboard</span>
+                    <div
+                        class="ml-auto w-1.5 h-6 bg-blue-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    </div>
                 </a>
             </li>
             <li>
                 <a href="#" data-module="admin"
-                    class="flex items-center space-x-2 px-4 py-2 rounded-md hover:bg-gray-100 transition nav-link">
-                    <i class="fas fa-users-line text-gray-600"></i>
-                    <span class="text-gray-700">Admin</span>
+                    class="flex items-center gap-4 py-3 px-4 rounded-lg hover:bg-gray-100/80 transition-all duration-200 nav-link group">
+                    <div
+                        class="w-8 h-8 flex items-center justify-center rounded-full bg-purple-50 group-hover:bg-purple-100 transition-colors duration-200">
+                        <i class="fas fa-user-circle text-purple-500 text-lg"></i>
+                    </div>
+                    <span
+                        class="text-gray-700 font-medium group-hover:text-purple-600 transition-colors duration-200">Admin</span>
+                    <div
+                        class="ml-auto w-1.5 h-6 bg-purple-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    </div>
                 </a>
             </li>
             <li>
                 <a href="#" data-module="tracking"
-                    class="flex items-center space-x-2 px-4 py-2 rounded-md hover:bg-gray-100 transition nav-link">
-                    <i class="fas fa-user-secret text-gray-600"></i>
-                    <span class="text-gray-700">Tracking</span>
+                    class="flex items-center gap-4 py-3 px-4 rounded-lg hover:bg-gray-100/80 transition-all duration-200 nav-link group">
+                    <div
+                        class="w-8 h-8 flex items-center justify-center rounded-full bg-green-50 group-hover:bg-green-100 transition-colors duration-200">
+                        <i class="fas fa-shield-alt text-green-500 text-lg"></i>
+                    </div>
+                    <span
+                        class="text-gray-700 font-medium group-hover:text-green-600 transition-colors duration-200">Tracking</span>
+                    <div
+                        class="ml-auto w-1.5 h-6 bg-green-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    </div>
                 </a>
             </li>
             <li>
                 <a href="#" data-module="pretext"
-                    class="flex items-center space-x-2 px-4 py-2 rounded-md hover:bg-gray-100 transition nav-link">
-                    <i class="fas fa-comment-dots text-gray-600"></i>
-                    <span class="text-gray-700">PreText</span>
+                    class="flex items-center gap-4 py-3 px-4 rounded-lg hover:bg-gray-100/80 transition-all duration-200 nav-link group">
+                    <div
+                        class="w-8 h-8 flex items-center justify-center rounded-full bg-yellow-50 group-hover:bg-yellow-100 transition-colors duration-200">
+                        <i class="fas fa-magic text-yellow-500 text-lg"></i>
+                    </div>
+                    <span
+                        class="text-gray-700 font-medium group-hover:text-yellow-600 transition-colors duration-200">PreText</span>
+                    <div
+                        class="ml-auto w-1.5 h-6 bg-yellow-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    </div>
                 </a>
             </li>
             <li>
                 <a href="#" data-module="campaign"
-                    class="flex items-center space-x-2 px-4 py-2 rounded-md hover:bg-gray-100 transition nav-link">
-                    <i class="fas fa-bullhorn text-gray-600"></i>
-                    <span class="text-gray-700">Campaign</span>
+                    class="flex items-center gap-4 py-3 px-4 rounded-lg hover:bg-gray-100/80 transition-all duration-200 nav-link group">
+                    <div
+                        class="w-8 h-8 flex items-center justify-center rounded-full bg-red-50 group-hover:bg-red-100 transition-colors duration-200">
+                        <i class="fas fa-copy text-red-500 text-lg"></i>
+                    </div>
+                    <span
+                        class="text-gray-700 font-medium group-hover:text-red-600 transition-colors duration-200">Campaign</span>
+                    <div
+                        class="ml-auto w-1.5 h-6 bg-red-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    </div>
                 </a>
             </li>
             <li>
                 <a href="#" data-module="addon"
-                    class="flex items-center space-x-2 px-4 py-2 rounded-md hover:bg-gray-100 transition nav-link">
-                    <i class="fas fa-puzzle-piece text-gray-600"></i>
-                    <span class="text-gray-700">Add-On</span>
+                    class="flex items-center gap-4 py-3 px-4 rounded-lg hover:bg-gray-100/80 transition-all duration-200 nav-link group">
+                    <div
+                        class="w-8 h-8 flex items-center justify-center rounded-full bg-indigo-50 group-hover:bg-indigo-100 transition-colors duration-200">
+                        <i class="fas fa-star text-indigo-500 text-lg"></i>
+                    </div>
+                    <span
+                        class="text-gray-700 font-medium group-hover:text-indigo-600 transition-colors duration-200">AddOns</span>
+                    <div
+                        class="ml-auto w-1.5 h-6 bg-indigo-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    </div>
                 </a>
             </li>
             <li>
                 <a href="#" data-module="setting"
-                    class="flex items-center space-x-2 px-4 py-2 rounded-md hover:bg-gray-100 transition nav-link">
-                    <i class="fas fa-tools text-gray-600"></i>
-                    <span class="text-gray-700">Setting</span>
+                    class="flex items-center gap-4 py-3 px-4 rounded-lg hover:bg-gray-100/80 transition-all duration-200 nav-link group">
+                    <div
+                        class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-50 group-hover:bg-gray-100 transition-colors duration-200">
+                        <i class="fas fa-cog text-gray-500 text-lg"></i>
+                    </div>
+                    <span
+                        class="text-gray-700 font-medium group-hover:text-gray-600 transition-colors duration-200">Setting</span>
+                    <div
+                        class="ml-auto w-1.5 h-6 bg-gray-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    </div>
                 </a>
             </li>
         </ul>

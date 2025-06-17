@@ -1,95 +1,218 @@
-<div class="bg-white px-6 py-4 flex items-center justify-between shadow-sm">
-    <!-- Kiri: Judul -->
-    <h1 class="text-2xl font-semibold text-gray-800">Campaign</h1>
+<main class="px-6 py-6">
+    <div class="mb-8">
+        <h2 class="text-4xl font-semibold text-gray-800">Campaign</h2>
+        <div class="mt-1 h-1 w-12 bg-red-500 rounded-full"></div>
+    </div>
+    <!-- Notification Banner -->
+    <div id="adminAlert" class="relative bg-teal-50 border border-teal-100 rounded-xl p-5 mb-6">
+        <button onclick="document.getElementById('adminAlert').remove()"
+            class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clip-rule="evenodd" />
+            </svg>
+        </button>
+        <h2 class="text-lg font-semibold text-gray-800 mb-2">Admin Module</h2>
+        <p class="text-sm text-gray-600">
+            This module provides comprehensive tools for managing all administrative aspects of the platform,
+            including user management, campaign monitoring, content control, and system settings.
+        </p>
+    </div>
 
-    <!-- Kanan: Breadcrumb -->
-    <nav class="text-sm text-teal-600 space-x-1">
-        <a href="#" class="hover:underline">WA-Go!</a>
-        <span>/</span>
-        <span class="text-gray-500">Detail Campaign</span>
-    </nav>
-</div>
+    <!-- Action Bar -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+        <button id="addButton"
+            class="flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            Add New Admin
+        </button>
 
-<main class="h-full px-1 py-6 pb-16 overflow-y-auto">
-    <div class="container px-6 mx-auto grid">
-        <!-- Notifikasi -->
-        <div id="adminAlert"
-            class="relative bg-teal-50 text-gray-700 rounded-lg mb-6 overflow-hidden shadow-md focus:outline-none focus:shadow-outline-teal">
-            <button onclick="document.getElementById('adminAlert').remove()"
-                class="absolute top-0 right-0 mt-2 mr-2 text-gray-600 hover:text-gray-200 text-xl font-bold focus:outline-none"
-                aria-label="Close">
-                &times;
+        <div class="w-full md:w-64">
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
+                <input type="text" id="searchInput" placeholder="Search admin..."
+                    class="pl-10 w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-100 focus:border-teal-400 text-sm">
+            </div>
+        </div>
+    </div>
+
+    <!-- Table Section -->
+    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
+        <!-- Desktop Table -->
+        <div class="hidden md:block overflow-x-auto">
+            <table class="w-full">
+                <thead class="bg-gray-50">
+                    <tr class="text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th class="px-6 py-3 text-left">No</th>
+                        <th class="px-6 py-3 text-left">Name</th>
+                        <th class="px-6 py-3 text-left">Link</th>
+                        <th class="px-6 py-3 text-left">Tracking</th>
+                        <th class="px-6 py-3 text-left">Clicks</th>
+                        <th class="px-6 py-3 text-left">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody" class="bg-white divide-y divide-gray-200"></tbody>
+            </table>
+        </div>
+
+        <!-- Mobile Cards -->
+        <div id="adminCardsContainer" class="md:hidden space-y-3 p-4"></div>
+    </div>
+
+    <!-- Floating Action Menu -->
+    <div class="flex flex-col md:flex-row justify-between items-center mt-6">
+        <div class="text-sm text-gray-500 mb-4 md:mb-0">
+            Showing <span id="trackingStart">1</span>-<span id="trackingEnd">10</span> of <span
+                id="trackingTotal">0</span> campaigns
+        </div>
+
+        <nav class="flex items-center gap-1">
+            <button id="firstPage"
+                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50">
+                First
             </button>
-            <div class="p-6">
-                <h2 class="text-2xl font-bold">Campaign Module</h2>
-                <p class="mt-2 text-sm">
-                    Campaign Module adalah fitur yang dirancang untuk mengelola data kampanye pengguna
-                    secara
-                    efisien. Di dalam modul ini, pengguna dapat membuat, menyimpan, dan mengakses informasi
-                    tentang berbagai kampanye marketing mereka. Setiap kampanye yang dibuat menghasilkan
-                    link
-                    unik yang dapat digunakan sebagai Call to Action (CTA) pada halaman landing page
-                    kampanye.
-                    Modul ini mempermudah pengguna dalam mengelola dan mempromosikan kampanye mereka melalui
-                    landing page yang terfokus dan terukur, memungkinkan strategi marketing yang lebih
-                    efektif.
+            <button id="prevPage"
+                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50">
+                Previous
+            </button>
+            <button id="nextPage"
+                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50">
+                Next
+            </button>
+            <button id="lastPage"
+                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50">
+                Last
+            </button>
+        </nav>
+    </div>
+</main>
+
+<!-- Hidden Form (for modal/popup) -->
+<div id="adminFormModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-xl p-6 w-full max-w-md">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-semibold">Add New Admin</h3>
+            <button onclick="document.getElementById('adminFormModal').classList.add('hidden')"
+                class="text-gray-400 hover:text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+
+        <form id="addform" class="space-y-4">
+            <div>
+                <label for="cs_admin" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                <input type="text" name="cs_admin" id="cs_admin" placeholder="Admin name"
+                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-100 focus:border-teal-400 text-sm">
+            </div>
+
+            <div>
+                <label for="create_phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                <div class="flex rounded-lg shadow-sm">
+                    <span
+                        class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">+62</span>
+                    <input type="text" name="phone" id="create_phone" placeholder="81234567890"
+                        class="flex-1 block w-full rounded-r-lg border-gray-300 focus:border-teal-400 focus:ring-2 focus:ring-teal-100 text-sm">
+                </div>
+                <p id="createPhoneTooltip" class="mt-1 hidden text-xs text-red-500">Phone number must be 11-14 digits
                 </p>
             </div>
-        </div>
 
-        <!-- Kontrol Atas -->
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
-            <!-- Tombol Add Admin -->
-            <div class="w-full md:w-2/3">
-                <button id="addButton"
-                    class="mt-4 bg-white text-teal-600 px-4 py-2 rounded shadow hover:bg-gray-100 text-sm font-medium">
-                    <i class="fas fa-sign-in-alt text-white/70"></i>
-                    + Add New Admin
+            <div class="flex justify-end gap-3 pt-2">
+                <button type="button" onclick="document.getElementById('adminFormModal').classList.add('hidden')"
+                    class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">
+                    Cancel
+                </button>
+                <button type="submit"
+                    class="px-4 py-2 bg-teal-600 hover:bg-teal-700 rounded-lg text-sm font-medium text-white shadow-sm">
+                    Save Admin
                 </button>
             </div>
-
-            <!-- Input Cari Produk -->
-            <div class="w-full md:w-1/3">
-                <input type="text" id="searchInput" onkeyup="handleSearch()" oninput="filterProducts()"
-                    placeholder="Cari Data Produk"
-                    class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            </div>
-        </div>
-
-        <!-- Tabel tracking-->
-        <!-- Tambahkan loader di atas tabel -->
-
-
-        <!-- Desktop Table View (md+) -->
-        <div class="hidden md:block w-full overflow-hidden rounded-lg shadow-xs">
-            <div class="w-full overflow-x-auto">
-                <table class="min-w-full w-full table-auto">
-                    <thead>
-                        <tr
-                            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-teal-50">
-                            <th scope="col" class="py-3 px-6 text-center">No.</th>
-                            <th scope="col" class="py-3 px-6 text-center">Campaign</th>
-                            <th scope="col" class="py-3 px-6 text-center">Link</th>
-                            <th scope="col" class="py-3 px-6 text-center">Tracking</th>
-                            <th scope="col" class="py-3 px-6 text-center">Click</th>
-                            <th scope="col" class="py-3 px-6 text-center">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y" id="tableBody">
-                        <tr class=" text-gray-700">
-                            <td colspan="5" class="text-center py-4 text-gray-500">Loading...</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-
-
-        <!-- Footer Info -->
-        <div class="mt-4 flex justify-between items-center text-sm text-gray-500">
-            <div>Total Data: <span id="totalData">0</span></div>
-            <div id="paginationControls" class="flex space-x-1"></div>
-        </div>
-
+        </form>
     </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Sample table data population
+        const tableBody = document.getElementById('tableBody');
+        const sampleData = [
+            { id: 1, name: "John Doe", whatsapp: "081234567890", clicks: 142, status: "Active" },
+            { id: 2, name: "Jane Smith", whatsapp: "082345678901", clicks: 87, status: "Inactive" },
+            { id: 3, name: "Robert Johnson", whatsapp: "083456789012", clicks: 256, status: "Active" }
+        ];
+
+        sampleData.forEach((admin, index) => {
+            const row = document.createElement('tr');
+            row.className = 'hover:bg-gray-50 cursor-pointer';
+            row.dataset.id = admin.id;
+
+            row.innerHTML = `
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${index + 1}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${admin.name}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${admin.whatsapp}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${admin.clicks}</td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                        ${admin.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}">
+                        ${admin.status}
+                    </span>
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
+
+        // Floating action menu
+        const floatingAction = document.getElementById('floatingAction');
+        let selectedAdminId = null;
+
+        tableBody.addEventListener('click', function (e) {
+            const row = e.target.closest('tr');
+            if (row && row.dataset.id) {
+                selectedAdminId = row.dataset.id;
+                const rect = row.getBoundingClientRect();
+
+                floatingAction.style.top = `${window.scrollY + rect.bottom}px`;
+                floatingAction.style.left = `${rect.left + rect.width - 160}px`;
+                floatingAction.classList.remove('hidden');
+            }
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('tr') && !e.target.closest('#floatingAction')) {
+                floatingAction.classList.add('hidden');
+            }
+        });
+
+        document.getElementById('editBtn').addEventListener('click', () => {
+            if (selectedAdminId) {
+                alert(`Edit admin with ID: ${selectedAdminId}`);
+                floatingAction.classList.add('hidden');
+            }
+        });
+
+        document.getElementById('deleteBtn').addEventListener('click', () => {
+            if (selectedAdminId && confirm(`Delete admin with ID: ${selectedAdminId}?`)) {
+                alert(`Admin ${selectedAdminId} deleted`);
+                floatingAction.classList.add('hidden');
+            }
+        });
+
+        // Show add form modal
+        document.getElementById('addButton').addEventListener('click', () => {
+            document.getElementById('adminFormModal').classList.remove('hidden');
+        });
+    });
+</script>

@@ -13,34 +13,42 @@ window.rowTemplate = function (item, index) {
   return `
     <tr data-id="${
       item.cs_id
-    }" class="group relative cursor-pointer hover:bg-gray-100 transition">
-        <td class="px-6 py-4 text-sm text-gray-500 text-center">${
-          index + 1
-        }</td>
-        <td class="px-6 py-4 text-sm text-gray-500">${item.cs_admin}</td>
-        <td class="px-6 py-4 text-sm text-gray-500 text-right">
-            <a href="https://wa.me/${item.phone}" target="_blank">
-              <span class="badge badge-success">
-                <i class="fab fa-whatsapp"></i> +${item.phone}
-              </span>
-            </a>
-        </td>
-        <td class="px-6 py-4 text-sm text-gray-500 text-center">0</td>
-        <td class="px-6 py-4 text-sm text-gray-500 text-center">Active</td>
-        <td class="px-6 py-4 text-sm text-gray-500 text-center relative">
-          <div class="dropdown-menu hidden absolute z-50 bg-white shadow-lg border rounded-md p-2 text-sm right-0 top-8 w-28">
-            <button class="edit-btn block w-full text-left px-2 py-1 hover:bg-gray-100">
-              <i class="fas fa-edit mr-2"></i>Edit
-            </button>
-            <button class="delete-btn block w-full text-left px-2 py-1 text-red-600 hover:bg-gray-100">
-              <i class="fas fa-trash-alt mr-2"></i>Hapus
-            </button>
-          </div>
-        </td>
+    }" class="group relative hover:bg-gray-100 transition">
+      <td class="px-6 py-4 text-sm text-gray-500 text-center">${index + 1}</td>
+      <td class="px-6 py-4 text-sm text-gray-500">${item.cs_admin}</td>
+      <td class="px-6 py-4 text-sm text-gray-500 text-right">
+        <a href="https://wa.me/${
+          item.phone
+        }" target="_blank" class="inline-flex items-center">
+          <span class="badge badge-success px-3 py-1 bg-green-100 text-green-800 rounded-full">
+            <i class="fab fa-whatsapp mr-1"></i> +${item.phone}
+          </span>
+        </a>
+      </td>
+      <td class="px-6 py-4 text-sm text-gray-500 text-center">0</td>
+      <td class="px-6 py-4 text-sm text-gray-500 text-center">
+        <span class="px-2 py-1 rounded-full bg-green-100 text-green-800 text-xs">Active</span>
+      </td>
+      <td class="px-6 py-4 text-sm text-gray-500 text-center relative">
+        <button class="action-btn p-1 rounded hover:bg-gray-200 focus:outline-none" 
+                onclick="toggleAdminDropdown('${item.cs_id}', event)">
+          <i class="fas fa-ellipsis-v"></i>
+        </button>
+        <div id="dropdown-${item.cs_id}" 
+             class="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50 border border-gray-200 divide-y divide-gray-100">
+          <button onclick="handleAdminEdit('${item.cs_id}', event)" 
+                  class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
+            <i class="fas fa-edit mr-2"></i> Edit
+          </button>
+          <button onclick="handleAdminDelete('${item.cs_id}', event)" 
+                  class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 flex items-center">
+            <i class="fas fa-trash-alt mr-2"></i> Hapus
+          </button>
+        </div>
+      </td>
     </tr>
   `;
 };
-
 formHtml = `
 <form id="dataform" class="space-y-6">
   <input type="hidden" name="owner_id" id="owner_id" value="${
@@ -75,32 +83,53 @@ formHtml = `
 </form>
 `;
 
+document.getElementById("trackingTotal").textContent = sampleData.length;
+document.getElementById("trackingEnd").textContent = Math.min(
+  sampleData.length,
+  10
+);
+
 // === Dropdown Toggle === //
-document.addEventListener("click", (e) => {
-  const tr = e.target.closest("tr[data-id]");
-  const isActionBtn = e.target.closest(".edit-btn, .delete-btn");
+function toggleAdminDropdown(id, event) {
+  event.stopPropagation();
 
-  // Jika klik baris & bukan tombol
-  if (tr && !isActionBtn) {
-    const dropdown = tr.querySelector(".dropdown-menu");
+  // Close all other dropdowns first
+  document.querySelectorAll(".dropdown-menu").forEach((menu) => {
+    if (menu.id !== `dropdown-${id}`) {
+      menu.classList.add("hidden");
+    }
+  });
 
-    // Tutup semua dulu
-    document
-      .querySelectorAll(".dropdown-menu")
-      .forEach((el) => el.classList.add("hidden"));
+  // Toggle current dropdown
+  const dropdown = document.getElementById(`dropdown-${id}`);
+  dropdown.classList.toggle("hidden");
+}
 
-    // Tampilkan dropdown milik baris
-    if (dropdown) dropdown.classList.toggle("hidden");
-  }
+// Handle edit action
+function handleAdminEdit(id, event) {
+  event.stopPropagation();
+  const tr = document.querySelector(`tr[data-id="${id}"]`);
+  const name = tr.querySelectorAll("td")[1].textContent.trim();
+  handleEdit(id, name);
+}
 
-  // Jika klik di luar baris/tombol
-  if (!tr && !isActionBtn) {
-    document
-      .querySelectorAll(".dropdown-menu")
-      .forEach((el) => el.classList.add("hidden"));
+// Handle delete action
+function handleAdminDelete(id, event) {
+  event.stopPropagation();
+  handleDelete(id);
+}
+
+// Close dropdowns when clicking outside
+document.addEventListener("click", function (event) {
+  if (
+    !event.target.closest(".dropdown-menu") &&
+    !event.target.closest(".action-btn")
+  ) {
+    document.querySelectorAll(".dropdown-menu").forEach((menu) => {
+      menu.classList.add("hidden");
+    });
   }
 });
-
 // === Tombol Edit & Delete Delegasi === //
 document.addEventListener("click", (e) => {
   const editBtn = e.target.closest(".edit-btn");

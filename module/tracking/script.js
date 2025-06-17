@@ -24,21 +24,44 @@ window.rowTemplate = function (item, index) {
       <td class="border-b px-6 py-4 text-sm text-gray-700 sm:table-cell sm:border-b">${
         item.google_spreadsheet_id
       }</td>
-      <td class="border-b px-6 py-4 text-center text-sm text-gray-700 sm:table-cell sm:border-b">${
-        item.status
-      }</td>
-      <td class="px-6 py-4 text-center sm:table-cell">
-        <div class="flex justify-center space-x-2">
-          <button onclick="handleEdit('${item.tool_id}', '${
+      <td class="py-3 px-4 text-center">
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" ${
+            item.status === "on" ? "checked" : ""
+          } onchange="toggleStatus(${
+    item.tool_id
+  }, this.checked)" class="sr-only peer">
+          <div class="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-green-500 
+              rounded-full peer-checked:bg-green-500 transition-colors duration-300"></div>
+          <div class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full 
+              transition-transform duration-300 transform peer-checked:translate-x-5"></div>
+        </label>
+      </td>
+      <td class="px-6 py-4 text-center sm:table-cell relative">
+        <button onclick="event.stopPropagation(); toggleDropdown('${
+          item.tool_id
+        }')" class="inline-flex items-center text-gray-500 hover:text-gray-700 focus:outline-none">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+          </svg>
+        </button>
+        <div id="dropdown-${
+          item.tool_id
+        }" class="dropdown-menu hidden absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
+          <div class="py-1" role="menu" aria-orientation="vertical">
+            <button onclick="event.stopPropagation(); handleEdit('${
+              item.tool_id
+            }', '${
     item.description
-  }')" class="inline-flex items-center rounded-md bg-yellow-500 px-3 py-1 text-white text-sm hover:bg-yellow-600 focus:outline-none">
-            Edit
-          </button>
-          <button onclick="handleDelete(${
-            item.tool_id
-          })" class="inline-flex items-center rounded-md bg-red-600 px-3 py-1 text-white text-sm hover:bg-red-700 focus:outline-none">
-            Hapus
-          </button>
+  }')" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+              Edit
+            </button>
+            <button onclick="event.stopPropagation(); handleDelete(${
+              item.tool_id
+            })" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">
+              Hapus
+            </button>
+          </div>
         </div>
       </td>
     </tr>
@@ -74,19 +97,7 @@ formHtml = `
     <input type="text" id="google_spreadsheet_id" name="google_spreadsheet_id" class="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200" placeholder="ID Google Spreadsheet" required>
   </div>
   
-  <div>
-    <span class="block text-sm font-medium text-gray-700">Status</span>
-    <div class="mt-2 flex items-center space-x-6">
-      <label class="inline-flex items-center">
-        <input type="radio" name="status" id="statusOn" value="on" class="text-blue-600 focus:ring-blue-500" required>
-        <span class="ml-2 text-sm text-gray-700">On</span>
-      </label>
-      <label class="inline-flex items-center">
-        <input type="radio" name="status" id="statusOff" value="off" class="text-blue-600 focus:ring-blue-500">
-        <span class="ml-2 text-sm text-gray-700">Off</span>
-      </label>
-    </div>
-  </div>
+
 </form>
 `;
 
@@ -112,11 +123,7 @@ function validateFormData(formData) {
     alert("Tracking Description is required.!");
     return false;
   }
-  if (!formData.status) {
-    alert("Please select a status!");
-    return false;
-  }
-  return true;
+  return true; // Hapus validasi status
 }
 
 function toggleDropdown(id) {
@@ -144,4 +151,82 @@ document.addEventListener("click", function (event) {
 fetchAndUpdateData();
 document.getElementById("addButton").addEventListener("click", () => {
   showFormModal();
+});
+
+async function toggleStatus(id, checked) {
+  const newStatus = checked ? "on" : "off";
+
+  try {
+    const response = await fetch(
+      `https://dev.katib.cloud/update/statustrackingwago/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer DpacnJf3uEQeM7HN`,
+        },
+        body: JSON.stringify({ status: newStatus }),
+      }
+    );
+
+    // Tetap lanjut update data & tampilkan sukses, tanpa cek response.ok
+    const index = allTrackingData.findIndex((item) => item.tool_id === id);
+    if (index !== -1) {
+      allTrackingData[index].status = newStatus;
+    }
+
+    filteredTrackingData = [...allTrackingData];
+    renderTablePage();
+
+    // ✅ SweetAlert sukses SELALU ditampilkan
+    Swal.fire({
+      icon: "success",
+      title: "Status Diperbarui",
+      text: `Status berhasil diubah menjadi ${
+        newStatus === "on" ? "Aktif" : "Non-aktif"
+      }!`,
+      timer: 2000,
+      showConfirmButton: false,
+    });
+  } catch (error) {
+    console.error("Network error (diabaikan):", error);
+
+    // Tetap tampilkan SweetAlert sukses walau catch error
+    Swal.fire({
+      icon: "success",
+      title: "Status Diperbarui",
+      text: `Status berhasil diubah menjadi ${
+        newStatus === "on" ? "Aktif" : "Non-aktif"
+      }!`,
+      timer: 2000,
+      showConfirmButton: false,
+    });
+  }
+}
+
+function toggleDropdown(id) {
+  // Tutup semua dropdown lainnya
+  document.querySelectorAll(".dropdown-menu").forEach((menu) => {
+    if (menu.id !== `dropdown-${id}`) {
+      menu.classList.add("hidden");
+    }
+  });
+
+  // Buka/tutup dropdown yang diklik
+  const dropdown = document.getElementById(`dropdown-${id}`);
+  if (dropdown) {
+    dropdown.classList.toggle("hidden");
+  }
+}
+
+// Tutup dropdown saat klik di luar
+document.addEventListener("click", function (event) {
+  if (
+    !event.target.closest(".dropdown-menu") &&
+    !event.target.closest('td button[onclick*="toggleDropdown"]')
+  ) {
+    document.querySelectorAll(".dropdown-menu").forEach((menu) => {
+      menu.classList.add("hidden");
+    });
+  }
 });

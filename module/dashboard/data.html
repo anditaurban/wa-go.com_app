@@ -1,46 +1,68 @@
-<h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-  Dashboard
-</h2>
+<div class="px-6 py-6">
+  <!-- Header Section -->
+  <div class="mb-8">
+    <h2 class="text-2xl font-semibold text-gray-800">Dashboard</h2>
+    <div class="mt-1 h-1 w-12 bg-blue-500 rounded-full"></div>
+  </div>
 
-<div class="bg-white min-h-screen p-2 m-0.5 rounded-lg shadow-md">
-  <div class="max-w-8xl mx-auto p-6">
-    <div class="mb-6">
-      <h1 class="text-xl font-semibold text-gray-800">Quick Link, !</h1>
-      <p class="text-sm text-gray-600">Buat link dengan cepat dan mudah melalui form berikut:</p>
+  <!-- Content Card -->
+  <div class="bg-white rounded-xl shadow-sm p-6">
+    <!-- Quick Link Header -->
+    <div class="mb-8">
+      <h1 class="text-xl font-semibold text-gray-800">Quick Link</h1>
+      <p class="text-gray-500 mt-1">Create links quickly and easily using the form below</p>
     </div>
 
-    <!-- Grid Form + Chart -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- FORM -->
-      <form id="dataform">
-        <div class="grid grid-cols-2 gap-2 mb-2">
-          <input id="cs_admin" name="cs_admin" type="text" placeholder="Pilih / Input Nama CS Admin"
-            class="text-xs p-2 border border-gray-300 rounded" />
-          <input id="phone" name="phone" type="text" placeholder="No Whatsapp"
-            class="text-xs p-2 border border-gray-300 rounded" />
-        </div>
+    <!-- Grid Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Form Section -->
+      <div class="space-y-4">
+        <form id="dataform" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="cs_admin" class="block text-sm font-medium text-gray-700 mb-1">CS Admin</label>
+              <input id="cs_admin" name="cs_admin" type="text" placeholder="Select/Input CS Admin Name"
+                class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all" />
+            </div>
+            <div>
+              <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">WhatsApp Number</label>
+              <input id="phone" name="phone" type="text" placeholder="Phone Number"
+                class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all" />
+            </div>
+          </div>
 
-        <input id="text" name="text" type="text" placeholder="Pre Text"
-          class="w-full mb-2 text-xs p-2 border border-gray-300 rounded" />
+          <div>
+            <label for="text" class="block text-sm font-medium text-gray-700 mb-1">Pre Text</label>
+            <input id="text" name="text" type="text" placeholder="Enter your pre-text"
+              class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all" />
+          </div>
 
-        <div class="grid grid-cols-2 gap-2">
-          <input id="meta_pixel_id" name="meta_pixel_id" type="text" placeholder="Meta Pixel"
-            class="text-xs p-2 border border-gray-300 rounded" />
-          <button type="submit" class="bg-green-500 hover:bg-green-600 text-white text-xs rounded p-2">
-            GENERATE LINK
-          </button>
-        </div>
-      </form>
-
-
-      <!-- GRAFIK -->
-      <div class="flex flex-col gap-4">
-        <div class="bg-white p-4 rounded-lg shadow">
-          <h2 class="text-lg font-semibold mb-6">Grafik Statistik Klik</h2>
-          <canvas id="combinedChart" width="600" height="400"></canvas>
-        </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="meta_pixel_id" class="block text-sm font-medium text-gray-700 mb-1">Meta Pixel</label>
+              <input id="meta_pixel_id" name="meta_pixel_id" type="text" placeholder="Pixel ID"
+                class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all" />
+            </div>
+            <div class="flex items-end">
+              <button type="submit"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 shadow-sm">
+                Generate Link
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
 
+      <!-- Chart Section -->
+      <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
+        <div class="mb-6">
+          <h3 class="text-lg font-semibold text-gray-800">Click Statistics</h3>
+          <p class="text-sm text-gray-500">Last 30 days performance</p>
+        </div>
+        <div class="h-64">
+          <canvas id="combinedChart"></canvas>
+        </div>
+      </div>
     </div>
   </div>
 </div>
