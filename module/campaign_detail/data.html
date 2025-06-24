@@ -1,146 +1,182 @@
-<div class="main-content" style="min-height: 811px;">
-    <section class="section">
-        <div class="section-header">
-            <h1>Campaign Detail</h1>
-            <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="#" class="warna">WA-Go!</a></div>
-                <div class="breadcrumb-item"><a href="#" class="warna">campaign-detail</a></div>
-            </div>
+<div class="min-h-screen">
+  <section class="py-6 px-4 sm:px-6 lg:px-8">
+    <!-- Header Section -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
+      <!-- Judul + Garis -->
+      <div class="mb-4 md:mb-0">
+        <h2 class="text-4xl font-semibold text-gray-800">Detail Campaign</h2>
+        <div class="mt-1 h-1 w-12 bg-red-500 rounded-full"></div>
+      </div>
+
+      <!-- Breadcrumb -->
+      <div class="flex items-center space-x-2">
+        <a href="#" class="text-blue-600 hover:text-blue-800 text-sm font-medium">WA-Go!</a>
+        <span class="text-gray-400">/</span>
+        <a href="#" class="text-gray-500 text-sm">campaign-detail</a>
+      </div>
+    </div>
+
+
+    <!-- Main Card -->
+    <!-- Back Button -->
+    <button onclick="loadModuleContent('campaign')"
+      class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 mb-6">
+      <i class="fas fa-arrow-left mr-2"></i>
+      Back
+    </button>
+
+    <!-- Alert Box -->
+    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 rounded">
+      <div class="flex justify-between items-start">
+        <div>
+          <h4 class="text-blue-800 font-medium">
+            <a onclick="copyLink('${item.url}')" class="cursor-pointer hover:text-blue-600">
+              <i class="fa fa-copy mr-2"></i>
+              <span id="campaignLink"></span>
+            </a>
+          </h4>
+          <p class="text-black mt-1">
+            Dari link yang kamu bagikan, saat ini sudah mendapatkan klik sebanyak
+            <span id="campaignCTAClick" class="font-semibold"></span> Click
+          </p>
         </div>
+        <button onclick="loadModuleContent('campaign_log', `${detail_id}`, `${detail_desc}`)"
+          class="flex items-center px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700">
+          <i class="fas fa-clipboard-list mr-1"></i> Log
+        </button>
+      </div>
+    </div>
 
-        
-        <div class="card">
-            <div class="card-body">
-                <button 
-                  onclick="loadModuleContent('campaign')" 
-                  class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 mb-4">
-                  <i class="fas fa-arrow-left mr-2"></i>
-                  Back
-                </button>
-                <main class="mt-16 flex-1 p-6 md:mt-0" id="content">
-                    <div class="alert alert-primary alert-dismissible show fade">
-                        <div class="alert-body">
-                          <div><button onclick="loadModuleContent('campaign_log', `${detail_id}`, `${detail_desc}`)" class="btn btn-danger float-right"><i class="fas fa-clipboard-list"></i> Log</button></div>
-                          <h4><a onclick="copyLink('${item.url}')"><i class="fa fa-copy"></i></a> <span id="campaignLink"></span></h4>
-                          <p>Dari link yang kamu bagikan, saat ini sudah mendapatkan klik sebanyak <span id="campaignCTAClick"></span> Click</p>                          
-                        </div>
-                      </div>
-
-                      <div class="row">
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                          <div class="card card-statistic-1">
-                            <div class="card-icon bg-primary">
-                              <i class="far fa-user"></i>
-                            </div>
-                            <div class="card-wrap">
-                              <div class="card-header">
-                                <h4>Admin</h4>
-                              </div>
-                              <div class="card-body" id="totalAdmin">
-                                10
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                          <div class="card card-statistic-1">
-                            <div class="card-icon bg-danger">
-                              <i class="far fa-newspaper"></i>
-                            </div>
-                            <div class="card-wrap">
-                              <div class="card-header">
-                                <h4>CTA hits</h4>
-                              </div>
-                              <div class="card-body" id="totalCTA">
-                                42
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                          <div class="card card-statistic-1">
-                            <div class="card-icon bg-warning">
-                              <i class="far fa-file"></i>
-                            </div>
-                            <div class="card-wrap">
-                              <div class="card-header">
-                                <h4>Leads</h4>
-                              </div>
-                              <div class="card-body" id="totalLeads">
-                                1,201
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                          <div class="card card-statistic-1">
-                            <div class="card-icon bg-success">
-                              <i class="fas fa-circle"></i>
-                            </div>
-                            <div class="card-wrap">
-                              <div class="card-header">
-                                <h4>Purchase</h4>
-                              </div>
-                              <div class="card-body" id="totalClosing">
-                                47
-                              </div>
-                            </div>
-                          </div>
-                        </div>                  
-                      </div>
-                      
-
-                      <div class="row">
-                          <div class="col-sm-8 mb-2">
-                              <span id="buttonDesktop" class="pl-1">
-                                  <button class="btn btn-primary col-12 col-sm-auto mb-md-0 mb-2" id="addButton" data-bs-toggle="modal" data-bs-target="#addProductModal">
-                                      <i class="fas fa-sign-in-alt fa-lg text-white-50"></i> Assign Admin
-                                  </button>
-                              </span>
-                          </div>
-                          <div class="col-sm-4">
-                              <div class="input-group">
-                                  <input type="text" class="form-control d-md-block" id="searchInput" onkeyup="handleSearch()" oninput="filterProducts()" placeholder="Cari Data Produk">
-                              </div>
-                          </div>
-                      </div>
-
-                      <div class="table-responsive mt-4">
-                        <table class="table-striped table-bordered table-hover table" width="100%" cellspacing="0">
-                            <thead class="bg-warna text-center">
-                                <tr>        
-                                    <th scope="col" class="px-6 py-3 text-xs font-medium uppercase text-white">No.</th>
-                                    <th scope="col" class="px-6 py-3 text-xs font-medium uppercase text-white">Admin</th>
-                                    <th scope="col" class="px-6 py-3 text-xs font-medium uppercase text-white">CTA</th>
-                                    <th scope="col" class="px-6 py-3 text-xs font-medium uppercase text-white">Action</th>
-                                </tr>
-                            </thead>
-
-                            <tbody id="tableBody" class="divide-y-0 divide-gray-200 bg-white sm:divide-y">
-                                <!-- Table rows will be inserted here by JavaScript -->
-                            </tbody>
-
-                        </table>
-                    </div>
-                    <div>
-                        <span id="paginationInfo" class="page-info text-sm text-gray-500">Showing null of null, Total Data : null</span>  
-                        <div class="float-right">
-                            <nav aria-label="Page navigation">
-                                <ul class="pagination">
-                                    <li class="page-item"><a class="page-link" href="#" id="startPage" onclick="goToPage(1)">First</a></li>
-                                    <li class="page-item"><a class="page-link" href="#" id="prevPage" onclick="goToPreviousPage()">Previous</a></li>
-                                    <li class="page-item"><a class="page-link" href="#" id="firstPage" onclick="goToPage(1)">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#" id="midPage" onclick="goToPage(2)">2</a></li>
-                                    <!-- <li class="page-item"><a class="page-link" href="#" id="thirdPage" onclick="goToPage(3)">3</a></li> -->
-                                    <li class="page-item"><a class="page-link" href="#"  id="nextPage" onclick="goToNextPage()">Next</a></li>
-                                    <li class="page-item"><a class="page-link" href="#"  id="lastPage" onclick="goToPage(3)">Last</a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                    
-                </main>
-            </div>
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <!-- Admin Card -->
+      <div class="bg-white rounded-lg shadow p-4 flex items-start">
+        <div class="bg-blue-500 p-3 rounded-full text-white mr-4">
+          <i class="far fa-user"></i>
         </div>
-    </section>
+        <div>
+          <h4 class="text-gray-500 text-sm font-medium">Admin</h4>
+          <p class="text-gray-800 text-xl font-semibold" id="totalAdmin">10</p>
+        </div>
+      </div>
+
+      <!-- CTA Hits Card -->
+      <div class="bg-white rounded-lg shadow p-4 flex items-start">
+        <div class="bg-red-500 p-3 rounded-full text-white mr-4">
+          <i class="far fa-newspaper"></i>
+        </div>
+        <div>
+          <h4 class="text-gray-500 text-sm font-medium">CTA hits</h4>
+          <p class="text-gray-800 text-xl font-semibold" id="totalCTA">42</p>
+        </div>
+      </div>
+
+      <!-- Leads Card -->
+      <div class="bg-white rounded-lg shadow p-4 flex items-start">
+        <div class="bg-yellow-500 p-3 rounded-full text-white mr-4">
+          <i class="far fa-file"></i>
+        </div>
+        <div>
+          <h4 class="text-gray-500 text-sm font-medium">Leads</h4>
+          <p class="text-gray-800 text-xl font-semibold" id="totalLeads">1,201</p>
+        </div>
+      </div>
+
+      <!-- Purchase Card -->
+      <div class="bg-white rounded-lg shadow p-4 flex items-start">
+        <div class="bg-green-500 p-3 rounded-full text-white mr-4">
+          <i class="fas fa-circle"></i>
+        </div>
+        <div>
+          <h4 class="text-gray-500 text-sm font-medium">Purchase</h4>
+          <p class="text-gray-800 text-xl font-semibold" id="totalClosing">47</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Bar -->
+    <div class="flex flex-col sm:flex-row justify-between gap-4 mb-6">
+      <div class="w-full sm:w-auto">
+        <button id="addButton"
+          class="flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          </svg>
+          Assign Admin
+        </button>
+
+      </div>
+      <div class="w-full sm:w-64">
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <i class="fas fa-search text-gray-400"></i>
+          </div>
+          <input type="text" id="searchInput" onkeyup="handleSearch()" oninput="filterProducts()"
+            placeholder="Cari Data Produk"
+            class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+        </div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
+      <!-- Desktop Table -->
+      <div class="hidden md:block overflow-x-auto">
+        <table class="w-full">
+          <thead class="bg-gray-50">
+            <tr class="text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th scope="col" class="px-6 py-3 text-left  ">No.
+              </th>
+              <th scope="col" class="px-6 py-3 text-left  ">
+                Admin</th>
+              <th scope="col" class="px-6 py-3 text-left  ">CTA
+              </th>
+              <th scope="col" class="px-6 py-3 text-left  ">
+                Action</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody" class="bg-white divide-y divide-gray-200">
+            <!-- Table rows will be inserted here by JavaScript -->
+            <tr>
+              <td colspan="4" class="px-6 py-4 text-center text-gray-500">Loading data...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-4 flex flex-col sm:flex-row items-center justify-between">
+      <span id="paginationInfo" class="text-sm text-gray-500 mb-4 sm:mb-0">Showing 0 of 0, Total Data: 0</span>
+
+      <nav class="flex items-center space-x-1">
+        <button id="startPage" onclick="goToPage(1)"
+          class="px-3 py-1 border border-gray-300 rounded text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+          First
+        </button>
+        <button id="prevPage" onclick="goToPreviousPage()"
+          class="px-3 py-1 border border-gray-300 rounded text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+          Previous
+        </button>
+        <button id="firstPage" onclick="goToPage(1)"
+          class="px-3 py-1 border border-gray-300 rounded text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+          1
+        </button>
+        <button id="midPage" onclick="goToPage(2)"
+          class="px-3 py-1 border border-gray-300 rounded text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+          2
+        </button>
+        <button id="nextPage" onclick="goToNextPage()"
+          class="px-3 py-1 border border-gray-300 rounded text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+          Next
+        </button>
+        <button id="lastPage" onclick="goToPage(3)"
+          class="px-3 py-1 border border-gray-300 rounded text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+          Last
+        </button>
+      </nav>
+    </div>
+</div>
+</div>
+</section>
 </div>

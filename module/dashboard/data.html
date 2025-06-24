@@ -1,3 +1,4 @@
+<!-- Tambahkan di dalam elemen kamu -->
 <div class="px-6 py-6">
   <!-- Header Section -->
   <div class="mb-8">
@@ -17,6 +18,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
       <!-- Form Section -->
       <div class="space-y-4">
+        <!-- Form untuk quick link (tetap seperti sebelumnya) -->
         <form id="dataform" class="space-y-4">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
@@ -51,18 +53,94 @@
             </div>
           </div>
         </form>
+
+        <!-- 🔥 Form filter grafik -->
+        <!-- Form Input Period -->
+        <form id="chartForm" class="mb-6 space-y-4 bg-gray-50 p-4 rounded-lg border">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="period" class="text-sm font-medium text-gray-700">Period</label>
+              <select id="period" name="period" class="w-full border rounded px-3 py-2">
+                <option value="weekly" selected>Weekly</option>
+                <option value="monthly">Monthly</option>
+                <option value="yearly">Yearly</option>
+              </select>
+            </div>
+            <div>
+              <label for="weekOffset" class="text-sm font-medium text-gray-700">Offset (Week/Month/Year)</label>
+              <div class="flex space-x-2">
+                <button type="button" id="prevBtn"
+                  class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors duration-200">
+                  <i class="fas fa-chevron-left mr-2"></i> Prev
+                </button>
+                <button type="button" id="nextBtn"
+                  class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors duration-200">
+                  Next <i class="fas fa-chevron-right ml-2"></i>
+                </button>
+              </div>
+              <input type="hidden" id="weekOffset" name="weekOffset" value="0">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="startDate" class="text-sm font-medium text-gray-700">Start Date</label>
+              <input type="date" id="startDate" name="startDate" value="2025-03-01"
+                class="w-full border rounded px-3 py-2">
+            </div>
+            <div>
+              <label for="endDate" class="text-sm font-medium text-gray-700">End Date</label>
+              <input type="date" id="endDate" name="endDate" value="2025-03-07" class="w-full border rounded px-3 py-2">
+            </div>
+          </div>
+
+          <button type="submit"
+            class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded w-full sm:w-auto">
+            Tampilkan Grafik
+          </button>
+        </form>
+
       </div>
 
       <!-- Chart Section -->
       <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
         <div class="mb-6">
           <h3 class="text-lg font-semibold text-gray-800">Click Statistics</h3>
-          <p class="text-sm text-gray-500">Last 30 days performance</p>
+          <p class="text-sm text-gray-500" id="chartSubtitle">Last 7 days performance</p>
         </div>
-        <div class="h-64">
-          <canvas id="combinedChart"></canvas>
+        <div class="h-64 relative">
+          <canvas id="chartCanvas"></canvas>
+          <div id="loadingSpinner"
+            class="loading-spinner absolute inset-0 flex items-center justify-center bg-white bg-opacity-80">
+            <div class="text-center">
+              <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto"></div>
+              <p class="mt-2 text-gray-600">Memuat data...</p>
+            </div>
+          </div>
+          <div id="errorMessage" class="hidden text-center py-10 text-red-500">
+            <i class="fas fa-exclamation-triangle text-2xl mb-2"></i>
+            <p>Gagal memuat data grafik</p>
+          </div>
+        </div>
+
+        <!-- Info Tambahan -->
+        <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="bg-blue-50 p-3 rounded-lg">
+            <p class="text-sm text-blue-600">Total Kunjungan</p>
+            <p class="text-xl font-semibold text-blue-800" id="totalVisitors">0</p>
+          </div>
+          <div class="bg-green-50 p-3 rounded-lg">
+            <p class="text-sm text-green-600">Rata-rata/Hari</p>
+            <p class="text-xl font-semibold text-green-800" id="avgVisitors">0</p>
+          </div>
+          <div class="bg-purple-50 p-3 rounded-lg">
+            <p class="text-sm text-purple-600">Periode</p>
+            <p class="text-xl font-semibold text-purple-800" id="periodLabel">-</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<!-- SCRIPT --> 

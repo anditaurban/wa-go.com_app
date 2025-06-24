@@ -2,6 +2,7 @@
 let dataItems = null;
 let colSpanCount = null;
 let currentDataType = null;
+let sampleData = [];
 
 // Set the current data type
 function setDataType(type) {
@@ -20,6 +21,19 @@ function setDataType(type) {
   }
 
   console.log("Current state:", state[currentDataType]);
+
+  // ⬇️ Tambahkan ini supaya data ter-*fetch* ulang saat ganti tab
+  resetPaginationAndSearch();
+  fetchAndUpdateData();
+}
+
+function resetPaginationAndSearch() {
+  const searchInput = document.getElementById("searchInput");
+  if (searchInput) searchInput.value = "";
+
+  if (state[currentDataType]) {
+    state[currentDataType].currentPage = 1;
+  }
 }
 
 // ---------------------------------------
@@ -44,7 +58,10 @@ async function fetchAndUpdateData(id = null) {
       throw new Error("Invalid response from the API");
     }
 
+    // Simpan hasil fetch ke variabel global agar bisa digunakan oleh search
     dataItems = response.tableData;
+    sampleData = [...dataItems]; // ✅ Tambahan penting
+
     console.log("Data items set:", dataItems);
 
     updateState(response);
@@ -65,13 +82,14 @@ async function fetchAndUpdateData(id = null) {
 function showLoadingSpinner(tableBody) {
   checksession();
   tableBody.innerHTML = `
-        <tr>
-            <td colspan="${colSpanCount}">
-                <div style="display: block; text-align: center;">
-                    <div class="spinner-border" role="status"></div>
-                </div>
-            </td>
-        </tr>`;
+    <tr>
+      <td colspan="${colSpanCount}">
+        <div class="flex justify-center items-center py-8">
+          <div class="w-8 h-8 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+        </div>
+      </td>
+    </tr>
+  `;
 }
 
 function updateState(response) {
@@ -519,4 +537,11 @@ function handleStop(id) {
         });
     }
   });
+}
+
+function resetPaginationAndSearch() {
+  document.getElementById("searchInput").value = "";
+  if (state[currentDataType]) {
+    state[currentDataType].currentPage = 1;
+  }
 }

@@ -3,6 +3,8 @@ colSpanCount = 7;
 
 setDataType("tracking");
 
+fetchAndUpdateData();
+
 window.rowTemplate = function (item, index) {
   return `
     <tr class="mb-4 flex flex-col rounded-lg border shadow-md sm:mb-0 sm:table-row sm:border-none sm:shadow-none">
@@ -170,12 +172,12 @@ async function toggleStatus(id, checked) {
     );
 
     // Tetap lanjut update data & tampilkan sukses, tanpa cek response.ok
-    const index = allTrackingData.findIndex((item) => item.tool_id === id);
+    const index = sampleData.findIndex((item) => item.tool_id === id);
     if (index !== -1) {
-      allTrackingData[index].status = newStatus;
+      sampleData[index].status = newStatus;
     }
 
-    filteredTrackingData = [...allTrackingData];
+    filteredTrackingData = [...sampleData];
     renderTablePage();
 
     // ✅ SweetAlert sukses SELALU ditampilkan
@@ -230,3 +232,42 @@ document.addEventListener("click", function (event) {
     });
   }
 });
+
+document.getElementById("searchInput").addEventListener("input", function () {
+  const keyword = this.value.toLowerCase();
+  const tbody =
+    document.querySelector("#dataTable tbody") ||
+    document.querySelector("#tableBody");
+
+  if (!keyword) {
+    filteredtrackingData = [...sampleData]; // reset data filter
+    renderTablePage(filteredtrackingData);
+    return;
+  }
+
+  showLoadingSpinner(tbody);
+
+  setTimeout(() => {
+    const filteredData = sampleData.filter((item) =>
+      item.description.toLowerCase().includes(keyword)
+    );
+
+    filteredtrackingData = filteredData; // update data yang sedang ditampilkan
+    renderFilteredTable(filteredData);
+  }, 300);
+});
+
+function renderFilteredTable(data) {
+  const tbody =
+    document.querySelector("#dataTable tbody") ||
+    document.querySelector("#tableBody");
+  tbody.innerHTML = "";
+
+  if (data.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="${colSpanCount}" class="text-center text-gray-400 py-6">Tidak ada data ditemukan.</td></tr>`;
+  } else {
+    data.forEach((item, index) => {
+      tbody.insertAdjacentHTML("beforeend", rowTemplate(item, index));
+    });
+  }
+}

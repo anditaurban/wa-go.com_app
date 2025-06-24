@@ -128,6 +128,19 @@ function loadModuleContent(module, Id, Detail) {
 
       currentScript = document.createElement("script");
       currentScript.src = `./module/${module}/script.js?v=${new Date().getTime()}`;
+      currentScript.onload = () => {
+        console.log(`✅ script.js for ${module} loaded`);
+
+        // ⬇️ Load chart.js kalau modulnya dashboard
+        if (module === "dashboard") {
+          loadScript(
+            `./module/dashboard/script.js?v=${new Date().getTime()}`,
+            () => {
+              console.log("✅ chart.js loaded");
+            }
+          );
+        }
+      };
       document.body.appendChild(currentScript);
     })
     .catch((error) => {

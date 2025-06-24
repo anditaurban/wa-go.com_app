@@ -1,6 +1,8 @@
 pagemodule = "Pretext";
 colSpanCount = 5;
 
+fetchAndUpdateData();
+
 setDataType("pretext");
 
 window.rowTemplate = function (item, index) {
@@ -28,19 +30,27 @@ window.rowTemplate = function (item, index) {
               transition-transform duration-300 transform peer-checked:translate-x-5"></div>
         </label>
       </td>
-      <td class="border-b px-6 py-4 text-sm text-gray-700 sm:table-cell sm:border-b-0 text-left">
-        <div class="flex gap-2">
-          <button onclick="handleEdit('${
-            item.text_id
-          }', '${item.description.replace(/'/g, "\\'")}')" 
-            class="inline-flex items-center rounded bg-yellow-500 px-3 py-1 text-white hover:bg-yellow-600 focus:outline-none">
-            Edit
-          </button>
-          <button onclick="handleDelete('${item.text_id}')" 
-            class="inline-flex items-center rounded bg-red-600 px-3 py-1 text-white hover:bg-red-700 focus:outline-none">
-            Hapus
-          </button>
-        </div>
+<td class="px-6 py-4 text-sm text-gray-500 text-center relative">
+  <div class="relative inline-block">
+    <button class="action-btn p-1 rounded hover:bg-gray-200 focus:outline-none" 
+            onclick="toggleAdminDropdown('${item.text_id}', event)">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+        <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+      </svg>
+    </button>
+    <div id="dropdown-${item.text_id}" 
+         class="dropdown-menu hidden absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+      <button onclick="handleEdit('${item.text_id}', event)" 
+              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left">
+        <i class="fas fa-edit mr-2"></i> Edit
+      </button>
+      <button onclick="handleDelete('${item.text_id}', event)" 
+              class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 w-full text-left">
+        <i class="fas fa-trash-alt mr-2"></i> Delete
+      </button>
+    </div>
+  </div>
+</td>
       </td>
     </tr>
   `;
@@ -125,12 +135,12 @@ async function toggleStatus(id, checked) {
     );
 
     // Tetap lanjut update data & tampilkan sukses, tanpa cek response.ok
-    const index = allpretextData.findIndex((item) => item.text_id === id);
+    const index = sampleData.findIndex((item) => item.text_id === id);
     if (index !== -1) {
-      allpretextData[index].status = newStatus;
+      sampleData[index].status = newStatus;
     }
 
-    filteredpretextData = [...allpretextData];
+    filteredpretextData = [...sampleData];
     renderTablePage();
 
     // ✅ SweetAlert sukses SELALU ditampilkan
@@ -155,6 +165,68 @@ async function toggleStatus(id, checked) {
       }!`,
       timer: 2000,
       showConfirmButton: false,
+    });
+  }
+}
+
+function toggleAdminDropdown(id, event) {
+  event.stopPropagation(); // Prevent event bubbling
+  const dropdown = document.getElementById(`dropdown-${id}`);
+  document.querySelectorAll(".dropdown-menu").forEach((menu) => {
+    if (menu.id !== `dropdown-${id}`) menu.classList.add("hidden");
+  });
+  dropdown.classList.toggle("hidden");
+}
+
+// Close dropdowns when clicking outside
+document.addEventListener("click", (event) => {
+  if (
+    !event.target.closest(".action-btn") &&
+    !event.target.closest(".dropdown-menu")
+  ) {
+    document.querySelectorAll(".dropdown-menu").forEach((menu) => {
+      menu.classList.add("hidden");
+    });
+  }
+});
+
+document.getElementById("searchInput").addEventListener("input", function () {
+  const keyword = this.value.toLowerCase();
+  const tbody =
+    document.querySelector("#dataTable tbody") ||
+    document.querySelector("#tableBody");
+
+  if (!keyword) {
+    filteredpretextData = [...sampleData]; // reset data filter
+    renderTablePage(filteredpretextData);
+    return;
+  }
+
+  showLoadingSpinner(tbody);
+
+  setTimeout(() => {
+    const filteredData = sampleData.filter(
+      (item) =>
+        item.description.toLowerCase().includes(keyword) ||
+        item.text.toLowerCase().includes(keyword)
+    );
+
+    filteredpretextData = filteredData; // update data yang sedang ditampilkan
+    renderFilteredTable(filteredData);
+  }, 300);
+});
+
+function renderFilteredTable(data) {
+  const tbody =
+    document.querySelector("#dataTable tbody") ||
+    document.querySelector("#tableBody");
+  tbody.innerHTML = "";
+
+  if (data.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="${colSpanCount}" class="text-center text-gray-400 py-6">Tidak ada data ditemukan.</td></tr>`;
+  } else {
+    data.forEach((item, index) => {
+      tbody.insertAdjacentHTML("beforeend", rowTemplate(item, index));
     });
   }
 }

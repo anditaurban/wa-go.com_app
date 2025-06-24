@@ -1,192 +1,189 @@
 <main class="px-6 py-6">
-  <!-- Page Title -->
-  <div class="mb-8">
-    <h2 class="text-4xl font-semibold text-gray-800">PreText</h2>
-    <div class="mt-1 h-1 w-12 bg-yellow-500 rounded-full"></div>
-  </div>
+    <!-- Page Title -->
+    <div class="mb-8">
+        <h2 class="text-4xl font-semibold text-gray-800">PreText</h2>
+        <div class="mt-1 h-1 w-12 bg-yellow-500 rounded-full"></div>
+    </div>
 
-  <!-- Notification Banner -->
-  <div id="pretextAlert" class="relative bg-teal-50 border border-teal-100 rounded-xl p-5 mb-6">
-    <button onclick="document.getElementById('pretextAlert').remove()"
-      class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 transition-colors">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-        <path fill-rule="evenodd"
-          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-          clip-rule="evenodd" />
-      </svg>
-    </button>
-    <h2 class="text-lg font-semibold text-gray-800 mb-2">PreText Module</h2>
-    <p class="text-sm text-gray-600">
-      Manage your pretext templates for efficient campaign engagement across platforms.
-    </p>
-  </div>
+    <!-- Notification Banner -->
+    <div id="pretextAlert" class="relative bg-teal-50 border border-teal-100 rounded-xl p-5 mb-6">
+        <button onclick="document.getElementById('pretextAlert').remove()"
+            class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clip-rule="evenodd" />
+            </svg>
+        </button>
+        <h2 class="text-lg font-semibold text-gray-800 mb-2">PreText Module</h2>
+        <p class="text-sm text-gray-600">
+            Manage your pretext templates for efficient campaign engagement across platforms.
+        </p>
+    </div>
 
-  <!-- Action Bar -->
-  <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
-    <button id="addButton"
-      class="flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-      </svg>
-      Add New PreText
-    </button>
+    <!-- Action Bar -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+        <button id="addButton"
+            class="flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            Add New PreText
+        </button>
 
-    <div class="w-full md:w-64">
-      <div class="relative">
-        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24"
-            stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
+        <div class="w-full md:w-64">
+            <div class="relative">
+                <input type="text" id="searchInput" placeholder="Search..."
+                    class="pl-10 w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-teal-100 text-sm">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    🔍
+                </div>
+            </div>
         </div>
-        <input type="text" id="searchInput" placeholder="Search pretext..."
-          class="pl-10 w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-100 focus:border-teal-400 text-sm">
-      </div>
-    </div>
-  </div>
-
-  <!-- Table Section -->
-  <div class="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
-    <!-- Desktop Table -->
-    <div class="hidden md:block overflow-x-auto">
-      <table class="w-full">
-        <thead class="bg-gray-50">
-          <tr class="text-xs font-medium text-gray-500 uppercase tracking-wider">
-            <th class="px-6 py-3 text-left">No</th>
-            <th class="px-6 py-3 text-left">Name</th>
-            <th class="px-6 py-3 text-left">PreText</th>
-            <th class="px-6 py-3 text-left">Status</th>
-            <th class="px-6 py-3 text-left">Action</th>
-          </tr>
-        </thead>
-        <tbody id="tableBody" class="bg-white divide-y divide-gray-200"></tbody>
-      </table>
     </div>
 
-    <!-- Mobile Cards -->
-    <div id="adminCardsContainer" class="md:hidden space-y-3 p-4"></div>
-  </div>
+    <!-- Table Section -->
+    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
+        <!-- Desktop Table -->
+        <div class="hidden md:block overflow-x-auto">
+            <table id="dataTable" class="w-full">
+                <thead class="bg-gray-50">
+                    <tr class="text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th class="px-6 py-3 text-left">No</th>
+                        <th class="px-6 py-3 text-left">Name</th>
+                        <th class="px-6 py-3 text-left">PreText</th>
+                        <th class="px-6 py-3 text-left">Status</th>
+                        <th class="px-6 py-3 text-left">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody" class="bg-white divide-y divide-gray-200"></tbody>
+            </table>
+        </div>
 
-  <!-- Pagination -->
-  <div class="flex flex-col md:flex-row justify-between items-center mt-6">
-    <div class="text-sm text-gray-500 mb-4 md:mb-0">
-      Showing <span id="trackingStart">1</span> - <span id="trackingEnd">10</span> of
-      <span id="trackingTotal">0</span> templates
+        <!-- Mobile Cards -->
+        <div id="adminCardsContainer" class="md:hidden space-y-3 p-4"></div>
     </div>
 
-    <nav class="flex items-center gap-1">
-      <button id="firstPage"
-        class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50">
-        First
-      </button>
-      <button id="prevPage"
-        class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50">
-        Previous
-      </button>
-      <button id="nextPage"
-        class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50">
-        Next
-      </button>
-      <button id="lastPage"
-        class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50">
-        Last
-      </button>
-    </nav>
-  </div>
+    <!-- Pagination -->
+    <div class="flex flex-col md:flex-row justify-between items-center mt-6">
+        <div class="text-sm text-gray-500 mb-4 md:mb-0">
+            Showing <span id="trackingStart">1</span> - <span id="trackingEnd">10</span> of
+            <span id="trackingTotal">0</span> templates
+        </div>
+
+        <nav class="flex items-center gap-1">
+            <button id="firstPage"
+                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50">
+                First
+            </button>
+            <button id="prevPage"
+                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50">
+                Previous
+            </button>
+            <button id="nextPage"
+                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50">
+                Next
+            </button>
+            <button id="lastPage"
+                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50">
+                Last
+            </button>
+        </nav>
+    </div>
 </main>
 
 <!-- PreText Form Modal -->
 <div id="adminFormModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-  <div class="bg-white rounded-xl p-6 w-full max-w-md">
-    <div class="flex justify-between items-center mb-4">
-      <h3 class="text-lg font-semibold">Add New PreText</h3>
-      <button onclick="document.getElementById('adminFormModal').classList.add('hidden')"
-        class="text-gray-400 hover:text-gray-600">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-          stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
+    <div class="bg-white rounded-xl p-6 w-full max-w-md">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-semibold">Add New PreText</h3>
+            <button onclick="document.getElementById('adminFormModal').classList.add('hidden')"
+                class="text-gray-400 hover:text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+
+        <form id="addform" class="space-y-4">
+            <div>
+                <label for="cs_admin" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                <input type="text" id="cs_admin" placeholder="PreText name"
+                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-100 focus:border-teal-400 text-sm">
+            </div>
+
+            <div>
+                <label for="create_phone" class="block text-sm font-medium text-gray-700 mb-1">Message Content</label>
+                <textarea id="create_phone" placeholder="PreText message..."
+                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-100 focus:border-teal-400 text-sm"></textarea>
+            </div>
+
+            <div class="flex justify-end gap-3 pt-2">
+                <button type="button" onclick="document.getElementById('adminFormModal').classList.add('hidden')"
+                    class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">
+                    Cancel
+                </button>
+                <button type="submit"
+                    class="px-4 py-2 bg-teal-600 hover:bg-teal-700 rounded-lg text-sm font-medium text-white shadow-sm">
+                    Save PreText
+                </button>
+            </div>
+        </form>
     </div>
-
-    <form id="addform" class="space-y-4">
-      <div>
-        <label for="cs_admin" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
-        <input type="text" id="cs_admin" placeholder="PreText name"
-          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-100 focus:border-teal-400 text-sm">
-      </div>
-
-      <div>
-        <label for="create_phone" class="block text-sm font-medium text-gray-700 mb-1">Message Content</label>
-        <textarea id="create_phone" placeholder="PreText message..."
-          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-100 focus:border-teal-400 text-sm"></textarea>
-      </div>
-
-      <div class="flex justify-end gap-3 pt-2">
-        <button type="button" onclick="document.getElementById('adminFormModal').classList.add('hidden')"
-          class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">
-          Cancel
-        </button>
-        <button type="submit"
-          class="px-4 py-2 bg-teal-600 hover:bg-teal-700 rounded-lg text-sm font-medium text-white shadow-sm">
-          Save PreText
-        </button>
-      </div>
-    </form>
-  </div>
 </div>
 
 <!-- Floating Action Menu (dummy, can be styled further) -->
 <div id="floatingAction" class="hidden fixed bg-white shadow-md border rounded-md z-50">
-  <button id="editBtn" class="block px-4 py-2 w-full text-left hover:bg-gray-100">Edit</button>
-  <button id="deleteBtn" class="block px-4 py-2 w-full text-left hover:bg-red-50 text-red-600">Delete</button>
+    <button id="editBtn" class="block px-4 py-2 w-full text-left hover:bg-gray-100">Edit</button>
+    <button id="deleteBtn" class="block px-4 py-2 w-full text-left hover:bg-red-50 text-red-600">Delete</button>
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const floatingAction = document.getElementById('floatingAction');
-    let selectedAdminId = null;
+    document.addEventListener('DOMContentLoaded', () => {
+        const floatingAction = document.getElementById('floatingAction');
+        let selectedAdminId = null;
 
-    // Show floating menu on row click
-    const tableBody = document.getElementById('tableBody');
-    if (tableBody) {
-      tableBody.addEventListener('click', function (e) {
-        const row = e.target.closest('tr');
-        if (row && row.dataset.id) {
-          selectedAdminId = row.dataset.id;
-          const rect = row.getBoundingClientRect();
-          floatingAction.style.top = `${window.scrollY + rect.bottom}px`;
-          floatingAction.style.left = `${rect.left + rect.width - 160}px`;
-          floatingAction.classList.remove('hidden');
+        // Show floating menu on row click
+        const tableBody = document.getElementById('tableBody');
+        if (tableBody) {
+            tableBody.addEventListener('click', function (e) {
+                const row = e.target.closest('tr');
+                if (row && row.dataset.id) {
+                    selectedAdminId = row.dataset.id;
+                    const rect = row.getBoundingClientRect();
+                    floatingAction.style.top = `${window.scrollY + rect.bottom}px`;
+                    floatingAction.style.left = `${rect.left + rect.width - 160}px`;
+                    floatingAction.classList.remove('hidden');
+                }
+            });
         }
-      });
-    }
 
-    // Hide on outside click
-    document.addEventListener('click', function (e) {
-      if (!e.target.closest('tr') && !e.target.closest('#floatingAction')) {
-        floatingAction.classList.add('hidden');
-      }
-    });
+        // Hide on outside click
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('tr') && !e.target.closest('#floatingAction')) {
+                floatingAction.classList.add('hidden');
+            }
+        });
 
-    document.getElementById('editBtn').addEventListener('click', () => {
-      if (selectedAdminId) {
-        alert(`Edit PreText ID: ${selectedAdminId}`);
-        floatingAction.classList.add('hidden');
-      }
-    });
+        document.getElementById('editBtn').addEventListener('click', () => {
+            if (selectedAdminId) {
+                alert(`Edit PreText ID: ${selectedAdminId}`);
+                floatingAction.classList.add('hidden');
+            }
+        });
 
-    document.getElementById('deleteBtn').addEventListener('click', () => {
-      if (selectedAdminId && confirm(`Delete PreText ID: ${selectedAdminId}?`)) {
-        alert(`PreText ${selectedAdminId} deleted`);
-        floatingAction.classList.add('hidden');
-      }
-    });
+        document.getElementById('deleteBtn').addEventListener('click', () => {
+            if (selectedAdminId && confirm(`Delete PreText ID: ${selectedAdminId}?`)) {
+                alert(`PreText ${selectedAdminId} deleted`);
+                floatingAction.classList.add('hidden');
+            }
+        });
 
-    // Show form modal
-    document.getElementById('addButton').addEventListener('click', () => {
-      document.getElementById('adminFormModal').classList.remove('hidden');
+        // Show form modal
+        document.getElementById('addButton').addEventListener('click', () => {
+            document.getElementById('adminFormModal').classList.remove('hidden');
+        });
     });
-  });
 </script>

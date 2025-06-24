@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wago - Solusi Distribusi Leads Otomatis Premium</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            @apply bg-white text-gray-800;
+            scroll-behavior: smooth;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #0F766E 0%, #047857 100%);
+        }
+
+        .btn-primary {
+            @apply bg-gray-900 text-white px-8 py-4 rounded-full font-medium hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl;
+        }
+
+        .btn-secondary {
+            @apply border-2 border-gray-900 text-gray-900 px-8 py-4 rounded-full font-medium hover:bg-gray-900 hover:text-white transition-all duration-300 hover:shadow-lg;
+        }
+
+        .feature-card {
+            @apply bg-white p-8 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 hover:border-emerald-100;
+        }
+
+        .testimonial-card {
+            @apply bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300;
+        }
+
+        .pricing-card {
+            @apply bg-white p-10 rounded-2xl shadow-sm border border-gray-200 hover:shadow-lg transition-all duration-300 hover:border-emerald-200;
+        }
+
+        .nav-link {
+            @apply relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-emerald-500 after:transition-all after:duration-300 hover:after:w-full;
+        }
+
+        .faq-item {
+            @apply bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300;
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+    <!-- Navbar -->
+    <nav class="bg-white/80 glass-effect sticky top-0 z-50 shadow-sm backdrop-blur-md">
+        <div class="container mx-auto px-6 py-5">
+            <div class="flex justify-between items-center">
+                <div class="text-3xl font-bold text-gray-900 flex items-center">
+                    <span class="bg-emerald-600 text-white p-2 rounded-lg mr-2">W</span>
+                    <span>ago</span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden lg:flex items-center space-x-10">
+                    <a href="#"
+                        class="nav-link font-medium text-gray-700 hover:text-emerald-600 transition py-2">Beranda</a>
+                    <a href="#features"
+                        class="nav-link font-medium text-gray-700 hover:text-emerald-600 transition py-2">Fitur</a>
+                    <a href="#testimonials"
+                        class="nav-link font-medium text-gray-700 hover:text-emerald-600 transition py-2">Testimoni</a>
+                    <a href="#pricing"
+                        class="nav-link font-medium text-gray-700 hover:text-emerald-600 transition py-2">Harga</a>
+                    <div class="flex items-center space-x-6 ml-6">
+                        <a href="login.html"
+                            class="font-medium text-gray-700 hover:text-emerald-600 transition">Masuk</a>
+                        <a href="register.html" class="btn-primary">Daftar Gratis</a>
+                    </div>
+                </div>
+
+                <!-- Mobile Toggle -->
+                <button id="mobileMenuButton" class="lg:hidden text-gray-700 focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden fixed inset-0 bg-white z-50 flex flex-col p-8">
+        <div class="flex justify-between items-center mb-12">
+            <div class="text-3xl font-bold text-gray-900 flex items-center">
+                <span class="bg-emerald-600 text-white p-2 rounded-lg mr-2">W</span>
+                <span>ago</span>
+            </div>
+            <button id="closeMobileMenu" class="text-gray-700 focus:outline-none">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+        </div>
+
+        <div class="flex flex-col space-y-8">
+            <a href="#" class="text-2xl font-medium text-gray-700 hover:text-emerald-600 transition">Beranda</a>
+            <a href="#features" class="text-2xl font-medium text-gray-700 hover:text-emerald-600 transition">Fitur</a>
+            <a href="#testimonials"
+                class="text-2xl font-medium text-gray-700 hover:text-emerald-600 transition">Testimoni</a>
+            <a href="#pricing" class="text-2xl font-medium text-gray-700 hover:text-emerald-600 transition">Harga</a>
+
+            <div class="pt-8 border-t border-gray-200 mt-8">
+                <a href="login.html"
+                    class="block text-2xl font-medium text-gray-700 hover:text-emerald-600 mb-6 transition">Masuk</a>
+                <a href="register.html" class="btn-primary w-full text-center py-4 text-lg">Daftar Gratis</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg text-white overflow-hidden">
+        <div class="container mx-auto px-6 py-24 md:py-36 relative">
+            <!-- Decorative elements -->
+            <div class="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10">
+                <div
+                    class="absolute top-20 left-20 w-64 h-64 rounded-full bg-emerald-300 mix-blend-multiply filter blur-3xl">
+                </div>
+                <div
+                    class="absolute bottom-20 right-20 w-64 h-64 rounded-full bg-emerald-400 mix-blend-multiply filter blur-3xl">
+                </div>
+            </div>
+
+            <div class="relative flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-16 lg:mb-0">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-8">
+                        <span class="block">Distribusi Leads</span>
+                        <span class="block text-emerald-200">Otomatis & Cerdas</span>
+                    </h1>
+                    <p class="text-xl lg:text-2xl mb-10 opacity-90 leading-relaxed">
+                        Optimalkan konversi iklan WhatsApp dengan sistem distribusi leads otomatis yang adil dan efisien
+                        untuk tim sales Anda.
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
+                        <a href="#" class="btn-primary">Mulai Sekarang</a>
+                        <a href="#" class="btn-secondary">Lihat Demo <i class="fas fa-play-circle ml-2"></i></a>
+                    </div>
+
+                    <div class="mt-12 flex items-center space-x-4">
+                        <div class="flex -space-x-2">
+                            <img src="https://randomuser.me/api/portraits/women/12.jpg"
+                                class="w-10 h-10 rounded-full border-2 border-white" alt="User">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg"
+                                class="w-10 h-10 rounded-full border-2 border-white" alt="User">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg"
+                                class="w-10 h-10 rounded-full border-2 border-white" alt="User">
+                        </div>
+                        <div>
+                            <div class="flex items-center">
+                                <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                <i class="fas fa-star text-yellow-400 mr-1"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                            </div>
+                            <p class="text-sm opacity-80">Trusted by 500+ businesses</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 lg:pl-16">
+                    <div class="relative">
+                        <div class="absolute -top-6 -left-6 w-full h-full rounded-2xl border-2 border-emerald-400 z-0">
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                            alt="Dashboard Wago"
+                            class="relative z-10 rounded-2xl shadow-2xl w-full h-auto transform hover:scale-105 transition duration-500">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Logo Cloud -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <p class="text-center text-gray-500 mb-12">Dipercaya oleh perusahaan-perusahaan ternama</p>
+            <div class="flex flex-wrap justify-center items-center gap-12 md:gap-20 opacity-70">
+                <img src="https://logo.clearbit.com/tokopedia.com" alt="Tokopedia" class="h-8">
+                <img src="https://logo.clearbit.com/bukalapak.com" alt="Bukalapak" class="h-8">
+                <img src="https://logo.clearbit.com/traveloka.com" alt="Traveloka" class="h-8">
+                <img src="https://logo.clearbit.com/blibli.com" alt="Blibli" class="h-8">
+                <img src="https://logo.clearbit.com/shopee.co.id" alt="Shopee" class="h-8">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-28 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20 max-w-4xl mx-auto">
+                <span
+                    class="inline-block px-4 py-2 bg-emerald-100 text-emerald-700 rounded-full text-sm font-medium mb-4">FITUR
+                    UNGGULAN</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                    Solusi Lengkap untuk Meningkatkan Konversi
+                </h2>
+                <p class="text-xl text-gray-600 leading-relaxed">
+                    Wago menyederhanakan manajemen leads dan mengoptimalkan performa tim sales Anda dengan teknologi
+                    canggih.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="feature-card" data-aos="fade-up">
+                    <div
+                        class="bg-emerald-100 text-emerald-600 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 text-3xl">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Distribusi Otomatis</h3>
+                    <p class="text-gray-600 mb-6">
+                        Sistem cerdas kami mendistribusikan leads secara merata ke tim sales berdasarkan berbagai
+                        parameter yang bisa disesuaikan.
+                    </p>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-emerald-500 mt-1 mr-3"></i>
+                            <span>Round-robin distribution</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-emerald-500 mt-1 mr-3"></i>
+                            <span>Performance-based routing</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-emerald-500 mt-1 mr-3"></i>
+                            <span>Custom rules engine</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div
+                        class="bg-emerald-100 text-emerald-600 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 text-3xl">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Analitik Real-time</h3>
+                    <p class="text-gray-600 mb-6">
+                        Lacak setiap interaksi dan konversi dengan dashboard analitik yang komprehensif dan mudah
+                        dipahami.
+                    </p>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-emerald-500 mt-1 mr-3"></i>
+                            <span>Conversion tracking</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-emerald-500 mt-1 mr-3"></i>
+                            <span>Agent performance</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-emerald-500 mt-1 mr-3"></i>
+                            <span>Custom reporting</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div
+                        class="bg-emerald-100 text-emerald-600 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 text-3xl">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Optimasi Iklan</h3>
+                    <p class="text-gray-600 mb-6">
+                        Maksimalkan ROI iklan WhatsApp dengan fitur canggih yang membantu Anda memahami perilaku
+                        prospek.
+                    </p>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-emerald-500 mt-1 mr-3"></i>
+                            <span>Click-to-chat generator</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-emerald-500 mt-1 mr-3"></i>
+                            <span>Facebook pixel integration</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-emerald-500 mt-1 mr-3"></i>
+                            <span>UTM tracking</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-28 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-16 lg:mb-0 lg:pr-16">
+                    <span
+                        class="inline-block px-4 py-2 bg-emerald-100 text-emerald-700 rounded-full text-sm font-medium mb-4">CARA
+                        KERJA</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                        Hanya 3 Langkah Sederhana untuk Efisiensi Maksimal
+                    </h2>
+                    <p class="text-xl text-gray-600 mb-10 leading-relaxed">
+                        Wago dirancang untuk kemudahan penggunaan tanpa mengorbankan fitur-fitur canggih yang Anda
+                        butuhkan.
+                    </p>
+
+                    <div class="space-y-8">
+                        <!-- Step 1 -->
+                        <div class="flex" data-aos="fade-right">
+                            <div
+                                class="bg-emerald-100 text-emerald-600 w-16 h-16 rounded-2xl flex items-center justify-center mr-6 text-2xl font-bold flex-shrink-0">
+                                1
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-3">Hubungkan WhatsApp</h3>
+                                <p class="text-gray-600">
+                                    Sambungkan akun WhatsApp bisnis Anda dengan platform Wago dalam hitungan menit.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="flex" data-aos="fade-right" data-aos-delay="100">
+                            <div
+                                class="bg-emerald-100 text-emerald-600 w-16 h-16 rounded-2xl flex items-center justify-center mr-6 text-2xl font-bold flex-shrink-0">
+                                2
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-3">Atur Distribusi</h3>
+                                <p class="text-gray-600">
+                                    Konfigurasi aturan distribusi leads sesuai kebutuhan spesifik tim Anda.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="flex" data-aos="fade-right" data-aos-delay="200">
+                            <div
+                                class="bg-emerald-100 text-emerald-600 w-16 h-16 rounded-2xl flex items-center justify-center mr-6 text-2xl font-bold flex-shrink-0">
+                                3
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-3">Mulai Terima Leads</h3>
+                                <p class="text-gray-600">
+                                    Leads akan otomatis terdistribusi ke tim sales Anda dengan adil dan efisien.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2">
+                    <div class="relative">
+                        <div class="absolute -top-6 -right-6 w-full h-full rounded-2xl border-2 border-emerald-400 z-0">
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                            alt="How Wago Works" class="relative z-10 rounded-2xl shadow-xl w-full h-auto">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="py-20 gradient-bg text-white">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8 text-center">
+                <!-- Stat 1 -->
+                <div class="py-8" data-aos="fade-up">
+                    <div class="text-5xl font-bold mb-4">500+</div>
+                    <div class="text-xl opacity-90">Perusahaan</div>
+                </div>
+
+                <!-- Stat 2 -->
+                <div class="py-8" data-aos="fade-up" data-aos-delay="100">
+                    <div class="text-5xl font-bold mb-4">1JT+</div>
+                    <div class="text-xl opacity-90">Leads Terdistribusi</div>
+                </div>
+
+                <!-- Stat 3 -->
+                <div class="py-8" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-5xl font-bold mb-4">40%</div>
+                    <div class="text-xl opacity-90">Peningkatan Konversi</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="py-28 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20 max-w-3xl mx-auto">
+                <span
+                    class="inline-block px-4 py-2 bg-emerald-100 text-emerald-700 rounded-full text-sm font-medium mb-4">TESTIMONI</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                    Apa Kata Klien Kami?
+                </h2>
+                <p class="text-xl text-gray-600 leading-relaxed">
+                    Ribuan bisnis telah mengalami transformasi dalam manajemen leads setelah menggunakan Wago.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card" data-aos="fade-up">
+                    <div class="flex items-center mb-6">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Bayu"
+                            class="w-14 h-14 rounded-full mr-4 object-cover">
+                        <div>
+                            <h4 class="font-bold text-lg">Bayu Setiawan</h4>
+                            <p class="text-gray-500">CEO TokoOnline</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6 leading-relaxed">
+                        "Sejak menggunakan Wago, tim sales kami menjadi lebih efisien. Distribusi leads yang otomatis
+                        benar-benar menghemat waktu kami dan meningkatkan konversi sebesar 35%."
+                    </p>
+                    <div class="mt-4 text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center mb-6">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ayu"
+                            class="w-14 h-14 rounded-full mr-4 object-cover">
+                        <div>
+                            <h4 class="font-bold text-lg">Ayu Lestari</h4>
+                            <p class="text-gray-500">Marketing Manager</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6 leading-relaxed">
+                        "Fitur analitik Wago membantu kami mengoptimalkan anggaran iklan dengan lebih baik. ROI iklan
+                        WhatsApp kami meningkat 40% dalam 3 bulan pertama."
+                    </p>
+                    <div class="mt-4 text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex items-center mb-6">
+                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Farhan"
+                            class="w-14 h-14 rounded-full mr-4 object-cover">
+                        <div>
+                            <h4 class="font-bold text-lg">Farhan Ahmad</h4>
+                            <p class="text-gray-500">Sales Director</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-6 leading-relaxed">
+                        "Sistem distribusi yang adil dari Wago membuat semua anggota tim mendapatkan kesempatan yang
+                        sama. Konflik internal berkurang drastis dan moral tim meningkat."
+                    </p>
+                    <div class="mt-4 text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <!-- Pricing -->
+    <section id="pricing" class="py-28 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20 max-w-3xl mx-auto">
+                <span
+                    class="inline-block px-4 py-2 bg-emerald-100 text-emerald-700 rounded-full text-sm font-medium mb-4">HARGA</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                    Investasi yang Tepat untuk Bisnis Anda
+                </h2>
+                <p class="text-xl text-gray-600 leading-relaxed">
+                    Harga transparan tanpa biaya tersembunyi. Skalakan sesuai kebutuhan bisnis Anda.
+                </p>
+
+                <!-- Pricing Toggle -->
+                <div class="mt-8 flex justify-center">
+                    <div class="bg-gray-100 p-1 rounded-full inline-flex">
+                        <button
+                            class="px-6 py-2 rounded-full font-medium bg-white shadow-sm text-gray-900">Bulanan</button>
+                        <button class="px-6 py-2 rounded-full font-medium text-gray-600 hover:text-gray-900">Tahunan
+                            <span class="text-emerald-500 ml-1">(Hemat 20%)</span></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Basic Plan -->
+                <div class="pricing-card hover:border-emerald-300" data-aos="fade-up">
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold mb-2">Starter</h3>
+                        <p class="text-4xl font-bold mb-2">Rp50rb<span class="text-lg text-gray-500">/bulan</span></p>
+                        <p class="text-gray-500">Untuk bisnis kecil atau yang baru memulai</p>
+                    </div>
+                    <div class="border-t border-gray-200 pt-6 mb-8">
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-500 mt-1 mr-3"></i>
+                                <span>1 akun WhatsApp</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-500 mt-1 mr-3"></i>
+                                <span>Distribusi ke 3 tim</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-500 mt-1 mr-3"></i>
+                                <span>Dasar analitik</span>
+                            </li>
+                            <li class="flex items-start text-gray-400">
+                                <i class="fas fa-times mt-1 mr-3"></i>
+                                <span>Pixel tracking</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="#" class="btn-secondary w-full text-center">Mulai Sekarang</a>
+                </div>
+
+                <!-- Popular Plan -->
+                <div class="pricing-card relative border-2 border-emerald-500 transform hover:scale-[1.02] shadow-lg"
+                    data-aos="fade-up" data-aos-delay="100">
+                    <div
+                        class="absolute top-0 right-0 bg-emerald-500 text-white px-4 py-1 text-sm font-bold rounded-bl-lg rounded-tr-lg">
+                        PALING POPULER
+                    </div>
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold mb-2">Professional</h3>
+                        <p class="text-4xl font-bold mb-2">Rp75rb<span class="text-lg text-gray-500">/bulan</span></p>
+                        <p class="text-gray-500">Solusi optimal untuk bisnis yang sedang berkembang</p>
+                    </div>
+                    <div class="border-t border-gray-200 pt-6 mb-8">
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-500 mt-1 mr-3"></i>
+                                <span>3 akun WhatsApp</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-500 mt-1 mr-3"></i>
+                                <span>Distribusi ke 10 tim</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-500 mt-1 mr-3"></i>
+                                <span>Analitik lengkap</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-500 mt-1 mr-3"></i>
+                                <span>Pixel tracking</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="#" class="btn-primary w-full text-center">Mulai Sekarang</a>
+                </div>
+
+                <!-- Enterprise Plan -->
+                <div class="pricing-card hover:border-emerald-300" data-aos="fade-up" data-aos-delay="200">
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold mb-2">Enterprise</h3>
+                        <p class="text-4xl font-bold mb-2">Rp150rb<span class="text-lg text-gray-500">/bulan</span></p>
+                        <p class="text-gray-500">Solusi lengkap untuk bisnis besar</p>
+                    </div>
+                    <div class="border-t border-gray-200 pt-6 mb-8">
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-500 mt-1 mr-3"></i>
+                                <span>10 akun WhatsApp</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-500 mt-1 mr-3"></i>
+                                <span>Distribusi ke 30 tim</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-500 mt-1 mr-3"></i>
+                                <span>Analitik premium</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-emerald-500 mt-1 mr-3"></i>
+                                <span>Integrasi API</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="#" class="btn-secondary w-full text-center">Hubungi Kami</a>
+                </div>
+            </div>
+
+            <!-- Custom Plan -->
+            <div class="mt-16 text-center">
+                <p class="text-lg text-gray-600 mb-4">Butuh solusi khusus untuk bisnis Anda?</p>
+                <a href="#" class="inline-flex items-center text-emerald-600 font-medium hover:text-emerald-700">
+                    Bicarakan dengan tim kami <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <div class="text-center mb-16">
+                <span
+                    class="inline-block px-4 py-2 bg-emerald-100 text-emerald-700 rounded-full text-sm font-medium mb-4">FAQ</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    Pertanyaan yang Sering Diajukan
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Temukan jawaban untuk pertanyaan umum tentang Wago.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- FAQ Column 1 -->
+                <div class="space-y-4">
+                    <!-- FAQ Item 1 -->
+                    <div class="faq-item" data-aos="fade-up">
+                        <button class="faq-toggle w-full flex justify-between items-center text-left">
+                            <h3 class="text-lg font-semibold">Bagaimana cara menghubungkan WhatsApp ke Wago?</h3>
+                            <i class="fas fa-plus text-emerald-500"></i>
+                        </button>
+                        <div class="faq-content mt-4 hidden">
+                            <p class="text-gray-600">
+                                Anda cukup scan QR code WhatsApp web melalui aplikasi Wago. Prosesnya sederhana dan
+                                hanya
+                                membutuhkan waktu kurang dari 1 menit. Kami menyediakan panduan langkah demi langkah
+                                setelah Anda mendaftar.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 2 -->
+                    <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
+                        <button class="faq-toggle w-full flex justify-between items-center text-left">
+                            <h3 class="text-lg font-semibold">Apakah ada biaya tambahan selain biaya berlangganan?</h3>
+                            <i class="fas fa-plus text-emerald-500"></i>
+                        </button>
+                        <div class="faq-content mt-4 hidden">
+                            <p class="text-gray-600">
+                                Tidak ada biaya tersembunyi. Semua fitur yang tercantum dalam paket yang Anda pilih
+                                sudah termasuk. Kami hanya menagih sesuai paket yang Anda pilih setiap bulannya.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Column 2 -->
+                <div class="space-y-4">
+                    <!-- FAQ Item 3 -->
+                    <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
+                        <button class="faq-toggle w-full flex justify-between items-center text-left">
+                            <h3 class="text-lg font-semibold">Bisakah saya upgrade paket di tengah periode berlangganan?
+                            </h3>
+                            <i class="fas fa-plus text-emerald-500"></i>
+                        </button>
+                        <div class="faq-content mt-4 hidden">
+                            <p class="text-gray-600">
+                                Tentu bisa. Anda dapat upgrade kapan saja dan hanya membayar selisih harga untuk sisa
+                                periode berlangganan. Proses upgrade hanya membutuhkan beberapa klik dari dashboard
+                                Anda.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 4 -->
+                    <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
+                        <button class="faq-toggle w-full flex justify-between items-center text-left">
+                            <h3 class="text-lg font-semibold">Apakah tersedia uji coba gratis?</h3>
+                            <i class="fas fa-plus text-emerald-500"></i>
+                        </button>
+                        <div class="faq-content mt-4 hidden">
+                            <p class="text-gray-600">
+                                Ya! Kami menawarkan uji coba gratis 7 hari untuk semua paket. Anda bisa mencoba semua
+                                fitur premium tanpa perlu memasukkan detail kartu kredit.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Help -->
+            <div class="mt-16 text-center">
+                <div class="inline-block bg-white p-6 rounded-xl shadow-sm border border-gray-100 max-w-2xl"
+                    data-aos="fade-up">
+                    <h3 class="text-xl font-bold mb-3">Masih punya pertanyaan?</h3>
+                    <p class="text-gray-600 mb-4">Tim dukungan kami siap membantu Anda 24/7</p>
+                    <a href="#" class="inline-flex items-center text-emerald-600 font-medium hover:text-emerald-700">
+                        Hubungi Dukungan <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-20 bg-gradient-to-r from-emerald-700 to-teal-600 text-white">
+        <div class="container mx-auto px-6 text-center">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 leading-tight">
+                    Siap Mengubah Cara Anda Mengelola Leads?
+                </h2>
+                <p class="text-xl mb-8 opacity-90">
+                    Bergabunglah dengan 500+ bisnis yang telah meningkatkan konversi mereka dengan Wago.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="#" class="btn-primary bg-white text-gray-900 hover:bg-gray-100 px-10">Mulai Gratis 7
+                        Hari</a>
+                    <a href="#"
+                        class="btn-secondary border-white text-white hover:bg-white hover:text-gray-900 px-10">Lihat
+                        Demo</a>
+                </div>
+                <p class="mt-4 text-sm opacity-80">Tidak perlu kartu kredit. Batalkan kapan saja.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+                <!-- Logo & Info -->
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">Wago</h3>
+                    <p class="text-gray-400 mb-4">
+                        Solusi distribusi leads otomatis untuk meningkatkan efisiensi tim sales Anda.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Perusahaan</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Tentang Kami</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Karir</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Partner</a></li>
+                    </ul>
+                </div>
+
+                <!-- Resources -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Sumber Daya</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Dokumentasi</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Panduan</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Webinar</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Status</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Hubungi Kami</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3"></i>
+                            <span>Jl. Sudirman No. 123, Jakarta</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3"></i>
+                            <span>+62 857 7099 8885</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3"></i>
+                            <span>hello@wago.id</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 mb-4 md:mb-0">
+                    &copy; 2023 Wago. All rights reserved.
+                </p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition">Terms</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">Privacy</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            once: true,
+            duration: 800,
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const closeMobileMenu = document.getElementById('closeMobileMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden');
+        });
+
+        closeMobileMenu.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+        });
+
+        // FAQ Toggle
+        const faqToggles = document.querySelectorAll('.faq-toggle');
+
+        faqToggles.forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const content = toggle.nextElementSibling;
+                const icon = toggle.querySelector('i');
+
+                content.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180');
+            });
+        });
+    </script>
+</body>
+
+</html>

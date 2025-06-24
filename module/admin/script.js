@@ -36,11 +36,11 @@ window.rowTemplate = function (item, index) {
         </button>
         <div id="dropdown-${item.cs_id}" 
              class="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50 border border-gray-200 divide-y divide-gray-100">
-          <button onclick="handleAdminEdit('${item.cs_id}', event)" 
+          <button onclick="handleEdit('${item.cs_id}', event)" 
                   class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
             <i class="fas fa-edit mr-2"></i> Edit
           </button>
-          <button onclick="handleAdminDelete('${item.cs_id}', event)" 
+          <button onclick="handleDelete('${item.cs_id}', event)" 
                   class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 flex items-center">
             <i class="fas fa-trash-alt mr-2"></i> Hapus
           </button>
@@ -182,4 +182,61 @@ function limitInputLength(input) {
   if (input.value.length > maxLength) {
     input.value = input.value.slice(0, maxLength);
   }
+}
+
+document.getElementById("searchInput").addEventListener("input", function () {
+  const keyword = this.value.toLowerCase();
+  const tbody = document.querySelector("#dataTable tbody");
+
+  if (!keyword) {
+    // Jika search kosong, kembalikan ke data awal
+    renderTablePage(sampleData);
+    return;
+  }
+
+  showLoadingSpinner(tbody);
+
+  setTimeout(() => {
+    const filteredData = sampleData.filter((item) =>
+      item.cs_admin.toLowerCase().includes(keyword)
+    );
+    renderFilteredTable(filteredData);
+  }, 300);
+});
+
+function renderFilteredTable(data) {
+  const tbody = document.querySelector("#dataTable tbody");
+  tbody.innerHTML = "";
+
+  if (data.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="${colSpanCount}" class="text-center text-gray-400 py-6">Tidak ada data ditemukan.</td></tr>`;
+  } else {
+    data.forEach((item, index) => {
+      tbody.insertAdjacentHTML("beforeend", rowTemplate(item, index));
+    });
+  }
+
+  document.getElementById("trackingTotal").textContent = data.length;
+  document.getElementById("trackingEnd").textContent = Math.min(
+    data.length,
+    10
+  );
+}
+
+function renderTablePage(data = []) {
+  const tbody =
+    document.querySelector("#dataTable tbody") ||
+    document.querySelector("#tableBody");
+  console.log("Rendering table for:", currentDataType, "data:", data);
+
+  tbody.innerHTML = "";
+
+  if (!data.length) {
+    tbody.innerHTML = `<tr><td colspan="${colSpanCount}" class="text-center text-gray-400 py-6">Tidak ada data ditemukan.</td></tr>`;
+    return;
+  }
+
+  data.forEach((item, index) => {
+    tbody.insertAdjacentHTML("beforeend", rowTemplate(item, index));
+  });
 }

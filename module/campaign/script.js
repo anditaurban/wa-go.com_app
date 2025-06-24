@@ -34,21 +34,33 @@ window.rowTemplate = function (item, index) {
         ${item.click_count}
       </td>
       <td class="relative px-6 py-4 text-center text-sm font-medium sm:table-cell">
-        <div id="action-${
-          item.campaign_id
-        }" class="hidden sm:flex sm:items-center sm:justify-center sm:space-x-2 sm:static sm:mt-0 mt-2">
-          <button onclick="event.stopPropagation(); loadModuleContent('campaign_detail', '${
+        <div class="relative inline-block text-left">
+          <button onclick="event.stopPropagation(); toggleDropdown('${
             item.campaign_id
-          }', '${item.campaign_name}')"
-            class="inline-flex items-center gap-1 rounded-md bg-yellow-400 px-3 py-1 text-xs text-white hover:bg-yellow-500">
-            <i class="fas fa-edit text-xs"></i>Edit
+          }', event)"
+            class="inline-flex items-center justify-center rounded-full p-1 text-gray-400 hover:bg-gray-200 hover:text-gray-600 focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+            </svg>
           </button>
-          <button onclick="event.stopPropagation(); handleDelete(${
-            item.campaign_id
-          })"
-            class="inline-flex items-center gap-1 rounded-md bg-red-500 px-3 py-1 text-xs text-white hover:bg-red-600">
-            <i class="fas fa-trash-alt text-xs"></i>Delete
-          </button>
+          
+          <div id="dropdown-${item.campaign_id}"
+            class="dropdown-menu hidden absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <div class="py-1">
+              <button onclick="event.stopPropagation(); loadModuleContent('campaign_detail', '${
+                item.campaign_id
+              }', '${item.campaign_name}')"
+                class="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100">
+                <i class="fas fa-edit mr-2"></i> Edit
+              </button>
+              <button onclick="event.stopPropagation(); handleDelete(${
+                item.campaign_id
+              })"
+                class="block w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-gray-100">
+                <i class="fas fa-trash-alt mr-2"></i> Delete
+              </button>
+            </div>
+          </div>
         </div>
       </td>
     </tr>
@@ -176,3 +188,63 @@ document.addEventListener("click", function (event) {
     });
   }
 });
+
+function toggleDropdown(id, event) {
+  event.stopPropagation();
+  const dropdown = document.getElementById(`dropdown-${id}`);
+  document.querySelectorAll(".dropdown-menu").forEach((menu) => {
+    if (menu.id !== `dropdown-${id}`) menu.classList.add("hidden");
+  });
+  dropdown.classList.toggle("hidden");
+}
+
+// Close dropdowns when clicking outside
+document.addEventListener("click", (event) => {
+  if (
+    !event.target.closest(".dropdown-menu") &&
+    !event.target.closest('[onclick*="toggleDropdown"]')
+  ) {
+    document.querySelectorAll(".dropdown-menu").forEach((menu) => {
+      menu.classList.add("hidden");
+    });
+  }
+});
+
+document.getElementById("searchInput").addEventListener("input", function () {
+  const keyword = this.value.toLowerCase();
+  const tbody =
+    document.querySelector("#dataTable tbody") ||
+    document.querySelector("#tableBody");
+
+  if (!keyword) {
+    filteredcampaignData = [...sampleData]; // reset data filter
+    renderTablePage(filteredcampaignData);
+    return;
+  }
+
+  showLoadingSpinner(tbody);
+
+  setTimeout(() => {
+    const filteredData = sampleData.filter((item) =>
+      item.description.toLowerCase().includes(keyword)
+    );
+
+    filteredcampaignData = filteredData; // update data yang sedang ditampilkan
+    renderFilteredTable(filteredData);
+  }, 300);
+});
+
+function renderFilteredTable(data) {
+  const tbody =
+    document.querySelector("#dataTable tbody") ||
+    document.querySelector("#tableBody");
+  tbody.innerHTML = "";
+
+  if (data.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="${colSpanCount}" class="text-center text-gray-400 py-6">Tidak ada data ditemukan.</td></tr>`;
+  } else {
+    data.forEach((item, index) => {
+      tbody.insertAdjacentHTML("beforeend", rowTemplate(item, index));
+    });
+  }
+}
