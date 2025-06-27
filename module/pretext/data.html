@@ -1,4 +1,6 @@
-<main class="px-6 py-6">
+<div class="px-4 py-20 mr-0 lg:px-20 lg:py-20 lg:mr-52">
+
+
     <!-- Page Title -->
     <div class="mb-8">
         <h2 class="text-4xl font-semibold text-gray-800">PreText</h2>
@@ -45,9 +47,8 @@
 
     <!-- Table Section -->
     <div class="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
-        <!-- Desktop Table -->
-        <div class="hidden md:block overflow-x-auto">
-            <table id="dataTable" class="w-full">
+        <div class="overflow-x-auto">
+            <table id="dataTable" class="w-full min-w-max">
                 <thead class="bg-gray-50">
                     <tr class="text-xs font-medium text-gray-500 uppercase tracking-wider">
                         <th class="px-6 py-3 text-left">No</th>
@@ -60,130 +61,76 @@
                 <tbody id="tableBody" class="bg-white divide-y divide-gray-200"></tbody>
             </table>
         </div>
-
-        <!-- Mobile Cards -->
-        <div id="adminCardsContainer" class="md:hidden space-y-3 p-4"></div>
     </div>
 
     <!-- Pagination -->
-    <div class="flex flex-col md:flex-row justify-between items-center mt-6">
-        <div class="text-sm text-gray-500 mb-4 md:mb-0">
-            Showing <span id="trackingStart">1</span> - <span id="trackingEnd">10</span> of
-            <span id="trackingTotal">0</span> templates
-        </div>
-
-        <nav class="flex items-center gap-1">
-            <button id="firstPage"
-                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50">
-                First
+    <div
+        class="flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200 sm:px-6 rounded-lg shadow-sm">
+        <!-- Mobile version -->
+        <div class="flex flex-1 justify-between sm:hidden space-x-2">
+            <button id="startPage" onclick="goToPage(1)"
+                class="px-3 py-1.5 text-sm font-medium rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                Start
             </button>
-            <button id="prevPage"
-                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50">
+            <button id="prevPage" onclick="goToPreviousPage()"
+                class="px-3 py-1.5 text-sm font-medium rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                 Previous
             </button>
-            <button id="nextPage"
-                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50">
+            <button id="nextPage" onclick="goToNextPage()"
+                class="px-3 py-1.5 text-sm font-medium rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                 Next
             </button>
-            <button id="lastPage"
-                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50">
+            <button id="lastPage" onclick="goToPage(state[currentDataType].totalPages)"
+                class="px-3 py-1.5 text-sm font-medium rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                 Last
-            </button>
-        </nav>
-    </div>
-</main>
-
-<!-- PreText Form Modal -->
-<div id="adminFormModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white rounded-xl p-6 w-full max-w-md">
-        <div class="flex justify-between items-center mb-4">
-            <h3 class="text-lg font-semibold">Add New PreText</h3>
-            <button onclick="document.getElementById('adminFormModal').classList.add('hidden')"
-                class="text-gray-400 hover:text-gray-600">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
             </button>
         </div>
 
-        <form id="addform" class="space-y-4">
+        <!-- Desktop version -->
+        <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+            <div class="page-info text-sm text-gray-600">
+                Showing page <span class="font-medium">{currentPage}</span> of <span
+                    class="font-medium">{totalPages}</span> • Total <span class="font-medium">{totalRecords}</span>
+                records
+            </div>
             <div>
-                <label for="cs_admin" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                <input type="text" id="cs_admin" placeholder="PreText name"
-                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-100 focus:border-teal-400 text-sm">
-            </div>
+                <nav class="inline-flex items-center space-x-1 rounded-md shadow-sm" aria-label="Pagination">
+                    <button id="startPage" onclick="goToPage(1)"
+                        class="relative inline-flex items-center px-3 py-2 text-sm font-medium rounded-l-md border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                        <span class="sr-only">Start</span>
+                        «
+                    </button>
+                    <button id="prevPage" onclick="goToPreviousPage()"
+                        class="relative inline-flex items-center px-3 py-2 text-sm font-medium border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                        <span class="sr-only">Previous</span>
+                        ‹
+                    </button>
 
-            <div>
-                <label for="create_phone" class="block text-sm font-medium text-gray-700 mb-1">Message Content</label>
-                <textarea id="create_phone" placeholder="PreText message..."
-                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-100 focus:border-teal-400 text-sm"></textarea>
-            </div>
+                    <div class="flex items-center space-x-1">
+                        <button id="firstPage" onclick="goToPage(1)"
+                            class="relative inline-flex items-center px-3.5 py-2 text-sm font-medium border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                            1
+                        </button>
+                        <button id="midPage"
+                            onclick="goToPage(Math.min(state[currentDataType].totalPages, state[currentDataType].currentPage + 1))"
+                            class="relative inline-flex items-center px-3.5 py-2 text-sm font-medium border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                            2
+                        </button>
 
-            <div class="flex justify-end gap-3 pt-2">
-                <button type="button" onclick="document.getElementById('adminFormModal').classList.add('hidden')"
-                    class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">
-                    Cancel
-                </button>
-                <button type="submit"
-                    class="px-4 py-2 bg-teal-600 hover:bg-teal-700 rounded-lg text-sm font-medium text-white shadow-sm">
-                    Save PreText
-                </button>
+                    </div>
+
+                    <button id="nextPage" onclick="goToNextPage()"
+                        class="relative inline-flex items-center px-3 py-2 text-sm font-medium border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                        <span class="sr-only">Next</span>
+                        ›
+                    </button>
+                    <button id="lastPage" onclick="goToPage(state[currentDataType].totalPages)"
+                        class="relative inline-flex items-center px-3 py-2 text-sm font-medium rounded-r-md border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                        <span class="sr-only">Last</span>
+                        »
+                    </button>
+                </nav>
             </div>
-        </form>
+        </div>
     </div>
-</div>
-
-<!-- Floating Action Menu (dummy, can be styled further) -->
-<div id="floatingAction" class="hidden fixed bg-white shadow-md border rounded-md z-50">
-    <button id="editBtn" class="block px-4 py-2 w-full text-left hover:bg-gray-100">Edit</button>
-    <button id="deleteBtn" class="block px-4 py-2 w-full text-left hover:bg-red-50 text-red-600">Delete</button>
-</div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const floatingAction = document.getElementById('floatingAction');
-        let selectedAdminId = null;
-
-        // Show floating menu on row click
-        const tableBody = document.getElementById('tableBody');
-        if (tableBody) {
-            tableBody.addEventListener('click', function (e) {
-                const row = e.target.closest('tr');
-                if (row && row.dataset.id) {
-                    selectedAdminId = row.dataset.id;
-                    const rect = row.getBoundingClientRect();
-                    floatingAction.style.top = `${window.scrollY + rect.bottom}px`;
-                    floatingAction.style.left = `${rect.left + rect.width - 160}px`;
-                    floatingAction.classList.remove('hidden');
-                }
-            });
-        }
-
-        // Hide on outside click
-        document.addEventListener('click', function (e) {
-            if (!e.target.closest('tr') && !e.target.closest('#floatingAction')) {
-                floatingAction.classList.add('hidden');
-            }
-        });
-
-        document.getElementById('editBtn').addEventListener('click', () => {
-            if (selectedAdminId) {
-                alert(`Edit PreText ID: ${selectedAdminId}`);
-                floatingAction.classList.add('hidden');
-            }
-        });
-
-        document.getElementById('deleteBtn').addEventListener('click', () => {
-            if (selectedAdminId && confirm(`Delete PreText ID: ${selectedAdminId}?`)) {
-                alert(`PreText ${selectedAdminId} deleted`);
-                floatingAction.classList.add('hidden');
-            }
-        });
-
-        // Show form modal
-        document.getElementById('addButton').addEventListener('click', () => {
-            document.getElementById('adminFormModal').classList.remove('hidden');
-        });
-    });
-</script>
+    </main>

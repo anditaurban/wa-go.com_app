@@ -8,16 +8,16 @@ setDataType("pretext");
 window.rowTemplate = function (item, index) {
   return `
     <tr class="mb-4 flex flex-col rounded-lg border shadow-md sm:mb-0 sm:table-row sm:border-none sm:shadow-none">
-      <td class="border-b px-6 py-4 text-sm font-medium text-gray-900 sm:table-cell sm:border-b-0 text-left">
+      <td class="break-words whitespace-normal max-w-xs border-b px-6 py-4 text-sm font-medium text-gray-900 sm:table-cell sm:border-b-0 text-left">
         ${index + 1}
       </td>
-      <td class="border-b px-6 py-4 text-sm text-gray-700 sm:table-cell sm:border-b-0 whitespace-pre-wrap break-words text-left">
+      <td class="break-words whitespace-normal max-w-xs border-b px-6 py-4 text-sm text-gray-700 sm:table-cell sm:border-b-0 whitespace-pre-wrap break-words text-left">
         ${item.description}
       </td>
-      <td class="border-b px-6 py-4 text-sm text-gray-700 sm:table-cell sm:border-b-0 whitespace-pre-wrap break-words text-left">
+      <td class="break-words whitespace-normal max-w-xs border-b px-6 py-4 text-sm text-gray-700 sm:table-cell sm:border-b-0 whitespace-pre-wrap break-words text-left">
         ${item.text}
       </td>
-      <td class="py-3 px-4 text-center">
+      <td class="break-words whitespace-normal max-w-xs py-3 px-4 text-center">
         <label class="relative inline-flex items-center cursor-pointer">
           <input type="checkbox" ${
             item.status === "on" ? "checked" : ""

@@ -22,7 +22,7 @@ window.rowTemplate = function (item, index) {
       <td class="border-b px-6 py-4 text-left text-sm text-gray-700 sm:table-cell sm:border-b-0">
         ${item.campaign_name}
       </td>
-      <td class="border-b px-6 py-4 text-right text-sm text-blue-600 sm:table-cell sm:border-b-0">
+      <td class="border-b px-6 py-4 text-left text-sm text-blue-600 sm:table-cell sm:border-b-0">
         <a href="${item.url}" target="_blank" class="hover:underline">${
     item.url
   }</a>

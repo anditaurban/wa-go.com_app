@@ -50,26 +50,5 @@
 </nav>
 
 <script>
-  // Toggle user dropdown
-  document.getElementById('userMenuButton').addEventListener('click', function (e) {
-    e.stopPropagation();
-    document.getElementById('userDropdown').classList.toggle('hidden');
-  });
-
-  // Close dropdown when clicking outside
-  document.addEventListener('click', function () {
-    document.getElementById('userDropdown').classList.add('hidden');
-  });
-
-  // Prevent dropdown from closing when clicking inside it
-  document.getElementById('userDropdown').addEventListener('click', function (e) {
-    e.stopPropagation();
-  });
-
-  // Mobile menu toggle (connect this to your sidebar toggle)
-  document.getElementById('mobileMenuButton').addEventListener('click', function () {
-    // This should be connected to your sidebar toggle function
-    const sidebar = document.getElementById('sidebar');
-    sidebar.classList.toggle('-translate-x-full');
-  });
+  
 </script>

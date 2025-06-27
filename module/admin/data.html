@@ -1,4 +1,4 @@
-<main class="px-6 py-8">
+<div class="px-4 py-20 mr-0 lg:px-20 lg:py-20 lg:mr-52">
     <div class="mb-8">
         <h2 class="text-4xl font-semibold text-gray-800">Admin</h2>
         <div class="mt-1 h-1 w-12 bg-purple-500 rounded-full"></div>
@@ -11,7 +11,13 @@
             ✕
         </button>
         <h2 class="text-lg font-semibold text-gray-800 mb-2">Admin Module</h2>
-        <p>This module provides tools for managing users, content, and settings.</p>
+        <p>Admin Module adalah fitur yang dirancang khusus untuk mengelola semua aspek
+            administratif
+            dari platform atau aplikasi. Modul ini memberikan kontrol penuh kepada administrator
+            untuk
+            mengatur, memonitor, dan mengelola berbagai elemen sistem yang berhubungan dengan
+            pengguna,
+            kampanye, konten, dan pengaturan umum.</p>
     </div>
 
     <!-- Action Bar -->
@@ -33,120 +39,94 @@
     </div>
 
     <!-- Admin Table (Desktop) -->
-    <div class="hidden md:block bg-white rounded-xl border border-gray-200 shadow-sm overflow-x-auto">
-        <table id="dataTable" class="w-full text-sm">
-            <thead class="bg-gray-50 text-gray-600 uppercase text-xs">
-                <tr>
-                    <th class="px-6 py-3 text-left">No</th>
-                    <th class="px-6 py-3 text-left">Name</th>
-                    <th class="px-6 py-3 text-left">WhatsApp</th>
-                    <th class="px-6 py-3 text-left">Clicks</th>
-                    <th class="px-6 py-3 text-left">Status</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody" class="divide-y divide-gray-200"></tbody>
-        </table>
+    <div class="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
+        <div class="overflow-x-auto">
+            <table id="dataTable" class="w-full min-w-max">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left">No</th>
+                        <th class="px-6 py-3 text-left">Name</th>
+                        <th class="px-6 py-3 text-left">WhatsApp</th>
+                        <th class="px-6 py-3 text-left">Clicks</th>
+                        <th class="px-6 py-3 text-left">Status</th>
+                        <th class="px-6 py-3 text-left">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody" class="divide-y divide-gray-200"></tbody>
+            </table>
+        </div>
     </div>
-
-    <!-- Admin Cards (Mobile) -->
-    <div id="adminCardsContainer" class="md:hidden space-y-3 mt-4"></div>
 
     <!-- Pagination -->
-    <div class="flex flex-col md:flex-row justify-between items-center mt-6 text-sm text-gray-500 gap-3">
-        <div>
-            Showing <span id="trackingStart">1</span>–<span id="trackingEnd">10</span> of
-            <span id="trackingTotal">3</span> admins
+    <!-- Pagination Controls -->
+    <div
+        class="flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200 sm:px-6 rounded-lg shadow-sm">
+        <!-- Mobile version -->
+        <div class="flex flex-1 justify-between sm:hidden space-x-2">
+            <button id="startPage" onclick="goToPage(1)"
+                class="px-3 py-1.5 text-sm font-medium rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                Start
+            </button>
+            <button id="prevPage" onclick="goToPreviousPage()"
+                class="px-3 py-1.5 text-sm font-medium rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                Previous
+            </button>
+            <button id="nextPage" onclick="goToNextPage()"
+                class="px-3 py-1.5 text-sm font-medium rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                Next
+            </button>
+            <button id="lastPage" onclick="goToPage(state[currentDataType].totalPages)"
+                class="px-3 py-1.5 text-sm font-medium rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                Last
+            </button>
         </div>
-        <nav class="flex gap-1">
-            <button class="px-3 py-1 border rounded disabled:opacity-50">First</button>
-            <button class="px-3 py-1 border rounded disabled:opacity-50">Previous</button>
-            <button class="px-3 py-1 border rounded disabled:opacity-50">Next</button>
-            <button class="px-3 py-1 border rounded disabled:opacity-50">Last</button>
-        </nav>
-    </div>
-</main>
 
-<!-- Admin Form Modal -->
-<div id="adminFormModal" class="hidden fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-    <div class="bg-white rounded-xl p-6 w-full max-w-md">
-        <div class="flex justify-between items-center mb-4">
-            <h3 class="text-lg font-semibold">Add New Admin</h3>
-            <button onclick="document.getElementById('adminFormModal').classList.add('hidden')"
-                class="text-gray-400 hover:text-gray-600 text-lg">✕</button>
-        </div>
-        <form id="addform" class="space-y-4">
-            <div>
-                <label for="cs_admin" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                <input type="text" name="cs_admin" id="cs_admin" placeholder="Admin name"
-                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-teal-100 text-sm">
+        <!-- Desktop version -->
+        <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+            <div class="page-info text-sm text-gray-600">
+                Showing page <span class="font-medium">{currentPage}</span> of <span
+                    class="font-medium">{totalPages}</span> • Total <span class="font-medium">{totalRecords}</span>
+                records
             </div>
             <div>
-                <label for="create_phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                <div class="flex rounded-lg">
-                    <span
-                        class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 text-sm text-gray-500">+62</span>
-                    <input type="text" name="phone" id="create_phone" placeholder="81234567890"
-                        class="flex-1 rounded-r-lg border-gray-300 focus:ring-2 focus:ring-teal-100 text-sm px-3 py-2">
-                </div>
+                <nav class="inline-flex items-center space-x-1 rounded-md shadow-sm" aria-label="Pagination">
+                    <button id="startPage" onclick="goToPage(1)"
+                        class="relative inline-flex items-center px-3 py-2 text-sm font-medium rounded-l-md border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                        <span class="sr-only">Start</span>
+                        «
+                    </button>
+                    <button id="prevPage" onclick="goToPreviousPage()"
+                        class="relative inline-flex items-center px-3 py-2 text-sm font-medium border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                        <span class="sr-only">Previous</span>
+                        ‹
+                    </button>
+
+                    <div class="flex items-center space-x-1">
+                        <button id="firstPage" onclick="goToPage(1)"
+                            class="relative inline-flex items-center px-3.5 py-2 text-sm font-medium border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                            1
+                        </button>
+                        <button id="midPage"
+                            onclick="goToPage(Math.min(state[currentDataType].totalPages, state[currentDataType].currentPage + 1))"
+                            class="relative inline-flex items-center px-3.5 py-2 text-sm font-medium border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                            2
+                        </button>
+
+                    </div>
+
+                    <button id="nextPage" onclick="goToNextPage()"
+                        class="relative inline-flex items-center px-3 py-2 text-sm font-medium border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                        <span class="sr-only">Next</span>
+                        ›
+                    </button>
+                    <button id="lastPage" onclick="goToPage(state[currentDataType].totalPages)"
+                        class="relative inline-flex items-center px-3 py-2 text-sm font-medium rounded-r-md border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                        <span class="sr-only">Last</span>
+                        »
+                    </button>
+                </nav>
             </div>
-            <div class="flex justify-end gap-2 pt-2">
-                <button type="button" onclick="document.getElementById('adminFormModal').classList.add('hidden')"
-                    class="px-4 py-2 border rounded-lg text-sm text-gray-700 hover:bg-gray-50">Cancel</button>
-                <button type="submit"
-                    class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-lg text-sm">Save</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const sampleData = [
-            { id: 1, name: "John Doe", whatsapp: "081234567890", clicks: 142, status: "Active" },
-            { id: 2, name: "Jane Smith", whatsapp: "082345678901", clicks: 87, status: "Inactive" },
-            { id: 3, name: "Robert Johnson", whatsapp: "083456789012", clicks: 256, status: "Active" }
-        ];
-
-        const tableBody = document.getElementById("tableBody");
-        const cardContainer = document.getElementById("adminCardsContainer");
-
-        sampleData.forEach((admin, index) => {
-            // Tabel Desktop
-            const row = document.createElement("tr");
-            row.innerHTML = `
-        <td class="px-6 py-4 text-gray-500">${index + 1}</td>
-        <td class="px-6 py-4 font-medium text-gray-900">${admin.name}</td>
-        <td class="px-6 py-4 text-gray-500">${admin.whatsapp}</td>
-        <td class="px-6 py-4 text-gray-500">${admin.clicks}</td>
-        <td class="px-6 py-4">
-          <span class="px-2 py-1 text-xs rounded-full font-semibold 
-            ${admin.status === "Active" ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"}">
-            ${admin.status}
-          </span>
-        </td>
-      `;
-            tableBody.appendChild(row);
-
-            // Card Mobile
-            const card = document.createElement("div");
-            card.className = "p-4 bg-white border rounded-xl shadow-sm";
-            card.innerHTML = `
-        <div class="flex justify-between items-center mb-1">
-          <h4 class="text-base font-semibold text-gray-800">${admin.name}</h4>
-          <span class="text-xs font-medium px-2 py-0.5 rounded-full 
-            ${admin.status === "Active" ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"}">
-            ${admin.status}
-          </span>
         </div>
-        <p class="text-sm text-gray-600"><strong>WA:</strong> ${admin.whatsapp}</p>
-        <p class="text-sm text-gray-600"><strong>Clicks:</strong> ${admin.clicks}</p>
-      `;
-            cardContainer.appendChild(card);
-        });
+    </div>
 
-        // Show Modal
-        document.getElementById("addButton").addEventListener("click", () => {
-            document.getElementById("adminFormModal").classList.remove("hidden");
-        });
-    });
-</script>
+    </main>

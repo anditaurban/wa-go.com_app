@@ -1,5 +1,6 @@
 const default_module = "dashboard";
 
+// Ambil session
 const owner_id = sessionStorage.getItem("owner_id");
 const user_id = sessionStorage.getItem("user_id");
 const status_active = sessionStorage.getItem("status_active");
@@ -10,86 +11,93 @@ const business_place = sessionStorage.getItem("business_place");
 const address = sessionStorage.getItem("address");
 const company_phone = sessionStorage.getItem("company_phone");
 const printer_setting = JSON.parse(sessionStorage.getItem("printer_setting"));
-// const app_id = 5;
-// const owner_id = 4409;
-// const user_id = 4409;
-// const level = 'owner';
-// const nama = 'Untug Katsirin';
 
+// Cek login
 function checksession() {
   if (!owner_id || !user_id || !level || !nama) {
     window.location.href = "login.html";
   }
 }
-
 checksession();
 
+// Global variabel
 let currentScript = null;
+let apiUrl = "";
+let defaultpage = 1;
+let productsData = [];
 let formHtml = null;
 let h1Element = null;
 let campaignTitle = null;
 let responseData = "";
 
-let apiUrl = "";
-let defaultpage = 1;
-let productsData = [];
-
+// Daftar script
 const scriptsToLoad = [
-  "./js/utils.js?v=${new Date().getTime()}",
-  "./js/api.js?v=${new Date().getTime()}",
-  "./js/table.js?v=${new Date().getTime()}",
-  "./js/general.js?v=${new Date().getTime()}",
+  "./js/utils.js",
+  "./js/api.js",
+  "./js/table.js",
+  "./js/general.js",
 ];
 
-window.onload = loadAppSections;
-scriptsToLoad.forEach((script) =>
-  loadScript(`${script}?v=${new Date().getTime()}`, () => {})
-);
+// Load script JS tambahan
+scriptsToLoad.forEach((script) => {
+  loadScript(`${script}?v=${Date.now()}`);
+});
 
-// Function to load HTML section
+// Load utama
+window.onload = loadAppSections;
+
+// Load file HTML dinamis
 async function loadSection(sectionPath) {
   try {
     const response = await fetch(sectionPath);
-    if (response.ok) {
-      return await response.text();
-    } else {
-      throw new Error(`Failed to load ${sectionPath}`);
-    }
+    if (response.ok) return await response.text();
+    else throw new Error(`Failed to load ${sectionPath}`);
   } catch (error) {
     console.error(error);
     return `<div>Error loading ${sectionPath}</div>`;
   }
 }
 
-// Function to load JavaScript files dynamically
+// Load script
 function loadScript(src, callback) {
   const script = document.createElement("script");
   script.src = src;
-  script.onload = callback;
-  script.onerror = () => console.error(`Error loading script: ${src}`);
+  if (callback) script.onload = callback;
+  script.onerror = () => console.error(`❌ Failed to load script: ${src}`);
   document.body.appendChild(script);
 }
 
-// Function to load all sections and scripts
+// Fungsi utama load layout awal
 async function loadAppSections() {
   const sectionDataDiv = document.getElementById("section-data");
 
-  const [headNavbar, sideNavbar, mainContent, footer] = await Promise.all([
-    loadSection(`section/headnavbar.html?v=${new Date().getTime()}`),
-    loadSection(`section/sidenavbar.html?v=${new Date().getTime()}`),
-    loadSection(`section/maincontent.html?v=${new Date().getTime()}`),
-    loadSection(`section/footer.html?v=${new Date().getTime()}`),
+  const [headNavbar, sideNavbar, footer] = await Promise.all([
+    loadSection(`section/headnavbar.html?v=${Date.now()}`),
+    loadSection(`section/sidenavbar.html?v=${Date.now()}`),
+    loadSection(`section/footer.html?v=${Date.now()}`),
   ]);
 
-  sectionDataDiv.innerHTML = `${headNavbar}${sideNavbar}${mainContent}${footer}`;
+  // Inject layout utama + wrapper konten kosong
+  sectionDataDiv.innerHTML = `
+    ${headNavbar}
+    ${sideNavbar}
+    <main id="main-content-module" class="pt-6 px-4 sm:px-6 lg:px-4 flex-1 max-w-11xl mx-auto w-full sm:ml-60">
+      <!-- Module content will be injected here -->
+    </main>
+    ${footer}
+  `;
 
+  // Tambahkan event listener side nav
   addSideNavListeners();
 
-  loadScript(`./section/section.js?v=${new Date().getTime()}`, () => {});
-  loadModuleContent("dashboard");
+  // Load section.js jika ada
+  loadScript(`./section/section.js?v=${Date.now()}`);
+
+  // Load default modul (dashboard)
+  loadModuleContent(default_module);
 }
 
-// Function to add event listeners after sidenav is loaded
+// Tambahkan event klik di sidenav
 function addSideNavListeners() {
   const links = document.querySelectorAll("nav ul li a");
   links.forEach((link) => {
@@ -97,7 +105,6 @@ function addSideNavListeners() {
       e.preventDefault();
       const module = link.getAttribute("data-module");
       if (module) {
-        // Cek jika data-module tersedia
         loadModuleContent(module);
         currentDataSearch = "";
       }
@@ -105,35 +112,65 @@ function addSideNavListeners() {
   });
 }
 
-// Function to load module content
-function loadModuleContent(module, Id, Detail) {
-  fetch(`./module/${module}/data.html?v=${new Date().getTime()}`)
+// Fungsi untuk load modul dinamis (ex: dashboard)
+function loadModuleContent(module, Id = null, Detail = null) {
+  fetch(`./module/${module}/data.html?v=${Date.now()}`)
     .then((response) => {
-      if (!response.ok) {
-        throw new Error(`Error loading module: ${module}`);
-      }
+      if (!response.ok) throw new Error(`Error loading module: ${module}`);
       return response.text();
     })
     .then((data) => {
-      document.getElementById("content").innerHTML = data;
+      const mainContent = document.getElementById("main-content-module");
+      if (!mainContent) {
+        console.error("❌ Container #main-content-module tidak ditemukan!");
+        return;
+      }
+
+      // Inject isi modul
+      mainContent.innerHTML = data;
 
       if (data.trim() !== "") {
         window.detail_id = Id;
         window.detail_desc = Detail;
       }
 
+      // Hapus script sebelumnya kalau ada
       if (currentScript) {
         document.body.removeChild(currentScript);
+        currentScript = null;
       }
 
+      // Load script.js dari modul terkait
       currentScript = document.createElement("script");
-      currentScript.src = `./module/${module}/script.js?v=${new Date().getTime()}`;
+      currentScript.src = `./module/${module}/script.js?v=${Date.now()}`;
+      currentScript.onload = () => {
+        console.log(`✅ Module ${module} loaded`);
+        if (
+          module === "dashboard" &&
+          typeof initDashboardChart === "function"
+        ) {
+          initDashboardChart();
+        }
+      };
+
+      currentScript.onerror = () => {
+        console.error(`❌ Gagal load script module: ${module}`);
+        if (
+          module === "dashboard" &&
+          typeof initDashboardChart === "function"
+        ) {
+          console.log("⚠️ Memanggil fallback initDashboardChart()");
+          initDashboardChart();
+        }
+      };
+
       document.body.appendChild(currentScript);
     })
     .catch((error) => {
       console.error(error);
-      document.getElementById(
-        "content"
-      ).innerHTML = `<p>Error loading module ${module}</p>`;
+      const mainContent = document.getElementById("main-content-module");
+      if (mainContent) {
+        mainContent.innerHTML = `<p class="text-red-500">Gagal memuat modul ${module}</p>`;
+      }
     });
 }

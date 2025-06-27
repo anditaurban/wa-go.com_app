@@ -49,6 +49,114 @@ window.rowTemplate = function (item, index) {
     </tr>
   `;
 };
+
+// Mobile Card Template
+window.mobileCardTemplate = function (item, index) {
+  return `
+    <div data-id="${
+      item.cs_id
+    }" class="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden mb-4">
+      <div class="p-4">
+        <div class="flex justify-between items-start">
+          <div>
+            <h3 class="text-lg font-semibold text-gray-800">${
+              item.cs_admin
+            }</h3>
+            <p class="text-sm text-gray-600 mt-1">
+              <span class="font-medium">No:</span> ${index + 1}
+            </p>
+          </div>
+          <span class="px-2 py-1 rounded-full bg-green-100 text-green-800 text-xs">Active</span>
+        </div>
+        
+        <div class="mt-3 grid grid-cols-2 gap-2">
+          <div class="bg-gray-50 p-2 rounded">
+            <p class="text-xs text-gray-500">WhatsApp</p>
+            <a href="https://wa.me/${
+              item.phone
+            }" target="_blank" class="font-medium text-blue-600 hover:underline">
+              +${item.phone}
+            </a>
+          </div>
+          <div class="bg-gray-50 p-2 rounded">
+            <p class="text-xs text-gray-500">Clicks</p>
+            <p class="font-medium">0</p>
+          </div>
+        </div>
+        
+        <div class="mt-4 flex justify-end">
+          <div class="relative">
+            <button class="action-btn p-2 text-gray-500 hover:bg-gray-100 rounded-full"
+                    onclick="toggleAdminDropdown('${item.cs_id}', event)">
+              <i class="fas fa-ellipsis-v"></i>
+            </button>
+            <div id="dropdown-mobile-${item.cs_id}" 
+                 class="dropdown-menu hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50 border border-gray-200 divide-y divide-gray-100">
+              <button onclick="handleEdit('${item.cs_id}', event)" 
+                      class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
+                <i class="fas fa-edit mr-2"></i> Edit
+              </button>
+              <button onclick="handleDelete('${item.cs_id}', event)" 
+                      class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 flex items-center">
+                <i class="fas fa-trash-alt mr-2"></i> Hapus
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+};
+
+// Function to render data based on screen size
+window.renderData = function (data) {
+  const tableBody = document.getElementById("tableBody");
+  const cardContainer = document.getElementById("adminCardsContainer");
+
+  // Clear existing content
+  tableBody.innerHTML = "";
+  cardContainer.innerHTML = "";
+
+  data.forEach((item, index) => {
+    if (window.innerWidth >= 768) {
+      // Desktop
+      tableBody.innerHTML += rowTemplate(item, index);
+    } else {
+      // Mobile
+      cardContainer.innerHTML += mobileCardTemplate(item, index);
+    }
+  });
+};
+
+// Toggle dropdown function (works for both desktop and mobile)
+window.toggleAdminDropdown = function (id, event) {
+  event.stopPropagation();
+  const dropdown =
+    document.getElementById(`dropdown-${id}`) ||
+    document.getElementById(`dropdown-mobile-${id}`);
+  dropdown.classList.toggle("hidden");
+
+  // Close other open dropdowns
+  document.querySelectorAll(".dropdown-menu").forEach((menu) => {
+    if (menu.id !== dropdown.id) {
+      menu.classList.add("hidden");
+    }
+  });
+};
+
+// Close dropdowns when clicking outside
+document.addEventListener("click", function () {
+  document.querySelectorAll(".dropdown-menu").forEach((menu) => {
+    menu.classList.add("hidden");
+  });
+});
+
+// Handle window resize
+window.addEventListener("resize", function () {
+  if (window.dataCache) {
+    renderData(window.dataCache);
+  }
+});
 formHtml = `
 <form id="dataform" class="space-y-6">
   <input type="hidden" name="owner_id" id="owner_id" value="${

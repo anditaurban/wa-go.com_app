@@ -1,5 +1,5 @@
 <div class="min-h-screen">
-    <section class="py-6 px-4 sm:px-6 lg:px-8">
+    <div class="px-4 py-20 mr-0 lg:px-20 lg:py-20 lg:mr-52">
         <!-- Header Section -->
         <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
             <h1 class="text-2xl font-bold text-gray-800">Campaign Detail</h1>
@@ -41,9 +41,8 @@
 
         <!-- Table -->
         <div class="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
-            <!-- Desktop Table -->
-            <div class="hidden md:block overflow-x-auto">
-                <table class="w-full">
+            <div class="overflow-x-auto">
+                <table id="dataTable" class="w-full min-w-max">
                     <thead class="bg-gray-50">
                         <tr class="text-xs font-medium text-gray-500 uppercase tracking-wider">
                             <th scope="col" class="px-6 py-3 text-left  ">
@@ -71,36 +70,74 @@
         </div>
 
         <!-- Pagination -->
-        <div class="mt-4 flex flex-col sm:flex-row items-center justify-between">
-            <span id="paginationInfo" class="text-sm text-gray-500 mb-4 sm:mb-0">Showing 0 of 0, Total Data:
-                0</span>
-
-            <nav class="flex items-center space-x-1">
+        <div
+            class="flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200 sm:px-6 rounded-lg shadow-sm">
+            <!-- Mobile version -->
+            <div class="flex flex-1 justify-between sm:hidden space-x-2">
                 <button id="startPage" onclick="goToPage(1)"
-                    class="px-3 py-1 border border-gray-300 rounded text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-                    First
+                    class="px-3 py-1.5 text-sm font-medium rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    Start
                 </button>
                 <button id="prevPage" onclick="goToPreviousPage()"
-                    class="px-3 py-1 border border-gray-300 rounded text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                    class="px-3 py-1.5 text-sm font-medium rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                     Previous
                 </button>
-                <button id="firstPage" onclick="goToPage(1)"
-                    class="px-3 py-1 border border-gray-300 rounded text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-                    1
-                </button>
-                <button id="midPage" onclick="goToPage(2)"
-                    class="px-3 py-1 border border-gray-300 rounded text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-                    2
-                </button>
                 <button id="nextPage" onclick="goToNextPage()"
-                    class="px-3 py-1 border border-gray-300 rounded text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                    class="px-3 py-1.5 text-sm font-medium rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                     Next
                 </button>
-                <button id="lastPage" onclick="goToPage(3)"
-                    class="px-3 py-1 border border-gray-300 rounded text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                <button id="lastPage" onclick="goToPage(state[currentDataType].totalPages)"
+                    class="px-3 py-1.5 text-sm font-medium rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                     Last
                 </button>
-            </nav>
+            </div>
+
+            <!-- Desktop version -->
+            <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+                <div class="page-info text-sm text-gray-600">
+                    Showing page <span class="font-medium">{currentPage}</span> of <span
+                        class="font-medium">{totalPages}</span> • Total <span class="font-medium">{totalRecords}</span>
+                    records
+                </div>
+                <div>
+                    <nav class="inline-flex items-center space-x-1 rounded-md shadow-sm" aria-label="Pagination">
+                        <button id="startPage" onclick="goToPage(1)"
+                            class="relative inline-flex items-center px-3 py-2 text-sm font-medium rounded-l-md border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                            <span class="sr-only">Start</span>
+                            «
+                        </button>
+                        <button id="prevPage" onclick="goToPreviousPage()"
+                            class="relative inline-flex items-center px-3 py-2 text-sm font-medium border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                            <span class="sr-only">Previous</span>
+                            ‹
+                        </button>
+
+                        <div class="flex items-center space-x-1">
+                            <button id="firstPage" onclick="goToPage(1)"
+                                class="relative inline-flex items-center px-3.5 py-2 text-sm font-medium border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                                1
+                            </button>
+                            <button id="midPage"
+                                onclick="goToPage(Math.min(state[currentDataType].totalPages, state[currentDataType].currentPage + 1))"
+                                class="relative inline-flex items-center px-3.5 py-2 text-sm font-medium border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                                2
+                            </button>
+
+                        </div>
+
+                        <button id="nextPage" onclick="goToNextPage()"
+                            class="relative inline-flex items-center px-3 py-2 text-sm font-medium border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                            <span class="sr-only">Next</span>
+                            ›
+                        </button>
+                        <button id="lastPage" onclick="goToPage(state[currentDataType].totalPages)"
+                            class="relative inline-flex items-center px-3 py-2 text-sm font-medium rounded-r-md border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                            <span class="sr-only">Last</span>
+                            »
+                        </button>
+                    </nav>
+                </div>
+            </div>
         </div>
 </div>
 </div>

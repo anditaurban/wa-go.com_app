@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Statistik</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+
+        .loading-spinner {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <div class="container mx-auto px-4 py-8">
+        <form id="dataform" class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label for="cs_admin" class="block text-sm font-medium text-gray-700 mb-1">CS
+                        Admin</label>
+                    <input id="cs_admin" name="cs_admin" type="text" placeholder="Select/Input CS Admin Name"
+                        class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all" />
+                </div>
+                <div>
+                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">WhatsApp
+                        Number</label>
+                    <input id="phone" name="phone" type="text" placeholder="Phone Number"
+                        class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all" />
+                </div>
+            </div>
+
+            <div>
+                <label for="text" class="block text-sm font-medium text-gray-700 mb-1">Pre Text</label>
+                <input id="text" name="text" type="text" placeholder="Enter your pre-text"
+                    class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all" />
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label for="meta_pixel_id" class="block text-sm font-medium text-gray-700 mb-1">Meta
+                        Pixel</label>
+                    <input id="meta_pixel_id" name="meta_pixel_id" type="text" placeholder="Pixel ID"
+                        class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all" />
+                </div>
+                <div class="flex items-end">
+                    <button type="submitButton"
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 shadow-sm">
+                        Generate Link
+                    </button>
+                </div>
+            </div>
+        </form>
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-2xl font-bold text-gray-800">Dashboard Statistik</h1>
+            <div class="mt-1 h-1 w-12 bg-blue-500 rounded-full"></div>
+        </div>
+
+        <!-- Konten Utama -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Panel Form Input -->
+            <div class="lg:col-span-1 bg-white rounded-xl shadow-sm p-6">
+                <h2 class="text-lg font-semibold text-gray-800 mb-4">Pengaturan Grafik</h2>
+
+                <form id="chartForm" class="space-y-4">
+                    <div>
+                        <label for="period" class="block text-sm font-medium text-gray-700 mb-1">Periode</label>
+                        <select id="period" name="period"
+                            class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all">
+                            <option value="weekly" selected>Mingguan</option>
+                            <option value="monthly">Bulanan</option>
+                            <option value="yearly">Tahunan</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Periode
+                            Sebelumnya/Sesudahnya</label>
+                        <div class="flex space-x-2">
+                            <button type="button" id="prevBtn"
+                                class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors duration-200">
+                                <i class="fas fa-chevron-left mr-2"></i> Previous
+                            </button>
+                            <button type="button" id="nextBtn"
+                                class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors duration-200">
+                                Next <i class="fas fa-chevron-right ml-2"></i>
+                            </button>
+                        </div>
+                        <input type="hidden" id="weekOffset" name="weekOffset" value="0">
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="startDate" class="block text-sm font-medium text-gray-700 mb-1">Tanggal
+                                Mulai</label>
+                            <input type="date" id="startDate" name="startDate" value="2025-03-01"
+                                class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all">
+                        </div>
+                        <div>
+                            <label for="endDate" class="block text-sm font-medium text-gray-700 mb-1">Tanggal
+                                Akhir</label>
+                            <input type="date" id="endDate" name="endDate" value="2025-03-07"
+                                class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all">
+                        </div>
+                    </div>
+
+                    <button type="submit" id="submitBtn"
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 shadow-sm mt-4 flex items-center justify-center">
+                        <span id="btnText">Muat Grafik</span>
+                        <i id="loadingIcon" class="fas fa-spinner fa-spin ml-2 hidden"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Panel Grafik -->
+            <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h2 class="text-lg font-semibold text-gray-800">Statistik Kunjungan</h2>
+                        <p class="text-sm text-gray-500" id="chartSubtitle">Data 7 hari terakhir</p>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button id="exportBtn" class="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg">
+                            <i class="fas fa-download mr-1"></i> Export
+                        </button>
+                    </div>
+                </div>
+
+                <div class="chart-container relative">
+                    <canvas id="chartCanvas"></canvas>
+                    <div id="loadingSpinner"
+                        class="loading-spinner absolute inset-0 flex items-center justify-center bg-white bg-opacity-80">
+                        <div class="text-center">
+                            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto"></div>
+                            <p class="mt-2 text-gray-600">Memuat data...</p>
+                        </div>
+                    </div>
+                    <div id="errorMessage" class="hidden text-center py-10 text-red-500">
+                        <i class="fas fa-exclamation-triangle text-2xl mb-2"></i>
+                        <p>Gagal memuat data grafik</p>
+                    </div>
+                </div>
+
+                <!-- Info Tambahan -->
+                <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="bg-blue-50 p-3 rounded-lg">
+                        <p class="text-sm text-blue-600">Total Kunjungan</p>
+                        <p class="text-xl font-semibold text-blue-800" id="totalVisitors">0</p>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded-lg">
+                        <p class="text-sm text-green-600">Rata-rata/Hari</p>
+                        <p class="text-xl font-semibold text-green-800" id="avgVisitors">0</p>
+                    </div>
+                    <div class="bg-purple-50 p-3 rounded-lg">
+                        <p class="text-sm text-purple-600">Periode</p>
+                        <p class="text-xl font-semibold text-purple-800" id="periodLabel">-</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        pagemodule = "Dashboard";
+        console.log(pagemodule);
+        setDataType("quicklink");
+        console.log("Script dashboard/script.js berhasil dimuat");
+
+        document
+            .getElementById("dataform")
+            .addEventListener("submit", function (event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                // Retrieve form data using the existing getFormData function
+                const rawFormData = getFormData();
+                console.log("Raw Form Data:", rawFormData);
+                if (rawFormData) {
+                    // Restructure the form data to match the expected API format
+                    const formattedData = {
+                        owner_id: owner_id, // Set owner_id directly or dynamically if needed
+                        cs_admin: rawFormData.cs_admin,
+                        phone: rawFormData.phone,
+                        text: rawFormData.text,
+                        meta_pixel_id: rawFormData.meta_pixel_id,
+                    };
+
+                    // Pass the formatted data to handleCreate for submission
+                    handleCreate(formattedData);
+                    console.log(formattedData); // Optional: Log to verify the structure
+                    document.getElementById("dataform").reset();
+                } else {
+                    showErrorAlert("Please fill in all required fields correctly.");
+                }
+            });
+
+        function validateFormData(formData) {
+            return true;
+        }
+
+
+        let chartInstance = null;
+        let currentOffset = 0;
+
+        const summaryApiUrl = "https://dev.katib.cloud/summary/dashboardwago/4409";
+        const apiToken = "DpacnJf3uEQeM7HN";
+
+        document.addEventListener("DOMContentLoaded", function () {
+            updateDateRange();
+            loadChartData();
+
+            document.getElementById("chartForm").addEventListener("submit", function (e) {
+                e.preventDefault();
+                loadChartData();
+            });
+
+            document.getElementById("prevBtn").addEventListener("click", function () {
+                currentOffset++;
+                document.getElementById("weekOffset").value = currentOffset;
+                loadChartData();
+            });
+
+            document.getElementById("nextBtn").addEventListener("click", function () {
+                if (currentOffset > 0) {
+                    currentOffset--;
+                    document.getElementById("weekOffset").value = currentOffset;
+                    loadChartData();
+                }
+            });
+
+            document.getElementById("period").addEventListener("change", function () {
+                currentOffset = 0;
+                document.getElementById("weekOffset").value = currentOffset;
+                updateDateRange();
+                loadChartData();
+            });
+        });
+
+        function updateDateRange() {
+            const period = document.getElementById("period").value;
+            const offset = parseInt(document.getElementById("weekOffset").value);
+            let startDate, endDate;
+
+            const today = new Date();
+            if (period === "weekly") {
+                today.setDate(today.getDate() - offset * 7);
+                const day = today.getDay();
+                const diff = today.getDate() - day + (day === 0 ? -6 : 1);
+                startDate = new Date(today.setDate(diff));
+                endDate = new Date(startDate);
+                endDate.setDate(startDate.getDate() + 6);
+            } else if (period === "monthly") {
+                today.setMonth(today.getMonth() - offset);
+                startDate = new Date(today.getFullYear(), today.getMonth(), 1);
+                endDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+            } else if (period === "yearly") {
+                today.setFullYear(today.getFullYear() - offset);
+                startDate = new Date(today.getFullYear(), 0, 1);
+                endDate = new Date(today.getFullYear(), 11, 31);
+            }
+
+            document.getElementById("startDate").value = formatDate(startDate);
+            document.getElementById("endDate").value = formatDate(endDate);
+        }
+
+        function formatDate(date) {
+            const d = new Date(date);
+            const month = (d.getMonth() + 1).toString().padStart(2, "0");
+            const day = d.getDate().toString().padStart(2, "0");
+            const year = d.getFullYear();
+            return `${year}-${month}-${day}`;
+        }
+
+        function showLoading() {
+            document.getElementById("loadingSpinner").style.display = "flex";
+            document.getElementById("chartCanvas").style.opacity = "0.5";
+            document.getElementById("errorMessage").classList.add("hidden");
+            document.getElementById("loadingIcon").classList.remove("hidden");
+            document.getElementById("btnText").textContent = "Memuat...";
+            document.getElementById("submitBtn").disabled = true;
+        }
+
+        function hideLoading() {
+            document.getElementById("loadingSpinner").style.display = "none";
+            document.getElementById("chartCanvas").style.opacity = "1";
+            document.getElementById("loadingIcon").classList.add("hidden");
+            document.getElementById("btnText").textContent = "Muat Grafik";
+            document.getElementById("submitBtn").disabled = false;
+        }
+
+        function showError() {
+            document.getElementById("errorMessage").classList.remove("hidden");
+        }
+
+        function loadChartData() {
+            const period = document.getElementById("period").value;
+            const startDate = document.getElementById("startDate").value;
+            const endDate = document.getElementById("endDate").value;
+            const offset = parseInt(document.getElementById("weekOffset").value);
+
+            const payload = {
+                period,
+                startDate,
+                endDate,
+                weekOffset: offset,
+            };
+
+            console.log("[DEBUG] Sending Payload:", payload);
+
+            showLoading();
+
+            fetch(summaryApiUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${apiToken}`,
+                },
+                body: JSON.stringify(payload),
+            })
+                .then((res) => {
+                    console.log("[DEBUG] Response Status:", res.status);
+                    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                    return res.json();
+                })
+                .then((response) => {
+                    console.log("[DEBUG] Response Data:", response);
+                    hideLoading();
+                    renderChart(response, period);
+                })
+                .catch((error) => {
+                    console.error("[ERROR] Gagal ambil data grafik:", error);
+                    hideLoading();
+                    showError();
+                });
+        }
+
+        function renderChart(response, period) {
+            const graph = response.graphData;
+            console.log("[DEBUG] graphData:", graph);
+
+            if (!graph || !graph.data || graph.data.length === 0) {
+                console.warn("[WARNING] Data kosong");
+                showError();
+                return;
+            }
+
+            const total = graph.data.reduce((sum, item) => sum + item.visitor_count, 0);
+            const avg = Math.round(total / graph.data.length);
+
+            document.getElementById("totalVisitors").textContent = total.toLocaleString();
+            document.getElementById("avgVisitors").textContent = avg.toLocaleString();
+
+            let periodLabel = "-";
+            if (period === "weekly") {
+                periodLabel =
+                    currentOffset === 0
+                        ? "Minggu Ini"
+                        : currentOffset === 1
+                            ? "Minggu Lalu"
+                            : `${currentOffset} Minggu Yang Lalu`;
+            } else if (period === "monthly") {
+                periodLabel =
+                    currentOffset === 0
+                        ? "Bulan Ini"
+                        : currentOffset === 1
+                            ? "Bulan Lalu"
+                            : `${currentOffset} Bulan Yang Lalu`;
+            } else if (period === "yearly") {
+                periodLabel =
+                    currentOffset === 0
+                        ? "Tahun Ini"
+                        : currentOffset === 1
+                            ? "Tahun Lalu"
+                            : `${currentOffset} Tahun Yang Lalu`;
+            }
+
+            document.getElementById("periodLabel").textContent = periodLabel;
+            document.getElementById("chartSubtitle").textContent = `Data ${period === "weekly"
+                ? "7 hari terakhir"
+                : period === "monthly"
+                    ? "4 minggu terakhir"
+                    : "12 bulan terakhir"
+                }`;
+
+            const labels = graph.data.map((item) =>
+                period === "weekly"
+                    ? `${graph.month_label} ${item.date}`
+                    : period === "monthly"
+                        ? item.week
+                        : item.month
+            );
+            const values = graph.data.map((item) => item.visitor_count);
+
+            const ctx = document.getElementById("chartCanvas").getContext("2d");
+            if (chartInstance) chartInstance.destroy();
+
+            chartInstance = new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: "Jumlah Kunjungan",
+                            data: values,
+                            backgroundColor: "rgba(59, 130, 246, 0.7)",
+                            borderColor: "rgba(59, 130, 246, 1)",
+                            borderWidth: 1,
+                            borderRadius: 4,
+                        },
+                    ],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    return `Kunjungan: ${context.raw.toLocaleString()}`;
+                                },
+                            },
+                        },
+                        legend: {
+                            display: false,
+                        },
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: "Jumlah Kunjungan",
+                            },
+                            ticks: {
+                                callback: (value) => value.toLocaleString(),
+                            },
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text:
+                                    period === "weekly"
+                                        ? "Tanggal"
+                                        : period === "monthly"
+                                            ? "Minggu"
+                                            : "Bulan",
+                            },
+                        },
+                    },
+                },
+            });
+        }
+
+
+    </script>
+
+    <!-- SCRIPT -->
+</body>
+
+</html>

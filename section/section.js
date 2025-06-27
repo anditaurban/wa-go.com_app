@@ -327,3 +327,44 @@ $(function () {
     });
   }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Toggle dropdown profile
+  const userMenuButton = document.getElementById("userMenuButton");
+  const userDropdown = document.getElementById("userDropdown");
+
+  userMenuButton.addEventListener("click", function () {
+    userDropdown.classList.toggle("hidden");
+  });
+
+  // Tutup dropdown ketika klik di luar
+  document.addEventListener("click", function (event) {
+    if (
+      !userMenuButton.contains(event.target) &&
+      !userDropdown.contains(event.target)
+    ) {
+      userDropdown.classList.add("hidden");
+    }
+  });
+
+  // Toggle sidenavbar mobile
+  const mobileMenuButton = document.getElementById("mobileMenuButton");
+  const sidenavbar = document.getElementById("sidenavbar");
+
+  mobileMenuButton.addEventListener("click", function () {
+    sidenavbar.classList.toggle("-translate-x-full");
+    sidenavbar.classList.toggle("sm:translate-x-0");
+  });
+
+  // Tutup sidenavbar mobile ketika klik menu item (opsional)
+  const navLinks = document.querySelectorAll(".nav-link");
+  navLinks.forEach((link) => {
+    link.addEventListener("click", function () {
+      if (window.innerWidth < 640) {
+        // Hanya untuk mobile
+        sidenavbar.classList.add("-translate-x-full");
+        sidenavbar.classList.remove("sm:translate-x-0");
+      }
+    });
+  });
+});

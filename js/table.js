@@ -22,9 +22,24 @@ function setDataType(type) {
 
   console.log("Current state:", state[currentDataType]);
 
-  // ⬇️ Tambahkan ini supaya data ter-*fetch* ulang saat ganti tab
+  // â¬‡ï¸ Tambahkan ini supaya data ter-*fetch* ulang saat ganti tab
   resetPaginationAndSearch();
   fetchAndUpdateData();
+}
+
+function updateTrackingRange(currentPage, pageSize, totalRecords) {
+  const start = totalRecords === 0 ? 0 : (currentPage - 1) * pageSize + 1;
+  const end = Math.min(currentPage * pageSize, totalRecords);
+
+  document.getElementById("trackingStart").textContent = start;
+  document.getElementById("trackingEnd").textContent = end;
+  document.getElementById("trackingTotal").textContent = totalRecords;
+}
+
+function updateState(response) {
+  state[currentDataType].totalPages = response.totalPages;
+  state[currentDataType].totalRecords = response.totalRecords;
+  state[currentDataType].pageSize = response.pageSize || 10; // default 10 kalau tidak ada
 }
 
 function resetPaginationAndSearch() {
@@ -60,7 +75,7 @@ async function fetchAndUpdateData(id = null) {
 
     // Simpan hasil fetch ke variabel global agar bisa digunakan oleh search
     dataItems = response.tableData;
-    sampleData = [...dataItems]; // ✅ Tambahan penting
+    sampleData = [...dataItems]; // âœ… Tambahan penting
 
     console.log("Data items set:", dataItems);
 
@@ -137,6 +152,11 @@ function updatePagination() {
   );
   updatePaginationButtons(currentPage, totalPages);
   updatePaginationInfo(currentPage, totalPages);
+  updateTrackingRange(
+    currentPage,
+    state[currentDataType].pageSize,
+    state[currentDataType].totalRecords
+  );
 }
 
 function updatePaginationButtons(currentPage, totalPages) {
@@ -149,20 +169,24 @@ function updatePaginationButtons(currentPage, totalPages) {
     lastButton: document.getElementById("lastPage"),
   };
 
-  paginationButtons.prevButton.style.display =
-    currentPage > 1 ? "inline-block" : "none";
-  paginationButtons.startButton.style.display =
-    currentPage > 1 ? "inline-block" : "none";
-  paginationButtons.firstButton.style.display =
-    currentPage > 1 ? "inline-block" : "none";
+  // Update visibility using Tailwind classes
+  paginationButtons.prevButton.classList.toggle("hidden", currentPage <= 1);
+  paginationButtons.startButton.classList.toggle("hidden", currentPage <= 1);
+  paginationButtons.firstButton.classList.toggle("hidden", currentPage <= 1);
 
-  paginationButtons.midButton.style.display =
-    totalPages > 1 && currentPage < totalPages ? "inline-block" : "none";
+  paginationButtons.midButton.classList.toggle(
+    "hidden",
+    totalPages <= 1 || currentPage >= totalPages
+  );
 
-  paginationButtons.nextButton.style.display =
-    currentPage < totalPages ? "inline-block" : "none";
-  paginationButtons.lastButton.style.display =
-    currentPage < totalPages ? "inline-block" : "none";
+  paginationButtons.nextButton.classList.toggle(
+    "hidden",
+    currentPage >= totalPages
+  );
+  paginationButtons.lastButton.classList.toggle(
+    "hidden",
+    currentPage >= totalPages
+  );
 
   paginationButtons.firstButton.setAttribute("onclick", "goToPage(1)");
   paginationButtons.midButton.setAttribute(
@@ -176,9 +200,7 @@ function updatePaginationButtons(currentPage, totalPages) {
 }
 
 function updatePaginationInfo(currentPage, totalPages) {
-  const paginationInfo = document.querySelector(
-    ".page-info.text-sm.text-gray-500"
-  );
+  const paginationInfo = document.querySelector(".page-info");
   paginationInfo.textContent = `Page ${currentPage} of ${totalPages}. Total Data: ${state[currentDataType].totalRecords}`;
 }
 
@@ -202,7 +224,6 @@ function goToPage(pageNumber) {
     fetchAndUpdateData((page = state[currentDataType].currentPage));
   }
 }
-
 // ---------------------------------------
 // CREATE DATA FUNCTIONS
 // ---------------------------------------

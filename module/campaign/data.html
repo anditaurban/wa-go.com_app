@@ -1,8 +1,9 @@
-<main class="px-6 py-6">
+<div class="px-4 py-20 mr-0 lg:px-20 lg:py-20 lg:mr-52">
     <div class="mb-8">
-        <h2 class="text-4xl font-semibold text-gray-800">Campaign</h2>
-        <div class="mt-1 h-1 w-12 bg-red-500 rounded-full"></div>
+        <h2 class="text-4xl font-semibold text-gray-800">Admin</h2>
+        <div class="mt-1 h-1 w-12 bg-purple-500 rounded-full"></div>
     </div>
+
     <!-- Notification Banner -->
     <div id="adminAlert" class="relative bg-teal-50 border border-teal-100 rounded-xl p-5 mb-6">
         <button onclick="document.getElementById('adminAlert').remove()"
@@ -44,53 +45,97 @@
 
     <!-- Table Section -->
     <div class="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
-        <!-- Desktop Table -->
-        <div class="hidden md:block overflow-x-auto">
-            <table id="dataTable" class="w-full">
+        <div class="w-full overflow-x-auto">
+            <table id="dataTable" class="min-w-full text-sm text-left text-gray-700">
                 <thead class="bg-gray-50">
                     <tr class="text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        <th class="px-6 py-3 text-left">No</th>
-                        <th class="px-6 py-3 text-left">Name</th>
-                        <th class="px-6 py-3 text-left">Link</th>
-                        <th class="px-6 py-3 text-left">Tracking</th>
-                        <th class="px-6 py-3 text-left">Clicks</th>
-                        <th class="px-6 py-3 text-left">Action</th>
+                        <th class="px-4 py-3">No</th>
+                        <th class="px-4 py-3">Name</th>
+                        <th class="px-4 py-3">Link</th>
+                        <th class="px-4 py-3">Tracking</th>
+                        <th class="px-4 py-3">Clicks</th>
+                        <th class="px-4 py-3">Action</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody" class="bg-white divide-y divide-gray-200"></tbody>
-
             </table>
         </div>
+    </div>
 
-        <!-- Mobile Cards -->
-        <div id="adminCardsContainer" class="md:hidden space-y-3 p-4"></div>
+
+    <!-- Mobile Cards -->
+    <div id="adminCardsContainer" class="md:hidden space-y-3 p-4"></div>
     </div>
 
     <!-- Floating Action Menu -->
-    <div class="flex flex-col md:flex-row justify-between items-center mt-6">
-        <div class="text-sm text-gray-500 mb-4 md:mb-0">
-            Showing <span id="trackingStart">1</span>-<span id="trackingEnd">10</span> of <span
-                id="trackingTotal">0</span> campaigns
-        </div>
-
-        <nav class="flex items-center gap-1">
-            <button id="firstPage"
-                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50">
-                First
+    <div
+        class="flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200 sm:px-6 rounded-lg shadow-sm">
+        <!-- Mobile version -->
+        <div class="flex flex-1 justify-between sm:hidden space-x-2">
+            <button id="startPage" onclick="goToPage(1)"
+                class="px-3 py-1.5 text-sm font-medium rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                Start
             </button>
-            <button id="prevPage"
-                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50">
+            <button id="prevPage" onclick="goToPreviousPage()"
+                class="px-3 py-1.5 text-sm font-medium rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                 Previous
             </button>
-            <button id="nextPage"
-                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50">
+            <button id="nextPage" onclick="goToNextPage()"
+                class="px-3 py-1.5 text-sm font-medium rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                 Next
             </button>
-            <button id="lastPage"
-                class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50">
+            <button id="lastPage" onclick="goToPage(state[currentDataType].totalPages)"
+                class="px-3 py-1.5 text-sm font-medium rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                 Last
             </button>
-        </nav>
+        </div>
+
+        <!-- Desktop version -->
+        <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+            <div class="page-info text-sm text-gray-600">
+                Showing page <span class="font-medium">{currentPage}</span> of <span
+                    class="font-medium">{totalPages}</span> • Total <span class="font-medium">{totalRecords}</span>
+                records
+            </div>
+            <div>
+                <nav class="inline-flex items-center space-x-1 rounded-md shadow-sm" aria-label="Pagination">
+                    <button id="startPage" onclick="goToPage(1)"
+                        class="relative inline-flex items-center px-3 py-2 text-sm font-medium rounded-l-md border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                        <span class="sr-only">Start</span>
+                        «
+                    </button>
+                    <button id="prevPage" onclick="goToPreviousPage()"
+                        class="relative inline-flex items-center px-3 py-2 text-sm font-medium border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                        <span class="sr-only">Previous</span>
+                        ‹
+                    </button>
+
+                    <div class="flex items-center space-x-1">
+                        <button id="firstPage" onclick="goToPage(1)"
+                            class="relative inline-flex items-center px-3.5 py-2 text-sm font-medium border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                            1
+                        </button>
+                        <button id="midPage"
+                            onclick="goToPage(Math.min(state[currentDataType].totalPages, state[currentDataType].currentPage + 1))"
+                            class="relative inline-flex items-center px-3.5 py-2 text-sm font-medium border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                            2
+                        </button>
+
+                    </div>
+
+                    <button id="nextPage" onclick="goToNextPage()"
+                        class="relative inline-flex items-center px-3 py-2 text-sm font-medium border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                        <span class="sr-only">Next</span>
+                        ›
+                    </button>
+                    <button id="lastPage" onclick="goToPage(state[currentDataType].totalPages)"
+                        class="relative inline-flex items-center px-3 py-2 text-sm font-medium rounded-r-md border border-gray-300 bg-white text-gray-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                        <span class="sr-only">Last</span>
+                        »
+                    </button>
+                </nav>
+            </div>
+        </div>
     </div>
 </main>
 
