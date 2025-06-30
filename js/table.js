@@ -248,8 +248,17 @@ function showFormModal() {
   });
 }
 
+function validateFormData(data) {
+  // simple: semua harus diisi
+  if (!data.cs_admin || !data.phone || !data.text || !data.meta_pixel_id) {
+    alert("Semua input wajib diisi!");
+    return false;
+  }
+  return true;
+}
+
 function getFormData() {
-  const formElement = document.querySelector("#dataform");
+  const formElement = document.querySelector("#dataForm");
   if (!formElement) {
     throw new Error("Form not found");
   }

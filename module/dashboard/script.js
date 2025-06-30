@@ -1,5 +1,5 @@
 pagemodule = "Dashboard";
-
+colSpanCount = 4;
 window.chartInstance = window.chartInstance || null;
 window.currentOffset =
   typeof window.currentOffset === "undefined" ? 0 : window.currentOffset;
@@ -7,8 +7,14 @@ window.currentOffset =
 const summaryApiUrl = "https://dev.katib.cloud/summary/dashboardwago/4409";
 const apiToken = "DpacnJf3uEQeM7HN";
 
+console.log("✅ dashboard script.js loaded!");
+
 document.addEventListener("DOMContentLoaded", () => {
   setDataType("quicklink");
+  initDashboardChart();
+});
+
+function initDashboardChart() {
   updateDateRange();
   loadChartData();
 
@@ -16,17 +22,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const prevBtn = document.getElementById("prevBtn");
   const nextBtn = document.getElementById("nextBtn");
   const periodSelect = document.getElementById("period");
-  const dataForm = document.getElementById("dataform");
+  const dataForm = document.getElementById("dataForm");
 
   if (chartForm) {
-    chartForm.addEventListener("submit", (e) => {
+    chartForm.addEventListener("submit", function (e) {
       e.preventDefault();
       loadChartData();
     });
   }
 
   if (prevBtn) {
-    prevBtn.addEventListener("click", () => {
+    prevBtn.addEventListener("click", function () {
       window.currentOffset++;
       document.getElementById("weekOffset").value = window.currentOffset;
       updateDateRange();
@@ -35,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (nextBtn) {
-    nextBtn.addEventListener("click", () => {
+    nextBtn.addEventListener("click", function () {
       if (window.currentOffset > 0) {
         window.currentOffset--;
         document.getElementById("weekOffset").value = window.currentOffset;
@@ -46,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (periodSelect) {
-    periodSelect.addEventListener("change", () => {
+    periodSelect.addEventListener("change", function () {
       window.currentOffset = 0;
       document.getElementById("weekOffset").value = window.currentOffset;
       updateDateRange();
@@ -55,28 +61,34 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (dataForm) {
-    dataForm.addEventListener("submit", (event) => {
+    dataForm.addEventListener("submit", function (event) {
       event.preventDefault();
+
       const rawFormData = getFormData();
-      if (rawFormData) {
+      console.log("✅ FormData:", rawFormData);
+
+      if (
+        rawFormData.cs_admin &&
+        rawFormData.phone &&
+        rawFormData.text &&
+        rawFormData.meta_pixel_id
+      ) {
         const formattedData = {
-          owner_id: owner_id,
+          owner_id: owner_id, // pastikan ini ada di scope
           cs_admin: rawFormData.cs_admin,
           phone: rawFormData.phone,
-          description: rawFormData.description,
           text: rawFormData.text,
           meta_pixel_id: rawFormData.meta_pixel_id,
-          campaign_type: rawFormData.campaign_type,
-          campaign_name: rawFormData.campaign_name,
         };
+
         handleCreate(formattedData);
         dataForm.reset();
       } else {
-        showErrorAlert("Please fill in all required fields correctly.");
+        showErrorAlert("Semua input wajib diisi.");
       }
     });
   }
-});
+}
 
 function updateDateRange() {
   const period = document.getElementById("period").value;
@@ -117,7 +129,20 @@ function showError() {
   if (errEl) errEl.classList.remove("hidden");
 }
 
+function toggleLoader(show) {
+  const loader = document.getElementById("chartLoader");
+  if (loader) {
+    if (show) {
+      loader.classList.remove("hidden");
+    } else {
+      loader.classList.add("hidden");
+    }
+  }
+}
+
 function loadChartData() {
+  toggleLoader(true);
+
   const period = document.getElementById("period").value;
   const startDate = document.getElementById("startDate").value;
   const endDate = document.getElementById("endDate").value;
@@ -145,6 +170,9 @@ function loadChartData() {
     .catch((error) => {
       console.error("[ERROR] Gagal ambil data grafik:", error);
       showError();
+    })
+    .finally(() => {
+      toggleLoader(false);
     });
 }
 

@@ -1,3 +1,16 @@
+<style>
+  .loader {
+    border-top-color: #3490dc;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+
 <!-- Tambahkan di dalam elemen kamu -->
 <div class="px-4 py-20 mr-0 lg:px-20 lg:py-20 lg:mr-52">
   <div class="mb-8">
@@ -18,7 +31,7 @@
       <!-- Form Section -->
       <div class="space-y-4">
         <!-- Form untuk quick link (tetap seperti sebelumnya) -->
-        <form id="dataform" class="space-y-4">
+        <form id="dataForm" method="post" class="space-y-4">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label for="cs_admin" class="block text-sm font-medium text-gray-700 mb-1">CS Admin</label>
@@ -35,7 +48,7 @@
 
           <div>
             <label for="text" class="block text-sm font-medium text-gray-700 mb-1">Pre Text</label>
-            <input id="text" name="text" type="text" placeholder="Enter your pre-text"
+            <input id="text" name="text" type="link" placeholder="Enter your pre-text"
               class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all" />
           </div>
 
@@ -47,7 +60,7 @@
                 class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all" />
             </div>
             <div class="flex items-end">
-              <button type="submitButton"
+              <button type="submit"
                 class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 shadow-sm">
                 Generate Link
               </button>
@@ -111,8 +124,15 @@
           <p class="text-sm text-gray-500" id="chartSubtitle">Last 7 days performance</p>
         </div>
         <div class="h-64 relative">
-          <canvas id="dashboardChartCanvas" class="w-full h-64" h-64></canvas>
+          <canvas id="dashboardChartCanvas" class="w-full h-64"></canvas>
 
+          <!-- Loader -->
+          <div id="chartLoader"
+            class="hidden absolute inset-0 flex items-center justify-center bg-white bg-opacity-70 z-10">
+            <div class="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+          </div>
+
+          <!-- Error -->
           <div id="errorMessage" class="hidden text-center py-10 text-red-500">
             <i class="fas fa-exclamation-triangle text-2xl mb-2"></i>
             <p>Gagal memuat data grafik</p>
@@ -135,6 +155,9 @@
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </div>
+
+<script></script>

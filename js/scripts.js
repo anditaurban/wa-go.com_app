@@ -87,11 +87,10 @@ async function loadAppSections() {
     ${footer}
   `;
 
-  // Tambahkan event listener side nav
-  addSideNavListeners();
-
   // Load section.js jika ada
   loadScript(`./section/section.js?v=${Date.now()}`);
+  // Tambahkan event listener side nav
+  addSideNavListeners();
 
   // Load default modul (dashboard)
   loadModuleContent(default_module);
@@ -149,7 +148,9 @@ function loadModuleContent(module, Id = null, Detail = null) {
           module === "dashboard" &&
           typeof initDashboardChart === "function"
         ) {
-          initDashboardChart();
+          setTimeout(() => {
+            initDashboardChart();
+          }, 0);
         }
       };
 

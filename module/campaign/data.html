@@ -14,10 +14,18 @@
                     clip-rule="evenodd" />
             </svg>
         </button>
-        <h2 class="text-lg font-semibold text-gray-800 mb-2">Admin Module</h2>
+        <h2 class="text-lg font-semibold text-gray-800 mb-2">Campaign Module</h2>
         <p class="text-sm text-gray-600">
-            This module provides comprehensive tools for managing all administrative aspects of the platform,
-            including user management, campaign monitoring, content control, and system settings.
+            Campaign Module adalah fitur yang dirancang untuk mengelola data kampanye pengguna
+            secara
+            efisien. Di dalam modul ini, pengguna dapat membuat, menyimpan, dan mengakses informasi
+            tentang berbagai kampanye marketing mereka. Setiap kampanye yang dibuat menghasilkan
+            link
+            unik yang dapat digunakan sebagai Call to Action (CTA) pada halaman landing page
+            kampanye.
+            Modul ini mempermudah pengguna dalam mengelola dan mempromosikan kampanye mereka melalui
+            landing page yang terfokus dan terukur, memungkinkan strategi marketing yang lebih
+            efektif.
         </p>
     </div>
 
@@ -65,7 +73,7 @@
 
     <!-- Mobile Cards -->
     <div id="adminCardsContainer" class="md:hidden space-y-3 p-4"></div>
-    </div>
+
 
     <!-- Floating Action Menu -->
     <div
@@ -94,7 +102,8 @@
         <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
             <div class="page-info text-sm text-gray-600">
                 Showing page <span class="font-medium">{currentPage}</span> of <span
-                    class="font-medium">{totalPages}</span> • Total <span class="font-medium">{totalRecords}</span>
+                    class="font-medium">{totalPages}</span>
+                • Total <span class="font-medium">{totalRecords}</span>
                 records
             </div>
             <div>
@@ -137,71 +146,73 @@
             </div>
         </div>
     </div>
-</main>
+    </main>
 
-<!-- Hidden Form (for modal/popup) -->
-<div id="adminFormModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-    <div class="bg-white rounded-xl p-6 w-full max-w-md">
-        <div class="flex justify-between items-center mb-4">
-            <h3 class="text-lg font-semibold">Add New Admin</h3>
-            <button onclick="document.getElementById('adminFormModal').classList.add('hidden')"
-                class="text-gray-400 hover:text-gray-600">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-        </div>
-
-        <form id="addform" class="space-y-4">
-            <div>
-                <label for="cs_admin" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                <input type="text" name="cs_admin" id="cs_admin" placeholder="Admin name"
-                    class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-100 focus:border-teal-400 text-sm">
+    <!-- Hidden Form (for modal/popup) -->
+    <div id="adminFormModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-xl p-6 w-full max-w-md">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold">Add New Admin</h3>
+                <button onclick="document.getElementById('adminFormModal').classList.add('hidden')"
+                    class="text-gray-400 hover:text-gray-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
             </div>
 
-            <div>
-                <label for="create_phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                <div class="flex rounded-lg shadow-sm">
-                    <span
-                        class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">+62</span>
-                    <input type="text" name="phone" id="create_phone" placeholder="81234567890"
-                        class="flex-1 block w-full rounded-r-lg border-gray-300 focus:border-teal-400 focus:ring-2 focus:ring-teal-100 text-sm">
+            <form id="addform" class="space-y-4">
+                <div>
+                    <label for="cs_admin" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                    <input type="text" name="cs_admin" id="cs_admin" placeholder="Admin name"
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-100 focus:border-teal-400 text-sm">
                 </div>
-                <p id="createPhoneTooltip" class="mt-1 hidden text-xs text-red-500">Phone number must be 11-14 digits
-                </p>
-            </div>
 
-            <div class="flex justify-end gap-3 pt-2">
-                <button type="button" onclick="document.getElementById('adminFormModal').classList.add('hidden')"
-                    class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">
-                    Cancel
-                </button>
-                <button type="submit"
-                    class="px-4 py-2 bg-teal-600 hover:bg-teal-700 rounded-lg text-sm font-medium text-white shadow-sm">
-                    Save Admin
-                </button>
-            </div>
-        </form>
+                <div>
+                    <label for="create_phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                    <div class="flex rounded-lg shadow-sm">
+                        <span
+                            class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">+62</span>
+                        <input type="text" name="phone" id="create_phone" placeholder="81234567890"
+                            class="flex-1 block w-full rounded-r-lg border-gray-300 focus:border-teal-400 focus:ring-2 focus:ring-teal-100 text-sm">
+                    </div>
+                    <p id="createPhoneTooltip" class="mt-1 hidden text-xs text-red-500">Phone number must be 11-14
+                        digits
+                    </p>
+                </div>
+
+                <div class="flex justify-end gap-3 pt-2">
+                    <button type="button" onclick="document.getElementById('adminFormModal').classList.add('hidden')"
+                        class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50">
+                        Cancel
+                    </button>
+                    <button type="submit"
+                        class="px-4 py-2 bg-teal-600 hover:bg-teal-700 rounded-lg text-sm font-medium text-white shadow-sm">
+                        Save Admin
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Sample table data population
-        const tableBody = document.getElementById('tableBody');
-        const sampleData = [
-            { id: 1, name: "John Doe", whatsapp: "081234567890", clicks: 142, status: "Active" },
-            { id: 2, name: "Jane Smith", whatsapp: "082345678901", clicks: 87, status: "Inactive" },
-            { id: 3, name: "Robert Johnson", whatsapp: "083456789012", clicks: 256, status: "Active" }
-        ];
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Sample table data population
+            const tableBody = document.getElementById('tableBody');
+            const sampleData = [
+                { id: 1, name: "John Doe", whatsapp: "081234567890", clicks: 142, status: "Active" },
+                { id: 2, name: "Jane Smith", whatsapp: "082345678901", clicks: 87, status: "Inactive" },
+                { id: 3, name: "Robert Johnson", whatsapp: "083456789012", clicks: 256, status: "Active" }
+            ];
 
-        sampleData.forEach((admin, index) => {
-            const row = document.createElement('tr');
-            row.className = 'hover:bg-gray-50 cursor-pointer';
-            row.dataset.id = admin.id;
+            sampleData.forEach((admin, index) => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-50 cursor-pointer';
+                row.dataset.id = admin.id;
 
-            row.innerHTML = `
+                row.innerHTML = `
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${index + 1}</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${admin.name}</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${admin.whatsapp}</td>
@@ -213,48 +224,48 @@
                     </span>
                 </td>
             `;
-            tableBody.appendChild(row);
+                tableBody.appendChild(row);
+            });
+
+            // Floating action menu
+            const floatingAction = document.getElementById('floatingAction');
+            let selectedAdminId = null;
+
+            tableBody.addEventListener('click', function (e) {
+                const row = e.target.closest('tr');
+                if (row && row.dataset.id) {
+                    selectedAdminId = row.dataset.id;
+                    const rect = row.getBoundingClientRect();
+
+                    floatingAction.style.top = `${window.scrollY + rect.bottom}px`;
+                    floatingAction.style.left = `${rect.left + rect.width - 160}px`;
+                    floatingAction.classList.remove('hidden');
+                }
+            });
+
+            document.addEventListener('click', function (e) {
+                if (!e.target.closest('tr') && !e.target.closest('#floatingAction')) {
+                    floatingAction.classList.add('hidden');
+                }
+            });
+
+            document.getElementById('editBtn').addEventListener('click', () => {
+                if (selectedAdminId) {
+                    alert(`Edit admin with ID: ${selectedAdminId}`);
+                    floatingAction.classList.add('hidden');
+                }
+            });
+
+            document.getElementById('deleteBtn').addEventListener('click', () => {
+                if (selectedAdminId && confirm(`Delete admin with ID: ${selectedAdminId}?`)) {
+                    alert(`Admin ${selectedAdminId} deleted`);
+                    floatingAction.classList.add('hidden');
+                }
+            });
+
+            // Show add form modal
+            document.getElementById('addButton').addEventListener('click', () => {
+                document.getElementById('adminFormModal').classList.remove('hidden');
+            });
         });
-
-        // Floating action menu
-        const floatingAction = document.getElementById('floatingAction');
-        let selectedAdminId = null;
-
-        tableBody.addEventListener('click', function (e) {
-            const row = e.target.closest('tr');
-            if (row && row.dataset.id) {
-                selectedAdminId = row.dataset.id;
-                const rect = row.getBoundingClientRect();
-
-                floatingAction.style.top = `${window.scrollY + rect.bottom}px`;
-                floatingAction.style.left = `${rect.left + rect.width - 160}px`;
-                floatingAction.classList.remove('hidden');
-            }
-        });
-
-        document.addEventListener('click', function (e) {
-            if (!e.target.closest('tr') && !e.target.closest('#floatingAction')) {
-                floatingAction.classList.add('hidden');
-            }
-        });
-
-        document.getElementById('editBtn').addEventListener('click', () => {
-            if (selectedAdminId) {
-                alert(`Edit admin with ID: ${selectedAdminId}`);
-                floatingAction.classList.add('hidden');
-            }
-        });
-
-        document.getElementById('deleteBtn').addEventListener('click', () => {
-            if (selectedAdminId && confirm(`Delete admin with ID: ${selectedAdminId}?`)) {
-                alert(`Admin ${selectedAdminId} deleted`);
-                floatingAction.classList.add('hidden');
-            }
-        });
-
-        // Show add form modal
-        document.getElementById('addButton').addEventListener('click', () => {
-            document.getElementById('adminFormModal').classList.remove('hidden');
-        });
-    });
-</script>
+    </script>

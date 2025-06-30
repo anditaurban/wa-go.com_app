@@ -174,6 +174,16 @@ async function handleCreate() {
     formData.campaign_id = selectedCampaignId;
     formData.campaign_name = selectedCampaignName;
   }
+  if (currentDataType == "quicklink") {
+    console.log("Form data awal:", formData);
+    // Contoh: ambil custom input kalau perlu
+    // Misal: link name atau url, pastikan input name di form cocok
+    const linkInput = document.getElementById("create_linkInput");
+    formData.link = linkInput.value;
+
+    // Atau kalau semua sudah ada di form, ini boleh di-skip
+    console.log("Quicklink formData final:", formData);
+  }
 
   // Validation
   if (!validateFormData(formData, "create")) {

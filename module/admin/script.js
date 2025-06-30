@@ -1,5 +1,5 @@
 pagemodule = "Admin";
-colSpanCount = 6;
+colSpanCount = 4;
 setDataType("admin");
 
 document.getElementById("addButton").addEventListener("click", () => {

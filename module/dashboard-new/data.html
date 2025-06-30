@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <title>WA-GO - Aplikasi Distribusi Leads</title>
+    <link rel="icon" href="./assets/img/wago.png" sizes="32x32">
+    <link rel="icon" href="./assets/img/wago.png" sizes="192x192">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+
+    <!-- Alpine.js -->
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        crossorigin="anonymous" />
+
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- <script src="https://kit.fontawesome.com/yourkit.js" crossorigin="anonymous"></script> -->
+
+
+    <!-- CDN Font Awesome 5 -->
+
+    <style>
+        .loader {
+            border-top-color: #3498db;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+
+        html,
+        body {
+            height: 100%;
+            overflow-x: hidden;
+        }
+    </style>
+
+    </style>
+</head>
+
+<body class="sidebar bg-gray-100 min-h-screen">
+
+    <!-- Navbar -->
+    <nav
+        class="fixed top-0 left-0 sm:left-72 right-0 h-16 bg-white backdrop-blur-sm shadow-sm z-40 flex items-center justify-between px-4 sm:px-6 border-b border-gray-100">
+
+        <!-- Mobile Menu Button (Left Side) -->
+        <button id="mobileMenuButton"
+            class="sm:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
+
+        <!-- Right: User Profile -->
+        <div class="relative ml-auto">
+            <button id="userMenuButton" class="flex items-center space-x-3 focus:outline-none group">
+                <div class="text-right">
+                    <p class="text-sm font-medium text-gray-700" id="nameUser">User Name</p>
+                </div>
+                <div class="relative">
+                    <img src="assets/img/avatar/avatar-3.png"
+                        class="w-9 h-9 rounded-full border-2 border-white shadow-sm group-hover:border-blue-200 transition-all duration-200"
+                        alt="User Avatar" />
+                    <span
+                        class="absolute bottom-0 right-0 w-3 h-3 bg-green-400 rounded-full border-2 border-white"></span>
+                </div>
+                <i
+                    class="fas fa-chevron-down text-xs text-gray-400 group-hover:text-gray-600 transition-colors duration-200 hidden sm:block"></i>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <div id="userDropdown"
+                class="absolute right-0 mt-3 w-56 bg-white rounded-xl shadow-lg shadow-gray-200/50 hidden z-50 border border-gray-100 overflow-hidden">
+                <div class="px-4 py-3 border-b border-gray-100 bg-gray-50">
+                    <p class="text-xs text-gray-400">Last login: 5 min ago</p>
+                </div>
+                <a href="#"
+                    class="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150">
+                    <i class="fas fa-user-circle mr-3 text-gray-500 w-5 text-center"></i> Profile
+                </a>
+                <a href="#"
+                    class="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150">
+                    <i class="fas fa-cog mr-3 text-gray-500 w-5 text-center"></i> Settings
+                </a>
+                <div class="border-t border-gray-100 my-1"></div>
+                <a href="#" id="logout"
+                    class="flex items-center px-4 py-3 text-sm text-red-500 hover:bg-red-50 transition-colors duration-150">
+                    <i class="fas fa-sign-out-alt mr-3 w-5 text-center"></i> Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+    <aside id="sidenavbar"
+        class="fixed top-0 left-0 z-40 w-72 h-screen bg-white shadow-xl transform -translate-x-full sm:translate-x-0 transition-all duration-300 ease-in-out border-r border-gray-100">
+
+
+        <div class="text-3xl font-bold text-gray-900 flex items-center py-6 border-b flex justify-center">
+            <span class="bg-emerald-600 text-white p-2 rounded-lg mr-2">W</span>
+            <span>ago</span>
+        </div>
+
+        <!-- Menu -->
+        <nav class="mt-6 px-3">
+            <ul class="space-y-2">
+                <li>
+                    <a href="#" data-module="dashboard"
+                        class="flex items-center gap-4 py-3 px-4 rounded-lg hover:bg-gray-100/80 transition-all duration-200 nav-link group">
+                        <div
+                            class="w-8 h-8 flex items-center justify-center rounded-full bg-blue-50 group-hover:bg-blue-100 transition-colors duration-200">
+                            <i class="fas fa-home text-blue-500 text-lg"></i>
+                        </div>
+                        <span
+                            class="text-gray-700 font-medium group-hover:text-blue-600 transition-colors duration-200">Dashboard</span>
+                        <div
+                            class="ml-auto w-1.5 h-6 bg-blue-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-module="admin"
+                        class="flex items-center gap-4 py-3 px-4 rounded-lg hover:bg-gray-100/80 transition-all duration-200 nav-link group">
+                        <div
+                            class="w-8 h-8 flex items-center justify-center rounded-full bg-purple-50 group-hover:bg-purple-100 transition-colors duration-200">
+                            <i class="fas fa-user-circle text-purple-500 text-lg"></i>
+                        </div>
+                        <span
+                            class="text-gray-700 font-medium group-hover:text-purple-600 transition-colors duration-200">Admin</span>
+                        <div
+                            class="ml-auto w-1.5 h-6 bg-purple-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-module="tracking"
+                        class="flex items-center gap-4 py-3 px-4 rounded-lg hover:bg-gray-100/80 transition-all duration-200 nav-link group">
+                        <div
+                            class="w-8 h-8 flex items-center justify-center rounded-full bg-green-50 group-hover:bg-green-100 transition-colors duration-200">
+                            <i class="fas fa-shield-alt text-green-500 text-lg"></i>
+                        </div>
+                        <span
+                            class="text-gray-700 font-medium group-hover:text-green-600 transition-colors duration-200">Tracking</span>
+                        <div
+                            class="ml-auto w-1.5 h-6 bg-green-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-module="pretext"
+                        class="flex items-center gap-4 py-3 px-4 rounded-lg hover:bg-gray-100/80 transition-all duration-200 nav-link group">
+                        <div
+                            class="w-8 h-8 flex items-center justify-center rounded-full bg-yellow-50 group-hover:bg-yellow-100 transition-colors duration-200">
+                            <i class="fas fa-magic text-yellow-500 text-lg"></i>
+                        </div>
+                        <span
+                            class="text-gray-700 font-medium group-hover:text-yellow-600 transition-colors duration-200">PreText</span>
+                        <div
+                            class="ml-auto w-1.5 h-6 bg-yellow-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-module="campaign"
+                        class="flex items-center gap-4 py-3 px-4 rounded-lg hover:bg-gray-100/80 transition-all duration-200 nav-link group">
+                        <div
+                            class="w-8 h-8 flex items-center justify-center rounded-full bg-red-50 group-hover:bg-red-100 transition-colors duration-200">
+                            <i class="fas fa-copy text-red-500 text-lg"></i>
+                        </div>
+                        <span
+                            class="text-gray-700 font-medium group-hover:text-red-600 transition-colors duration-200">Campaign</span>
+                        <div
+                            class="ml-auto w-1.5 h-6 bg-red-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-module="addon"
+                        class="flex items-center gap-4 py-3 px-4 rounded-lg hover:bg-gray-100/80 transition-all duration-200 nav-link group">
+                        <div
+                            class="w-8 h-8 flex items-center justify-center rounded-full bg-indigo-50 group-hover:bg-indigo-100 transition-colors duration-200">
+                            <i class="fas fa-star text-indigo-500 text-lg"></i>
+                        </div>
+                        <span
+                            class="text-gray-700 font-medium group-hover:text-indigo-600 transition-colors duration-200">AddOns</span>
+                        <div
+                            class="ml-auto w-1.5 h-6 bg-indigo-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-module="grafik"
+                        class="flex items-center gap-4 py-3 px-4 rounded-lg hover:bg-gray-100/80 transition-all duration-200 nav-link group">
+                        <div
+                            class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-50 group-hover:bg-gray-100 transition-colors duration-200">
+                            <i class="fas fa-cog text-gray-500 text-lg"></i>
+                        </div>
+                        <span
+                            class="text-gray-700 font-medium group-hover:text-gray-600 transition-colors duration-200">Setting</span>
+                        <div
+                            class="ml-auto w-1.5 h-6 bg-gray-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+    <!-- Tambahkan di dalam elemen kamu -->
+    <div class="px-4 py-20 mr-0 lg:px-20 lg:py-20 lg:mr-52">
+        <div class="mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800">Dashboard</h2>
+            <div class="mt-1 h-1 w-12 bg-blue-500 rounded-full"></div>
+        </div>
+
+        <!-- Content Card -->
+        <div class="bg-white rounded-xl shadow-sm p-6">
+            <!-- Quick Link Header -->
+            <div class="mb-8">
+                <h1 class="text-xl font-semibold text-gray-800">Quick Link</h1>
+                <p class="text-gray-500 mt-1">Create links quickly and easily using the form below</p>
+            </div>
+
+            <!-- Grid Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Form Section -->
+                <div class="space-y-4">
+                    <!-- Form untuk quick link (tetap seperti sebelumnya) -->
+                    <form id="createForm" method="post" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="cs_admin" class="block text-sm font-medium text-gray-700 mb-1">CS
+                                    Admin</label>
+                                <input id="cs_admin" name="cs_admin" type="text"
+                                    placeholder="Select/Input CS Admin Name"
+                                    class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all" />
+                            </div>
+                            <div>
+                                <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">WhatsApp
+                                    Number</label>
+                                <input id="phone" name="phone" type="text" placeholder="Phone Number"
+                                    class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all" />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="text" class="block text-sm font-medium text-gray-700 mb-1">Pre Text</label>
+                            <input id="text" name="text" type="link" placeholder="Enter your pre-text"
+                                class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all" />
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="meta_pixel_id" class="block text-sm font-medium text-gray-700 mb-1">Meta
+                                    Pixel</label>
+                                <input id="meta_pixel_id" name="meta_pixel_id" type="text" placeholder="Pixel ID"
+                                    class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all" />
+                            </div>
+                            <div class="flex items-end">
+                                <button type="submit"
+                                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 shadow-sm">
+                                    Generate Link
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- 🔥 Form filter grafik -->
+                    <!-- Form Input Period -->
+                    <form id="chartForm" class="space-y-4">
+                        <div>
+                            <label for="period" class="block text-sm font-medium text-gray-700 mb-1">Periode</label>
+                            <select id="period" name="period"
+                                class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all">
+                                <option value="weekly" selected>Mingguan</option>
+                                <option value="monthly">Bulanan</option>
+                                <option value="yearly">Tahunan</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Periode
+                                Sebelumnya/Sesudahnya</label>
+                            <div class="flex space-x-2">
+                                <button type="button" id="prevBtn"
+                                    class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors duration-200">
+                                    <i class="fas fa-chevron-left mr-2"></i> Previous
+                                </button>
+                                <button type="button" id="nextBtn"
+                                    class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors duration-200">
+                                    Next <i class="fas fa-chevron-right ml-2"></i>
+                                </button>
+                            </div>
+                            <input type="hidden" id="weekOffset" name="weekOffset" value="0">
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="startDate" class="block text-sm font-medium text-gray-700 mb-1">Tanggal
+                                    Mulai</label>
+                                <input type="date" id="startDate" name="startDate" value="2025-03-01"
+                                    class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all">
+                            </div>
+                            <div>
+                                <label for="endDate" class="block text-sm font-medium text-gray-700 mb-1">Tanggal
+                                    Akhir</label>
+                                <input type="date" id="endDate" name="endDate" value="2025-03-07"
+                                    class="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all">
+                            </div>
+                        </div>
+
+                        <button type="submit" id="submitBtn"
+                            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 shadow-sm mt-4 flex items-center justify-center">
+                            <span id="btnText">Muat Grafik</span>
+                            <i id="loadingIcon" class="fas fa-spinner fa-spin ml-2 hidden"></i>
+                        </button>
+                    </form>
+
+                </div>
+
+                <!-- Chart Section -->
+                <div class="bg-white p-5 rounded-xl border border-gray-100 shadow-sm">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-gray-800">Click Statistics</h3>
+                        <p class="text-sm text-gray-500" id="chartSubtitle">Last 7 days performance</p>
+                    </div>
+                    <div class="h-64 relative">
+                        <canvas id="ChartCanvas" class="w-full h-64" h-64></canvas>
+
+                        <div id="errorMessage" class="hidden text-center py-10 text-red-500">
+                            <i class="fas fa-exclamation-triangle text-2xl mb-2"></i>
+                            <p>Gagal memuat data grafik</p>
+                        </div>
+                    </div>
+
+                    <!-- Info Tambahan -->
+                    <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="bg-blue-50 p-3 rounded-lg">
+                            <p class="text-sm text-blue-600">Total Kunjungan</p>
+                            <p class="text-xl font-semibold text-blue-800" id="totalVisitors">0</p>
+                        </div>
+                        <div class="bg-green-50 p-3 rounded-lg">
+                            <p class="text-sm text-green-600">Rata-rata/Hari</p>
+                            <p class="text-xl font-semibold text-green-800" id="avgVisitors">0</p>
+                        </div>
+                        <div class="bg-purple-50 p-3 rounded-lg">
+                            <p class="text-sm text-purple-600">Periode</p>
+                            <p class="text-xl font-semibold text-purple-800" id="periodLabel">-</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer
+        class="ml-0 md:ml-72 bg-white py-7 px-6 flex flex-col md:flex-row items-center justify-between border-t border-gray-200"
+        id="section-data">
+        <div class="text-sm text-gray-600 flex items-center mb-2 md:mb-0">
+            Copyright © 2024 <span class="mx-2">•</span> Developed By
+            <a href="https://katib.id/" class="text-teal-600 hover:text-teal-800 ml-1">KATiB.id</a>
+        </div>
+        <div class="flex items-center space-x-4">
+            <!-- Additional footer right content can go here -->
+        </div>
+    </footer>
+
+    <!-- Optional: scripts.js jika perlu -->
+
+</body>
+<script>
+    const script = document.createElement('script');
+    script.src = `./js/scripts.js?v=${Date.now()}`;
+    document.head.appendChild(script);
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const userMenuButton = document.getElementById("userMenuButton");
+        const userDropdown = document.getElementById("userDropdown");
+
+        const mobileMenuButton = document.getElementById("mobileMenuButton");
+        const sidebar = document.getElementById("sidebar");
+
+        // Toggle dropdown user menu
+        if (userMenuButton && userDropdown) {
+            userMenuButton.addEventListener("click", function (e) {
+                e.stopPropagation();
+                userDropdown.classList.toggle("hidden");
+            });
+
+            document.addEventListener("click", function (e) {
+                // Jika klik di luar button & dropdown, sembunyikan dropdown
+                if (!userMenuButton.contains(e.target) && !userDropdown.contains(e.target)) {
+                    userDropdown.classList.add("hidden");
+                }
+            });
+        }
+
+        // Toggle sidebar
+        if (mobileMenuButton && sidebar) {
+            mobileMenuButton.addEventListener("click", function (e) {
+                e.stopPropagation();
+                sidebar.classList.toggle("-translate-x-full");
+            });
+
+            // Optional: close sidebar if click outside (mobile)
+            document.addEventListener("click", function (e) {
+                if (!sidebar.contains(e.target) && !mobileMenuButton.contains(e.target)) {
+                    sidebar.classList.add("-translate-x-full");
+                }
+            });
+        }
+    });
+</script>
+<script>
+
+
+    let chartInstance = null;
+    let currentOffset = 0;
+
+    const summaryApiUrl = "https://dev.katib.cloud/summary/dashboardwago/4409";
+    const apiToken = "DpacnJf3uEQeM7HN";
+
+    document.addEventListener("DOMContentLoaded", function () {
+        updateDateRange();
+        loadChartData();
+
+        document.getElementById("chartForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+            loadChartData();
+        });
+
+        document.getElementById("prevBtn").addEventListener("click", function () {
+            currentOffset++;
+            document.getElementById("weekOffset").value = currentOffset;
+            loadChartData();
+        });
+
+        document.getElementById("nextBtn").addEventListener("click", function () {
+            if (currentOffset > 0) {
+                currentOffset--;
+                document.getElementById("weekOffset").value = currentOffset;
+                loadChartData();
+            }
+        });
+
+        document.getElementById("period").addEventListener("change", function () {
+            currentOffset = 0;
+            document.getElementById("weekOffset").value = currentOffset;
+            updateDateRange();
+            loadChartData();
+        });
+    });
+
+    function updateDateRange() {
+        const period = document.getElementById("period").value;
+        const offset = parseInt(document.getElementById("weekOffset").value);
+        let startDate, endDate;
+
+        const today = new Date();
+        if (period === "weekly") {
+            today.setDate(today.getDate() - offset * 7);
+            const day = today.getDay();
+            const diff = today.getDate() - day + (day === 0 ? -6 : 1);
+            startDate = new Date(today.setDate(diff));
+            endDate = new Date(startDate);
+            endDate.setDate(startDate.getDate() + 6);
+        } else if (period === "monthly") {
+            today.setMonth(today.getMonth() - offset);
+            startDate = new Date(today.getFullYear(), today.getMonth(), 1);
+            endDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+        } else if (period === "yearly") {
+            today.setFullYear(today.getFullYear() - offset);
+            startDate = new Date(today.getFullYear(), 0, 1);
+            endDate = new Date(today.getFullYear(), 11, 31);
+        }
+
+        document.getElementById("startDate").value = formatDate(startDate);
+        document.getElementById("endDate").value = formatDate(endDate);
+    }
+
+    function formatDate(date) {
+        const d = new Date(date);
+        const month = (d.getMonth() + 1).toString().padStart(2, "0");
+        const day = d.getDate().toString().padStart(2, "0");
+        const year = d.getFullYear();
+        return `${year}-${month}-${day}`;
+    }
+
+    function showLoading() {
+        document.getElementById("loadingSpinner").style.display = "flex";
+        document.getElementById("chartCanvas").style.opacity = "0.5";
+        document.getElementById("errorMessage").classList.add("hidden");
+        document.getElementById("loadingIcon").classList.remove("hidden");
+        document.getElementById("btnText").textContent = "Memuat...";
+        document.getElementById("submitBtn").disabled = true;
+    }
+
+    function hideLoading() {
+        document.getElementById("loadingSpinner").style.display = "none";
+        document.getElementById("chartCanvas").style.opacity = "1";
+        document.getElementById("loadingIcon").classList.add("hidden");
+        document.getElementById("btnText").textContent = "Muat Grafik";
+        document.getElementById("submitBtn").disabled = false;
+    }
+
+    function showError() {
+        document.getElementById("errorMessage").classList.remove("hidden");
+    }
+
+    function loadChartData() {
+        const period = document.getElementById("period").value;
+        const startDate = document.getElementById("startDate").value;
+        const endDate = document.getElementById("endDate").value;
+        const offset = parseInt(document.getElementById("weekOffset").value);
+
+        const payload = {
+            period,
+            startDate,
+            endDate,
+            weekOffset: offset,
+        };
+
+        console.log("[DEBUG] Sending Payload:", payload);
+
+        showLoading();
+
+        fetch(summaryApiUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${apiToken}`,
+            },
+            body: JSON.stringify(payload),
+        })
+            .then((res) => {
+                console.log("[DEBUG] Response Status:", res.status);
+                if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                return res.json();
+            })
+            .then((response) => {
+                console.log("[DEBUG] Response Data:", response);
+                hideLoading();
+                renderChart(response, period);
+            })
+            .catch((error) => {
+                console.error("[ERROR] Gagal ambil data grafik:", error);
+                hideLoading();
+                showError();
+            });
+    }
+
+    function renderChart(response, period) {
+        const graph = response.graphData;
+        console.log("[DEBUG] graphData:", graph);
+
+        if (!graph || !graph.data || graph.data.length === 0) {
+            console.warn("[WARNING] Data kosong");
+            showError();
+            return;
+        }
+
+        const total = graph.data.reduce((sum, item) => sum + item.visitor_count, 0);
+        const avg = Math.round(total / graph.data.length);
+
+        document.getElementById("totalVisitors").textContent = total.toLocaleString();
+        document.getElementById("avgVisitors").textContent = avg.toLocaleString();
+
+        let periodLabel = "-";
+        if (period === "weekly") {
+            periodLabel =
+                currentOffset === 0
+                    ? "Minggu Ini"
+                    : currentOffset === 1
+                        ? "Minggu Lalu"
+                        : `${currentOffset} Minggu Yang Lalu`;
+        } else if (period === "monthly") {
+            periodLabel =
+                currentOffset === 0
+                    ? "Bulan Ini"
+                    : currentOffset === 1
+                        ? "Bulan Lalu"
+                        : `${currentOffset} Bulan Yang Lalu`;
+        } else if (period === "yearly") {
+            periodLabel =
+                currentOffset === 0
+                    ? "Tahun Ini"
+                    : currentOffset === 1
+                        ? "Tahun Lalu"
+                        : `${currentOffset} Tahun Yang Lalu`;
+        }
+
+        document.getElementById("periodLabel").textContent = periodLabel;
+        document.getElementById("chartSubtitle").textContent = `Data ${period === "weekly"
+            ? "7 hari terakhir"
+            : period === "monthly"
+                ? "4 minggu terakhir"
+                : "12 bulan terakhir"
+            }`;
+
+        const labels = graph.data.map((item) =>
+            period === "weekly"
+                ? `${graph.month_label} ${item.date}`
+                : period === "monthly"
+                    ? item.week
+                    : item.month
+        );
+        const values = graph.data.map((item) => item.visitor_count);
+
+        const ctx = document.getElementById("chartCanvas").getContext("2d");
+        if (chartInstance) chartInstance.destroy();
+
+        chartInstance = new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: "Jumlah Kunjungan",
+                        data: values,
+                        backgroundColor: "rgba(59, 130, 246, 0.7)",
+                        borderColor: "rgba(59, 130, 246, 1)",
+                        borderWidth: 1,
+                        borderRadius: 4,
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                return `Kunjungan: ${context.raw.toLocaleString()}`;
+                            },
+                        },
+                    },
+                    legend: {
+                        display: false,
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: "Jumlah Kunjungan",
+                        },
+                        ticks: {
+                            callback: (value) => value.toLocaleString(),
+                        },
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text:
+                                period === "weekly"
+                                    ? "Tanggal"
+                                    : period === "monthly"
+                                        ? "Minggu"
+                                        : "Bulan",
+                        },
+                    },
+                },
+            },
+        });
+    }
+
+
+</script>
+
+</html>
