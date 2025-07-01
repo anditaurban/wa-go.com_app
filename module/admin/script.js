@@ -158,7 +158,7 @@ window.addEventListener("resize", function () {
   }
 });
 formHtml = `
-<form id="dataform" class="space-y-6">
+<form id="dataForm" class="space-y-6">
   <input type="hidden" name="owner_id" id="owner_id" value="${
     owner_id || ""
   }" />

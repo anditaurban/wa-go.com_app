@@ -71,7 +71,7 @@ window.rowTemplate = function (item, index) {
 };
 
 formHtml = `
-<form id="dataform" class="space-y-6">
+<form id="dataForm" class="space-y-6">
   <h5 class="text-lg font-semibold text-gray-800">Tracking</h5>
   
   <div>

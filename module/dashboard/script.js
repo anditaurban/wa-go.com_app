@@ -5,7 +5,17 @@ window.currentOffset =
   typeof window.currentOffset === "undefined" ? 0 : window.currentOffset;
 
 const summaryApiUrl = "https://dev.katib.cloud/summary/dashboardwago/4409";
-const apiToken = "DpacnJf3uEQeM7HN";
+const apiToken = "DpacnJf3uEQeM7HN"; // pakai kalau backend butuh
+
+let quickLinkCounter = localStorage.getItem("quickLinkCounter")
+  ? parseInt(localStorage.getItem("quickLinkCounter"))
+  : 1;
+let lastPhoneNumber = null; // simpan nomor terakhir
+let lastCsAdmin = null;
+
+// Absolute value
+const DEFAULT_TEXT = "Hallo! this is quick link test message again.";
+const DEFAULT_CAMPAIGN_NAME = "Quick Campaign Name Again";
 
 console.log("✅ dashboard script.js loaded!");
 
@@ -65,29 +75,120 @@ function initDashboardChart() {
       event.preventDefault();
 
       const rawFormData = getFormData();
-      console.log("✅ FormData:", rawFormData);
+      let phoneNumber = rawFormData.phone.trim();
+      let csAdminName = rawFormData.cs_admin.trim();
 
-      if (
-        rawFormData.cs_admin &&
-        rawFormData.phone &&
-        rawFormData.text &&
-        rawFormData.meta_pixel_id
-      ) {
+      // === Validasi nomor ===
+
+      // Awalan 0
+      if (phoneNumber.startsWith("0")) {
+        Swal.fire("Error!", "Nomor tidak boleh diawali angka 0.", "error");
+        return;
+      }
+
+      // Panjang
+      if (phoneNumber.length < 9 || phoneNumber.length > 13) {
+        Swal.fire("Error!", "Nomor harus 9-13 digit.", "error");
+        return;
+      }
+
+      // Tidak boleh sama dengan nomor terakhir
+      if (phoneNumber === lastPhoneNumber) {
+        Swal.fire(
+          "Error!",
+          "Nomor tidak boleh sama dengan input sebelumnya.",
+          "error"
+        );
+        return;
+      }
+
+      // === Validasi CS Admin ===
+
+      if (csAdminName === lastCsAdmin) {
+        Swal.fire(
+          "Error!",
+          "Nama CS Admin tidak boleh sama dengan input sebelumnya.",
+          "error"
+        );
+        return;
+      }
+
+      if (csAdminName && phoneNumber && rawFormData.meta_pixel_id) {
         const formattedData = {
-          owner_id: owner_id, // pastikan ini ada di scope
-          cs_admin: rawFormData.cs_admin,
-          phone: rawFormData.phone,
-          text: rawFormData.text,
+          owner_id: 4409,
+          cs_admin: csAdminName,
+          phone: `${phoneNumber}`,
+          description: "Test Quick Link Again",
+          text: `Hallo! this is quick link test message ${quickLinkCounter}`,
           meta_pixel_id: rawFormData.meta_pixel_id,
+          campaign_name: `Campaign ${quickLinkCounter}`,
         };
 
         handleCreate(formattedData);
+
+        // Simpan nomor & CS Admin terakhir
+        lastPhoneNumber = phoneNumber;
+        lastCsAdmin = csAdminName;
+
+        // Naikkan counter & simpan di localStorage
+        quickLinkCounter++;
+        localStorage.setItem("quickLinkCounter", quickLinkCounter);
+
         dataForm.reset();
       } else {
-        showErrorAlert("Semua input wajib diisi.");
+        Swal.fire("Error!", "Semua input wajib diisi.", "error");
       }
     });
   }
+}
+
+function handleCreate(data) {
+  fetch("https://dev.katib.cloud/add/quicklinkwago", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${apiToken}`,
+    },
+    body: JSON.stringify(data),
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json();
+    })
+    .then((response) => {
+      console.log("✅ Full API Response:", response);
+
+      const link = response.data?.campaign_url || "#";
+      console.log("✅ Link:", link);
+
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        html: `
+          <p>Data successfully added.</p>
+          <p style="margin-top: 8px;">Campaign Link:</p>
+          <div style="display: flex; align-items: center; margin-top: 5px;">
+            <input id="copyLinkInput" value="${link}" readonly style="width: 80%; padding: 5px; border: 1px solid #ccc; border-radius: 4px;"/>
+            <button id="copyLinkBtn" style="margin-left: 8px; padding: 5px 10px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer;">Copy</button>
+          </div>
+        `,
+        showCancelButton: false,
+        confirmButtonText: "OK",
+        didOpen: () => {
+          const copyBtn = document.getElementById("copyLinkBtn");
+          const copyInput = document.getElementById("copyLinkInput");
+          copyBtn.addEventListener("click", () => {
+            copyInput.select();
+            document.execCommand("copy");
+            copyBtn.textContent = "Copied!";
+          });
+        },
+      });
+    })
+    .catch((error) => {
+      console.error("[ERROR] Gagal POST Quick Link:", error);
+      Swal.fire("Gagal!", "Terjadi kesalahan saat kirim data.", "error");
+    });
 }
 
 function updateDateRange() {
@@ -122,11 +223,6 @@ function formatDate(date) {
   return `${d.getFullYear()}-${(d.getMonth() + 1)
     .toString()
     .padStart(2, "0")}-${d.getDate().toString().padStart(2, "0")}`;
-}
-
-function showError() {
-  const errEl = document.getElementById("errorMessage");
-  if (errEl) errEl.classList.remove("hidden");
 }
 
 function toggleLoader(show) {
@@ -169,7 +265,7 @@ function loadChartData() {
     })
     .catch((error) => {
       console.error("[ERROR] Gagal ambil data grafik:", error);
-      showError();
+      Swal.fire("Error!", "Gagal memuat data grafik.", "error");
     })
     .finally(() => {
       toggleLoader(false);
@@ -213,21 +309,15 @@ function renderChart(response, period) {
   const graph = response.graphData;
   if (!graph || !graph.data || graph.data.length === 0) {
     console.warn("⚠️ Data grafik kosong");
-    showError();
+    Swal.fire("Info!", "Data grafik kosong.", "info");
     return;
   }
 
   const canvas = document.getElementById("dashboardChartCanvas");
-  if (!canvas) {
-    console.error("❌ Elemen canvas tidak ditemukan");
-    return;
-  }
+  if (!canvas) return;
 
   const ctx = canvas.getContext("2d");
-  if (!ctx) {
-    console.error("❌ Gagal mendapatkan context dari canvas");
-    return;
-  }
+  if (!ctx) return;
 
   if (window.chartInstance) window.chartInstance.destroy();
 
@@ -321,3 +411,7 @@ function renderChart(response, period) {
     },
   });
 }
+
+// Setelah handleCreate
+quickLinkCounter++;
+localStorage.setItem("quickLinkCounter", quickLinkCounter);

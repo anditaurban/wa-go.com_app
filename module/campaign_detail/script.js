@@ -92,7 +92,7 @@ window.rowTemplate = function (item, index) {
 };
 
 formHtml = `
-<form id="dataform">
+<form id="dataForm">
 <div class="container">
   <div class="row">
     <div class="col-12">

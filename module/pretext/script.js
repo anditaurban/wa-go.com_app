@@ -57,7 +57,7 @@ window.rowTemplate = function (item, index) {
 };
 
 formHtml = `
-  <form id="dataform" class="space-y-4">
+  <form id="dataForm" class="space-y-4">
     <h5 class="text-lg font-semibold text-gray-800 mb-2">Form Pretext</h5>
 
     <div class="space-y-1">

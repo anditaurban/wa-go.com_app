@@ -32,8 +32,8 @@ let responseData = "";
 
 // Daftar script
 const scriptsToLoad = [
-  "./js/utils.js",
   "./js/api.js",
+  "./js/utils.js",
   "./js/table.js",
   "./js/general.js",
 ];
